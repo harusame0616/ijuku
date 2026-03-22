@@ -1,0 +1,9 @@
+@apps/api/migrations/000001_add_courses.up.sql  をpostgres の推奨にマッチしているかどうかチェックして。準拠している部分、準拠していない部分、特に明示されていない部分でまとめて
+
+---
+
+golang-migrate って自動でトランザクション管理するの？じゃぁマイグレーション中に途中まで適用されてしまうとかってことはない？
+
+---
+
+function や extension の有効化も rollback される？
