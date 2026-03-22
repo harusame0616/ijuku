@@ -1,0 +1,18 @@
+@apps/api/migrations/000001_sample.up.sql 
+CREATE TRIGGER trigger_courses_updated_at
+    BEFORE UPDATE ON courses
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at();
+
+COMMENT ON COLUMN courses.publish_status IS 'draft / published / archived';
+
+CREATE EXTENSION ltree;
+CREATE TABLE "categories" {
+    categoryId UUID PRIMARY KEY
+    name TEXT NOT NULL
+    path ltree NOT NULL
+
+    created_at TIMESTAMPZ
+    updated_at TIMESTAMPZ
+};
+ (details: pq: syntax error at or near "{")
