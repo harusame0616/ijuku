@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "18c6b461052f",
+  "session_id": "402042f8-246a-4a35-ae4e-10eefc872b16",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-22T21:44:50.583721Z",
+  "branch": "main",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "CLAUDE.md",
+    "apps/api/migrations/000001_add_courses.down.sql",
+    "apps/api/migrations/000001_add_courses.up.sql"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "9951d73c1e3a",
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 9346,
+    "cache_read_tokens": 62474,
+    "output_tokens": 1019,
+    "api_call_count": 9
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-22T21:44:50.575956Z",
+    "agent_lines": 63,
+    "human_added": 32,
+    "human_modified": 7,
+    "human_removed": 0,
+    "total_committed": 102,
+    "agent_percentage": 61.76470588235294
+  }
+}
