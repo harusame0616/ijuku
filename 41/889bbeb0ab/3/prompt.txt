@@ -1,0 +1,43 @@
+API のレスポンスで JSON を返す場合、配列じゃなく常にオブジェクトで返すみたいなプラクティスあったよね。あれってなんで？
+
+---
+
+これって何？
+
+---
+
+値を string じゃなくて複合的な値を返すことはできる？number とか string　とか struct とか { courses: courses, total: 100} みたいな
+
+---
+
+cursor は次がないときは null にしたいんだけどどうすればいいの？
+
+---
+
+状況によってレスポンスの値が変わる時は？
+
+---
+
+slice を部分的に切り出すには？
+
+---
+
+要素よそ大きい数を指定した場合は？
+
+---
+
+3公演残滓って go にある？
+
+---
+
+３項演算子 ? : みたいなやつ
+
+---
+
+}
+page
+cannot use rawCourses[PAGE_SIZE - 1].CourseID.String() (value of type string) as *string value in assignmentcompilerIncompatibleAssign
+
+---
+
+これって自動でヒープに格納されるの？
