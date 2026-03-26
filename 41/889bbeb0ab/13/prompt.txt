@@ -1,0 +1,121 @@
+sqlc ってどうやって使うの？
+
+---
+
+スキーマファイルって何？それって必須？ golang-migrate との関係は？
+
+---
+
+sqlc って javascript にも対応してる？（typescriptも）
+
+---
+
+sql:                                                                                                                                                       
+    - engine: "postgresql"
+      schema: "migrations/"   # ← golang-migrate のファイルをそのまま指定
+      queries: "queries/"                                                                                                                                    
+      gen:                                                                                                                                                   
+        go: ...          を解説して他に設定あある？
+
+---
+
+設定書いた後はどうすればいいの？
+
+---
+
+($1)  とかって SQL の構文？
+
+---
+
+カーソル形式のページネーションってどうやるんだっけ？
+
+---
+
+left join と right join と cross join って違いなんだっけ省略した時はどれえ
+
+---
+
+他に join の種類ってある？
+
+---
+
+INNER JOINT の反対の outer join はあるの？
+
+---
+
+外部キー制約が付いている場合は常に innner join で必ず全てが取れるでいいんだよね？
+
+---
+
+SQL の順番ってどうだっけ SELET WHERE HAVING などの
+
+---
+
+internal/db って何？一般的なパス？
+
+---
+
+同じパッケージって package main とかってこと？
+
+---
+
+モノレポだけど api 配下の方がいいのかな？
+
+---
+
+package の指定って api ないなら全て main でいいの？なんか他のにする理由とかってある？
+
+---
+
+// courses パッケージ単体でテストできる
+
+---
+
+├──────────────────┼────────────────────┼──────────────────┤found packages courses (handler.go) and course (service.go) in /Users/haru/ghq/github.com/harusame0616/ijuku/apps/api/routes/courses
+
+---
+
+関数は基本的に タプルで最初に成功、失敗を返すのが一般的？
+
+---
+
+string or nil ってできるの？（optional
+
+---
+
+go でぱ import に新しいパッケージを追加したらなんのコマンド実行すればいいんだっけ
+
+---
+
+sqlc で生成したクエリをどうやって使えばいいの？
+
+---
+
+query 一覧を取得するようにしてみて
+
+---
+
+main に endpoint を登録して
+
+---
+
+internal server error
+
+---
+
+2026/03/23 13:19:22 Server starting on :8080
+^[[Aload: 5.45  cmd: main 62291 running 0.00u 0.01s
+^[[C2026/03/23 13:19:29 GetCourses error: failed to connect to `user=postgres database=postgres`:
+        hostname resolving error: lookup db: no such host
+        lookup db: no such host
+
+---
+
+~/ghq/github.com/harusame0616/ijuku/apps/api main* 23s
+❯ go run main.go
+2026/03/23 13:19:46 Server starting on :8080
+2026/03/23 13:19:47 GetCourses error: failed to connect to `user=postgres database=postgres`:
+        [::1]:5432 (localhost): dial error: dial tcp [::1]:5432: connect: connection refused
+        127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+        [::1]:5432 (localhost): dial error: dial tcp [::1]:5432: connect: connection refused
+        127.0.0.1:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "postgres" (SQLSTATE 28P
