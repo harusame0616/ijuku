@@ -1,0 +1,106 @@
+私は GO の初心者で GO らしくない書き方やオプションの書き方などを現在の変更点から教えてください
+
+---
+
+clean アーキテクチャなどを意識すると厳密には DB のインターフェイスは db そうで定義してはおかしいよね（
+場所の問題だけだけど）
+
+---
+
+そうすると sqlc が生成してくれる方をさらにラップする実装が必要になるってことだよね
+
+---
+
+cannot use queries (variable of type *db.Queries) as *db.Querier value in argument to courses.NewCoursesService: *db.Queries does not implement *db.Querier (type *db.Querier is pointer to interface, not interface)compilerInvalidIfaceAssign
+
+---
+
+クリーンアーキテクチャの文脈だと handler は presenter、 service は usecase に値するから handler から usecase は直接依存しても問題ないよね？
+
+---
+
+ちなみに js とかだと vitest とかで簡単にモックできるしそこまで mock 差し替えができる必要性がないけど、 go にはそのような機能はないの？
+
+---
+
+この場合も service の interface は handlerがわ（使うがわ）で書くべきなの？そうなると考え方時には service そうが handler 川に依存する形になるけど
+
+---
+
+とはいえ実際には依存しているよね
+
+---
+
+そもそも依存関係を逆転させたいのってなんでだっけ？
+
+---
+
+今回は service の実装を変えてもハンドラーの実装を変えたくないわけじゃないから今回の暗黙の依存は別にいいってことかな？
+
+---
+
+逆に implment みたいな形で厳密に依存させるみたいなことはできるの？
+
+---
+
+Clean Architecture 的には service そうに handler 向けのインターフェイスを書いた方がいい？
+
+---
+
+ここに interface 実装して
+
+---
+
+レシーバーメソッドの部分は書かないでいいの？
+
+---
+
+コンパイル時のチェックを追加して
+
+---
+
+あんまりこういう返却は行わない？（struct でまとめて２つ目はerrにした方がいいか）
+
+---
+
+cannot use (*SqrcRepository)(nil) (value of type *SqrcRepository) as Repository value in variable declaration: *SqrcRepository does not implement Repository (missing method findCourses)compilerInvalidIfaceAssign
+type SqrcRepository struct {
+    sqrc db.Querier
+}
+func (r *SqrcRepository) GetCourses(ctx context.Context, cursor string) (GetCoursesResult, error)
+
+---
+
+type SqrcRepository struct {
+    sqrc db.Querier
+}
+func (r *SqrcRepository) FindCourses(ctx context.Context, keyword string, cursor string) (GetCoursesResult, error)
+courses.SqrcRepository on pkg.go.dev
+
+---
+
+query command の考え方だとどうなる？
+
+---
+
+QueryService は直接 DB に依存するの？これも injection するの？
+
+---
+
+QueryService の方に寄せよう
+
+---
+
+repository ってデータをエンティティーに変換する役目が含まれているし、クエリー側でエンティティーに変換する必要ってないのでは？（ロジックもないし、クエリごとに必要なデータは別だしパフォーマンスの問題もある）
+
+---
+
+sqrc-reopsitory って使われていないってこと？
+
+---
+
+名前を変えて
+
+---
+
+進めて
