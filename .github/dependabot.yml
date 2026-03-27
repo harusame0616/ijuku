@@ -1,0 +1,29 @@
+  version: 2
+  updates:
+    - package-ecosystem: "go"
+      directory: "/apps/api"
+      schedule:
+        interval: "weekly"
+        day: "friday"
+        time: "20:00"
+      groups:
+        development-all:
+          dependency-type: "development"
+          automerge: true
+        patch-and-minor:
+          dependency-type: "production"
+          update-types: ["patch", "minor"]
+          automerge: true
+        major:
+          dependency-type: "production"
+          update-types: ["major"]
+          automerge: false
+      reviewers:
+        - "harusame0616"
+      labels:
+        - "dependencies"
+        - "go"
+      commit-message:
+        prefix: "chore(deps):"
+        include: "scope"
+
