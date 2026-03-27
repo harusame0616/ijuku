@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "b8d21a0f8f2f",
+  "session_id": "95830024-1c8d-43a4-beb4-f92de023451d",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-27T22:43:12.963821Z",
+  "branch": "2-migration",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/migrations/000002_enroll.down.sql",
+    "apps/api/migrations/000002_enroll.up.sql"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "166c1d3913c2",
+  "token_usage": {
+    "input_tokens": 5345,
+    "cache_creation_tokens": 82985,
+    "cache_read_tokens": 568800,
+    "output_tokens": 10888,
+    "api_call_count": 15
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-27T22:43:12.698683Z",
+    "agent_lines": 86,
+    "human_added": 249,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 337,
+    "agent_percentage": 25.519287833827892
+  }
+}
