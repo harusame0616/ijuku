@@ -1,0 +1,9 @@
+@apps/api/migrations/000002_enroll.up.sql  レビューして
+
+---
+
+migration up のルールってよんだ？
+
+---
+
+なぜ読んでいなかったの？パスが間違っている？
