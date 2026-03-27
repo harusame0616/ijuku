@@ -3,10 +3,11 @@
   "checkpoint_id": "6cf58a74f631",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 4,
+  "checkpoints_count": 8,
   "files_touched": [
     "apps/api/routes/courses/queries/get-courses.handler.go",
-    "apps/api/routes/courses/queries/get-courses.handler.medium.server_test.go"
+    "apps/api/routes/courses/queries/get-courses.handler.medium.server_test.go",
+    "apps/api/routes/courses/queries/get-courses.handler.small.server_test.go"
   ],
   "sessions": [
     {
@@ -20,13 +21,19 @@
       "transcript": "/6c/f58a74f631/1/full.jsonl",
       "content_hash": "/6c/f58a74f631/1/content_hash.txt",
       "prompt": "/6c/f58a74f631/1/prompt.txt"
+    },
+    {
+      "metadata": "/6c/f58a74f631/2/metadata.json",
+      "transcript": "/6c/f58a74f631/2/full.jsonl",
+      "content_hash": "/6c/f58a74f631/2/content_hash.txt",
+      "prompt": "/6c/f58a74f631/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 27,
-    "cache_creation_tokens": 34047,
-    "cache_read_tokens": 320210,
-    "output_tokens": 11824,
-    "api_call_count": 16
+    "input_tokens": 1998,
+    "cache_creation_tokens": 112456,
+    "cache_read_tokens": 4225578,
+    "output_tokens": 56413,
+    "api_call_count": 77
   }
 }

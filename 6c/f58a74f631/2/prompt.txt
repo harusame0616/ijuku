@@ -1,0 +1,69 @@
+以下のテストの実装をしてください
+- 条件を指定せずに一覧を取得できる
+- キーワードでタイトルを検索できる
+- キーワードで説明を検索できる
+- カーソルでページネーションができる
+- 次のページがない場合カーソルが null 
+
+なおテストケースは t.run でサブテストとして実装し、共通部分でテスト用のデータを投入してください
+
+---
+
+テストの実行方法は
+
+---
+
+親ディレクトリから再起的に実行するには？
+
+---
+
+❯ go test
+?       github.com/harusame0616/ijuku/apps/api  [no test files]
+
+---
+
+?       github.com/harusame0616/ijuku/apps/api  [no test files]
+?       github.com/harusame0616/ijuku/apps/api/internal/db      [no test files]
+panic: failed to setup test data: insert category: failed to connect to `user=postgres database=postgres`:
+                hostname resolving error: lookup db: no such host
+                lookup db: no such host
+
+goroutine 1 [running]:
+github.com/harusame0616/ijuku/apps/api/routes/courses/queries.TestMain(0x5562bf61e640)
+        /Users/haru/ghq/github.com/harusame0616/ijuku/apps/api/routes/courses/queries/get-courses.handler.medium.server_test.go:35 +0x1dc
+main.main()
+        _testmain.go:50 +0x88
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/queries   0.355s
+FAIL
+
+---
+
+TestMain って何？
+
+---
+
+これってそのファイルないのテストをラップするの？
+
+---
+
+じゃぁ TestMain じゃなくてサブテストにしてサブテスト実行前にセットアップ、ティアダウンするようにして
+
+---
+
+ここってどういう名前にするべき？
+
+---
+
+dbがどうとかインテグレーションテストとかの単位で名前つけるの？普通はどういう名前つけるの？
+
+---
+
+errorf とか error って何？エラーメッセージを出力してそこでテスト終わるの？
+
+---
+
+じゃぁ通常 fatal にした方がいいのかな
+
+---
+
+呼んだかどうかは実装に依存するので振る舞いだけをテストしてください
