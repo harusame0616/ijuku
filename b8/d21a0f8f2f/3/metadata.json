@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "b8d21a0f8f2f",
+  "session_id": "b13e6075-0c60-40e2-8dff-5b79833cb29d",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-27T22:43:13.001032Z",
+  "branch": "2-migration",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/rules/migration-up.md",
+    "apps/api/migrations/000002_enroll.down.sql",
+    "apps/api/migrations/000002_enroll.up.sql"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "258b05c6c037",
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 9383,
+    "cache_read_tokens": 98104,
+    "output_tokens": 3353,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-27T22:43:12.984065Z",
+    "agent_lines": 85,
+    "human_added": 248,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 336,
+    "agent_percentage": 25.297619047619047
+  }
+}
