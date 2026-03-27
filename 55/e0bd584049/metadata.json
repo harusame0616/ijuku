@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "55e0bd584049",
+  "strategy": "manual-commit",
+  "branch": "claude-code-setting-update",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/55/e0bd584049/0/metadata.json",
+      "transcript": "/55/e0bd584049/0/full.jsonl",
+      "content_hash": "/55/e0bd584049/0/content_hash.txt",
+      "prompt": "/55/e0bd584049/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 17932,
+    "cache_read_tokens": 52022,
+    "output_tokens": 514,
+    "api_call_count": 4
+  }
+}
