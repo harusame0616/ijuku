@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a3487bd6ea6e",
+  "strategy": "manual-commit",
+  "branch": "2-migration",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "apps/api/migrations/000002_enroll.up.sql"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a3/487bd6ea6e/0/metadata.json",
+      "transcript": "/a3/487bd6ea6e/0/full.jsonl",
+      "content_hash": "/a3/487bd6ea6e/0/content_hash.txt",
+      "prompt": "/a3/487bd6ea6e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 83,
+    "cache_creation_tokens": 58912,
+    "cache_read_tokens": 266185,
+    "output_tokens": 2942,
+    "api_call_count": 11
+  }
+}
