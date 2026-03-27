@@ -1,6 +1,6 @@
 ---
 paths:
-  - packages/db/migrations/*.up.sql
+  - apps/api/migrations/*.up.sql
 ---
 
 # MIGRATION UP
