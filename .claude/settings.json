@@ -4,108 +4,123 @@
   "hooks": {
     "PostToolUse": [
       {
+        "matcher": "Task",
         "hooks": [
           {
-            "command": "entire hooks claude-code post-task",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code post-task"
           }
-        ],
-        "matcher": "Task"
+        ]
       },
       {
+        "matcher": "TodoWrite",
         "hooks": [
           {
-            "command": "entire hooks claude-code post-todo",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code post-todo"
           }
-        ],
-        "matcher": "TodoWrite"
+        ]
       }
     ],
     "PreToolUse": [
       {
+        "matcher": "Task",
         "hooks": [
           {
-            "command": ".claude/hooks/db-generate-context-injection.sh",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code pre-task"
           }
-        ],
-        "matcher": "Bash"
-      },
-      {
-        "hooks": [
-          {
-            "command": "echo 'mcp__next-devtools__browser_eval は使用禁止です。playwright-cli を使用してください。' \u003e\u00262 \u0026\u0026 exit 2",
-            "type": "command"
-          }
-        ],
-        "matcher": "mcp__next-devtools__browser_eval"
-      },
-      {
-        "hooks": [
-          {
-            "command": "entire hooks claude-code pre-task",
-            "type": "command"
-          }
-        ],
-        "matcher": "Task"
+        ]
       }
     ],
     "SessionEnd": [
       {
+        "matcher": "",
         "hooks": [
           {
-            "command": "entire hooks claude-code session-end",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code session-end"
           }
-        ],
-        "matcher": ""
+        ]
       }
     ],
     "SessionStart": [
       {
+        "matcher": "",
         "hooks": [
           {
-            "command": "echo '## 参照可能な agent-docs ドキュメント一覧' && ls agent-docs/ | sed 's/^/- /'",
-            "type": "command"
+            "type": "command",
+            "command": "echo '## 参照可能な agent-docs ドキュメント一覧' && ls agent-docs/ | sed 's/^/- /'"
           },
           {
-            "command": "entire hooks claude-code session-start",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code session-start"
           }
-        ],
-        "matcher": ""
+        ]
       }
     ],
     "Stop": [
       {
+        "matcher": "",
         "hooks": [
           {
-            "command": "entire hooks claude-code stop",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code stop"
           }
-        ],
-        "matcher": ""
+        ]
       }
     ],
     "UserPromptSubmit": [
       {
+        "matcher": "",
         "hooks": [
           {
-            "command": "entire hooks claude-code user-prompt-submit",
-            "type": "command"
+            "type": "command",
+            "command": "entire hooks claude-code user-prompt-submit"
           }
-        ],
-        "matcher": ""
+        ]
       }
     ]
   },
   "language": "japanese",
   "permissions": {
     "allow": [
-      "Bash(git commit *)",
+      "Skill(gws-docs)",
+      "Skill(gws-sheets)",
+      "Skill(imp-plan)",
+      "Skill(playwright-cli)",
+      "Skill(pr)",
+      "Skill(sentry-cli)",
+      "Bash(gh issue create *)",
+      "Bash(gh issue list *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue comment *)",
+      "Bash(gh issue status *)",
+      "Bash(gh pr create *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr edit *)",
+      "Bash(gh pr comment *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr ready *)",
+      "Bash(gh pr reopen *)",
+      "Bash(gh pr checkout *)",
+      "Bash(gh pr status *)",
+      "Bash(gh pr update-branch *)",
+      "Bash(gh run list *)",
+      "Bash(gh run view *)",
+      "Bash(gh run watch *)",
+      "Bash(gh run download *)",
+      "Bash(gh search *)",
+      "Bash(gh status *)",
+      "Bash(gws docs documents get *)",
+      "Bash(gws sheets spreadsheets get *)",
+      "Bash(gws sheets +read *)",
+      "Bash(gws schema *)",
       "Bash(playwright-cli *)",
-      "Skill(playwright-cli)"
+      "Bash(pnpm --filter @workspace/web test*)",
+      "Bash(pnpm --filter @workspace/web e2e*)"
     ],
     "ask": [],
     "deny": ["Read(./.entire/metadata/**)"]
@@ -113,7 +128,16 @@
   "sandbox": {
     "autoAllowBashIfSandboxed": true,
     "enabled": true,
-    "excludedCommands": ["gh:*", "git commit:*"],
+    "excludedCommands": [
+      "gh:*",
+      "gws docs documents get:*",
+      "gws sheets spreadsheets get:*",
+      "gws sheets +read:*",
+      "gws schema:*",
+      "pnpm --filter @workspace/web test:*",
+      "pnpm --filter @workspace/web e2e:*",
+      "playwright-cli:*"
+    ],
     "filesystem": {
       "allowWrite": ["//tmp/pnpm/store"]
     },
@@ -308,7 +332,8 @@
         "www.json-schema.org",
         "json.schemastore.org",
         "www.schemastore.org",
-        "*.modelcontextprotocol.io"
+        "*.modelcontextprotocol.io",
+        "fonts.gstatic.com"
       ],
       "allowLocalBinding": true
     }
