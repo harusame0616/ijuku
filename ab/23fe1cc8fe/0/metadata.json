@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "ab23fe1cc8fe",
+  "session_id": "c95f1df0-8bff-4f93-b732-2fc273cb2a07",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-27T21:47:32.270804Z",
+  "branch": "test-workflow-fix",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/api-small-test.yml",
+    ".github/workflows/go-small-test.yml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-haiku-4-5-20251001",
+  "turn_id": "fdb2d4349846",
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 66262,
+    "cache_read_tokens": 271885,
+    "output_tokens": 6917,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-27T21:47:32.228644Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 55,
+    "human_removed": 0,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}
