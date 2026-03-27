@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "eebfc2da75d3",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "docs/api/受講開始.md",
+    "docs/api/認証.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ee/bfc2da75d3/0/metadata.json",
+      "transcript": "/ee/bfc2da75d3/0/full.jsonl",
+      "content_hash": "/ee/bfc2da75d3/0/content_hash.txt",
+      "prompt": "/ee/bfc2da75d3/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 40,
+    "cache_creation_tokens": 40549,
+    "cache_read_tokens": 694604,
+    "output_tokens": 11957,
+    "api_call_count": 23
+  }
+}

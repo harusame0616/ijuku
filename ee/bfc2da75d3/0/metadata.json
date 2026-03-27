@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "eebfc2da75d3",
+  "session_id": "84e33ad9-b944-492e-ae57-8b81cc889fc4",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-27T12:55:44.682479Z",
+  "branch": "main",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "docs/api/受講開始.md",
+    "docs/api/認証.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "09c10b0d77c0",
+  "token_usage": {
+    "input_tokens": 40,
+    "cache_creation_tokens": 40549,
+    "cache_read_tokens": 694604,
+    "output_tokens": 11957,
+    "api_call_count": 23
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-27T12:55:44.595922Z",
+    "agent_lines": 25,
+    "human_added": 121,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 146,
+    "agent_percentage": 17.123287671232877
+  }
+}
