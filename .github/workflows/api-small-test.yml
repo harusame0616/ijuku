@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 concurrency:
   group: api-small-test-${{ github.ref }}
   cancel-in-progress: true
