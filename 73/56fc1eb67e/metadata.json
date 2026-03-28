@@ -3,7 +3,7 @@
   "checkpoint_id": "7356fc1eb67e",
   "strategy": "manual-commit",
   "branch": "migration-check",
-  "checkpoints_count": 0,
+  "checkpoints_count": 1,
   "files_touched": [
     ".github/workflows/migration-test.yml"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/73/56fc1eb67e/0/full.jsonl",
       "content_hash": "/73/56fc1eb67e/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/73/56fc1eb67e/1/metadata.json",
+      "transcript": "/73/56fc1eb67e/1/full.jsonl",
+      "content_hash": "/73/56fc1eb67e/1/content_hash.txt",
+      "prompt": "/73/56fc1eb67e/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 0,
-    "cache_creation_tokens": 0,
-    "cache_read_tokens": 0,
-    "output_tokens": 0,
-    "api_call_count": 0
+    "input_tokens": 20,
+    "cache_creation_tokens": 21558,
+    "cache_read_tokens": 346573,
+    "output_tokens": 6788,
+    "api_call_count": 13
   }
 }

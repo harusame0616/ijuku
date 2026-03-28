@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "7356fc1eb67e",
+  "session_id": "f8b1d28a-a61f-453f-8801-9d63a2acb01b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-28T00:48:17.015076Z",
+  "branch": "migration-check",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/migration-test.yml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "f10447e60f0f",
+  "token_usage": {
+    "input_tokens": 20,
+    "cache_creation_tokens": 21558,
+    "cache_read_tokens": 346573,
+    "output_tokens": 6788,
+    "api_call_count": 13
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-28T00:48:16.933253Z",
+    "agent_lines": 55,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 2,
+    "total_committed": 55,
+    "agent_percentage": 100
+  }
+}

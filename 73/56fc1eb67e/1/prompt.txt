@@ -1,0 +1,3 @@
+DB のマイグレーションチェックをする Github Actions のワークフローを作成したいです。
+pathfilter を使って apps/api/migrations 配下のファイルが更新された場合のみ実行します。
+Postgresを立ち上げてマイグレーションを実行し、エラーがでないかチェックします job の名前は migration-test です
