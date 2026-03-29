@@ -1,0 +1,2 @@
+@apps/api/routes/courses/commands/sqrc-source.repository.go はエンティティーごとにファイルを分けて
+course.sqrc-repository.go user_topic_progress.sqrc-repository.go など
