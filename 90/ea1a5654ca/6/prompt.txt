@@ -1,0 +1,29 @@
+Go の http.Request から URL の可変パラメーターを取得する方法は？
+
+---
+
+pathvalue を使った方法で指定したパス名が存在しなかったらから文字が変える？
+
+---
+
+post の body を取得するには？
+
+---
+
+var foo struct って何？ type foo struct しかしらない
+
+---
+
+ちなみに decode で定義した型と異なる場合はエラーになるの？
+
+---
+
+ちなみに 未指定の場合に null にしたい場合は pointer にすればいいのかな
+
+---
+
+r.Body って手動で close が必要？
+
+---
+
+go の rune ってなんだっけ？

@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "90ea1a5654ca",
+  "session_id": "354dd07a-bc26-4927-8f54-6098e1bef2ea",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-29T20:04:40.059432Z",
+  "branch": "enrollment",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "apps/api/main.go"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-haiku-4-5-20251001",
+  "turn_id": "d6f340bff591",
+  "token_usage": {
+    "input_tokens": 104,
+    "cache_creation_tokens": 37525,
+    "cache_read_tokens": 339038,
+    "output_tokens": 5708,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-29T20:04:40.044307Z",
+    "agent_lines": 0,
+    "human_added": 753,
+    "human_modified": 12,
+    "human_removed": 0,
+    "total_committed": 753,
+    "agent_percentage": 0
+  }
+}
