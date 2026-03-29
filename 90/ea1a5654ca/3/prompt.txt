@@ -1,0 +1,5 @@
+course section topic という階層でデータを持っています
+course -> section は１対多
+section -> topic は１対多です
+
+SELECT する際に各小要素は配列の JSON　として 1クエリで取得したいんですがどうすればいいですか？ postgres です
