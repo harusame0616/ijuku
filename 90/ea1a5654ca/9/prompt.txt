@@ -1,0 +1,14 @@
+@apps/api/queries/courses.sql ~/ghq/github.com/harusame0616/ijuku/apps/api enrollment*
+❯ sqlc generate
+# package db
+queries/courses.sql:60:13: column reference "course_section_id" is ambiguous
+
+---
+
+Query 1 ERROR at Line 8: : ERROR:  column "categories.name" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 8:  categories.name AS category_name,
+         ^
+
+---
+
+where で courseId を受け取るように修正してください @形式で
