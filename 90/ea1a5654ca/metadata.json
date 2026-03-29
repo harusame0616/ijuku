@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "90ea1a5654ca",
+  "strategy": "manual-commit",
+  "branch": "enrollment",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000003_course_complement.down.sql",
+    "apps/api/migrations/000003_course_complement.up.sql",
+    "apps/api/queries/courses.sql",
+    "apps/api/routes/courses/commands/course.entity.go",
+    "apps/api/routes/courses/commands/enroll.handler.go",
+    "apps/api/routes/courses/commands/enroll.usecase.go",
+    "apps/api/routes/courses/commands/sqrc-source.repository.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/90/ea1a5654ca/0/metadata.json",
+      "transcript": "/90/ea1a5654ca/0/full.jsonl",
+      "content_hash": "/90/ea1a5654ca/0/content_hash.txt",
+      "prompt": "/90/ea1a5654ca/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 84,
+    "cache_creation_tokens": 158573,
+    "cache_read_tokens": 4331363,
+    "output_tokens": 28676,
+    "api_call_count": 68
+  }
+}
