@@ -1,0 +1,17 @@
+enroll できるのはコースが published か、自分が作成したコースのどちらかです。現在チェックが入っていないので enroll のロジックに含めてください
+
+---
+
+このテストは medium テストで担保するべき
+
+---
+
+could use tagged switch on status
+
+---
+
+sectionNumber と topicNumber の初期値は 0 だから default はいらない？それともそれ以外のケースは 0 と明示した方がいい？
+
+---
+
+EnrollNumber じゃなくて EnrollParams として userId も含めて
