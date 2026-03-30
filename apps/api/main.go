@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -19,9 +20,12 @@ func main() {
 	defer pool.Close()
 
 	q := db.New(pool)
-	coursesHandler := queries.NewCoursesHandlers(queries.NewSqrcCourseQueryService(q))
 
-	http.HandleFunc("/v1/courses", coursesHandler.GetCoursesHandler)
+	coursesHandler := queries.NewCoursesHandlers(queries.NewSqrcCourseQueryService(q))
+	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
+
+	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
+	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

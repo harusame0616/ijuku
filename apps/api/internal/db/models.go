@@ -8,6 +8,15 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Apikey struct {
+	KeyHash     string             `json:"key_hash"`
+	UserID      pgtype.UUID        `json:"user_id"`
+	PlainSuffix string             `json:"plain_suffix"`
+	ExpiredAt   pgtype.Timestamptz `json:"expired_at"`
+	CreatedAt   pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt   pgtype.Timestamptz `json:"_updated_at"`
+}
+
 type Author struct {
 	AuthorID  pgtype.UUID        `json:"author_id"`
 	Name      string             `json:"name"`
@@ -39,4 +48,46 @@ type Course struct {
 	Visibility string             `json:"visibility"`
 	CreatedAt  pgtype.Timestamptz `json:"_created_at"`
 	UpdatedAt  pgtype.Timestamptz `json:"_updated_at"`
+}
+
+type CourseSection struct {
+	CourseSectionID pgtype.UUID        `json:"course_section_id"`
+	CourseID        pgtype.UUID        `json:"course_id"`
+	Index           int16              `json:"index"`
+	CreatedAt       pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt       pgtype.Timestamptz `json:"_updated_at"`
+	Title           string             `json:"title"`
+	Description     string             `json:"description"`
+}
+
+type CourseSectionTopic struct {
+	CourseSectionTopicID pgtype.UUID        `json:"course_section_topic_id"`
+	CourseID             pgtype.UUID        `json:"course_id"`
+	CourseSectionID      pgtype.UUID        `json:"course_section_id"`
+	Index                int16              `json:"index"`
+	CreatedAt            pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt            pgtype.Timestamptz `json:"_updated_at"`
+	Title                string             `json:"title"`
+	Description          string             `json:"description"`
+	Prerequisites        string             `json:"prerequisites"`
+	Knowledge            string             `json:"knowledge"`
+	Flow                 string             `json:"flow"`
+	Quiz                 string             `json:"quiz"`
+	CompletionCriteria   string             `json:"completion_criteria"`
+}
+
+type User struct {
+	UserID    pgtype.UUID        `json:"user_id"`
+	Nickname  string             `json:"nickname"`
+	CreatedAt pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+}
+
+type UserTopicProgress struct {
+	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
+	UserID               pgtype.UUID `json:"user_id"`
+	// IN_PROGRESS = 開始済み, COMPLETED = 完了済み, 開始していない場合はレコード自体がないので値として持たない
+	Status    string             `json:"status"`
+	CreatedAt pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
 }

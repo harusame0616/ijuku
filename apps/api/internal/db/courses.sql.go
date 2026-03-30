@@ -11,6 +11,128 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const getCourseById = `-- name: GetCourseById :one
+SELECT
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name AS category_name,
+    courses.published_at,
+    courses.author_id,
+    authors.name AS author_name,
+    courses.visibility,
+    json_agg(
+        json_build_object(
+            'course_section_id',
+            sections.course_section_id,
+            'title',
+            sections.title,
+            'description',
+            sections.description,
+            'topics',
+            sections.topics
+        )
+        ORDER BY
+            sections."index" ASC
+    ) AS sections
+FROM
+    courses
+    JOIN categories USING (category_id)
+    JOIN authors USING (author_id)
+    JOIN (
+        SELECT
+            course_sections.course_id,
+            course_sections.course_section_id,
+            course_sections.title,
+            course_sections.description,
+            course_sections."index",
+            json_agg(
+                json_build_object(
+                    'course_section_topic_id',
+                    course_section_topic_id,
+                    'title',
+                    course_section_topics.title,
+                    'description',
+                    course_section_topics.description,
+                    'prerequisites',
+                    course_section_topics.prerequisites,
+                    'knowledge',
+                    course_section_topics.knowledge,
+                    'flow',
+                    course_section_topics.flow,
+                    'quiz',
+                    course_section_topics.quiz,
+                    'completion_criteria',
+                    course_section_topics.completion_criteria
+                )
+                ORDER BY
+                    course_section_topics."index" ASC
+            ) AS topics
+        FROM
+            course_sections
+            JOIN course_section_topics USING (course_section_id)
+        GROUP BY
+            course_sections.course_id,
+            course_sections.course_section_id
+    ) AS sections USING (course_id)
+WHERE
+    courses.course_id = $1 :: uuid
+GROUP BY
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name,
+    courses.published_at,
+    courses.author_id,
+    authors.name,
+    courses.visibility
+`
+
+type GetCourseByIdRow struct {
+	CourseID      pgtype.UUID        `json:"course_id"`
+	Title         string             `json:"title"`
+	Description   string             `json:"description"`
+	Slug          string             `json:"slug"`
+	Tags          []byte             `json:"tags"`
+	PublishStatus string             `json:"publish_status"`
+	CategoryID    pgtype.UUID        `json:"category_id"`
+	CategoryName  string             `json:"category_name"`
+	PublishedAt   pgtype.Timestamptz `json:"published_at"`
+	AuthorID      pgtype.UUID        `json:"author_id"`
+	AuthorName    string             `json:"author_name"`
+	Visibility    string             `json:"visibility"`
+	Sections      []byte             `json:"sections"`
+}
+
+func (q *Queries) GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error) {
+	row := q.db.QueryRow(ctx, getCourseById, courseid)
+	var i GetCourseByIdRow
+	err := row.Scan(
+		&i.CourseID,
+		&i.Title,
+		&i.Description,
+		&i.Slug,
+		&i.Tags,
+		&i.PublishStatus,
+		&i.CategoryID,
+		&i.CategoryName,
+		&i.PublishedAt,
+		&i.AuthorID,
+		&i.AuthorName,
+		&i.Visibility,
+		&i.Sections,
+	)
+	return i, err
+}
+
 const getCourses = `-- name: GetCourses :many
 SELECT
     course_id,
@@ -66,4 +188,92 @@ func (q *Queries) GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCo
 		return nil, err
 	}
 	return items, nil
+}
+
+const getProgressByUserIdAndCourseId = `-- name: GetProgressByUserIdAndCourseId :many
+SELECT
+    utp.course_section_topic_id,
+    utp.user_id,
+    utp.status,
+    cs."index" AS section_index,
+    cst."index" AS topic_index
+FROM
+    user_topic_progresses utp
+    JOIN course_section_topics cst ON utp.course_section_topic_id = cst.course_section_topic_id
+    JOIN course_sections cs ON cst.course_section_id = cs.course_section_id
+WHERE
+    utp.user_id = $1 :: uuid
+    AND cst.course_id = $2 :: uuid
+`
+
+type GetProgressByUserIdAndCourseIdParams struct {
+	Userid   pgtype.UUID `json:"userid"`
+	Courseid pgtype.UUID `json:"courseid"`
+}
+
+type GetProgressByUserIdAndCourseIdRow struct {
+	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
+	UserID               pgtype.UUID `json:"user_id"`
+	Status               string      `json:"status"`
+	SectionIndex         int16       `json:"section_index"`
+	TopicIndex           int16       `json:"topic_index"`
+}
+
+func (q *Queries) GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error) {
+	rows, err := q.db.Query(ctx, getProgressByUserIdAndCourseId, arg.Userid, arg.Courseid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetProgressByUserIdAndCourseIdRow{}
+	for rows.Next() {
+		var i GetProgressByUserIdAndCourseIdRow
+		if err := rows.Scan(
+			&i.CourseSectionTopicID,
+			&i.UserID,
+			&i.Status,
+			&i.SectionIndex,
+			&i.TopicIndex,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const upsertProgress = `-- name: UpsertProgress :exec
+INSERT INTO
+    user_topic_progresses (
+        course_section_topic_id,
+        user_id,
+        status
+    )
+VALUES
+    (
+        $1 :: uuid,
+        $2 :: uuid,
+        $3
+    )
+ON CONFLICT (course_section_topic_id, user_id)
+DO UPDATE SET
+    status = EXCLUDED.status
+`
+
+type UpsertProgressParams struct {
+	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
+	Userid               pgtype.UUID `json:"userid"`
+	Status               string      `json:"status"`
+}
+
+func (q *Queries) UpsertProgress(ctx context.Context, arg UpsertProgressParams) error {
+	_, err := q.db.Exec(ctx, upsertProgress,
+		arg.Coursesectiontopicid,
+		arg.Userid,
+		arg.Status,
+	)
+	return err
 }

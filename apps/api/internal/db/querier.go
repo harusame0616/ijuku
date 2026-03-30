@@ -6,10 +6,15 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
+	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
+	GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error)
+	UpsertProgress(ctx context.Context, arg UpsertProgressParams) error
 }
 
 var _ Querier = (*Queries)(nil)
