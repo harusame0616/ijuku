@@ -9,23 +9,27 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type SqrcSourceRepository struct {
+type SqrcCourseRepository struct {
 	sqrc db.Querier
 }
 
-func (repository *SqrcSourceRepository) getCourseByCourseId(ctx context.Context, courseId string) Course {
+func NewSqrcCourseRepository(q db.Querier) *SqrcCourseRepository {
+	return &SqrcCourseRepository{sqrc: q}
+}
+
+func (repository *SqrcCourseRepository) getCourseByCourseId(ctx context.Context, courseId string) (Course, error) {
 	var courseIdUuid pgtype.UUID
 
 	if err := courseIdUuid.Scan(courseId); err != nil {
-		return Course{}
+		return Course{}, err
 	}
 
 	courseRaw, err := repository.sqrc.GetCourseById(ctx, courseIdUuid)
 	if err != nil {
-		return Course{}
+		return Course{}, err
 	}
 
-	return toCourse(courseRaw)
+	return toCourse(courseRaw), nil
 }
 
 func toCourse(raw db.GetCourseByIdRow) Course {
@@ -65,12 +69,14 @@ func toCourse(raw db.GetCourseByIdRow) Course {
 				flow:               t.Flow,
 				quiz:               t.Quiz,
 				completionCriteria: t.CompletionCriteria,
+				number:             j,
 			}
 		}
 		sections[i] = Section{
 			sectionId:   s.CourseSectionId,
 			title:       s.Title,
 			description: s.Description,
+			number:      i,
 			topics:      topics,
 		}
 	}

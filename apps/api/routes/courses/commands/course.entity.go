@@ -21,7 +21,7 @@ type Section struct {
 	sectionId   string
 	title       string
 	description string
-	number int
+	number      int
 	topics      []Topic
 }
 
@@ -49,140 +49,138 @@ type Course struct {
 	sections      []Section
 }
 
-type EnrollNumber struct {
-	SectionNumber *int
-	TopicNumber *int
+type ProgressPosition struct {
+	sectionNumber int
+	topicNumber   int
+	status        string
 }
 
 type ProgressRecord struct {
-	courseSectionId string
 	courseSectionTopicId string
-	sectionNumber int
-	topicNumber int
-	status string
-	startedAt string
-	completedAt *string
+	sectionNumber        int
+	topicNumber          int
+	status               string
+	startedAt            string
+	completedAt          *string
 }
 
 type Progress struct {
 	courseId string
-	records []ProgressRecord
+	userId   string
+	records  []ProgressRecord
 }
 
-
-
-func (p *Progress) lastTopic() (status string, sectionNumber int, topicNumber int) {
-	var maxRecord ProgressRecord = ProgressRecord{ "", "", 0, 0, "not started", "", nil };
+func (p *Progress) lastTopicPosition() ProgressPosition {
+	pos := ProgressPosition{sectionNumber: -1, topicNumber: -1, status: "NOT_STARTED"}
 
 	for _, record := range p.records {
-		if record.sectionNumber > maxRecord.sectionNumber || (record.sectionNumber == maxRecord.sectionNumber && record.topicNumber > maxRecord.topicNumber) {
-			maxRecord = record
+		if record.sectionNumber > pos.sectionNumber || (record.sectionNumber == pos.sectionNumber && record.topicNumber > pos.topicNumber) {
+			pos = ProgressPosition{sectionNumber: record.sectionNumber, topicNumber: record.topicNumber, status: record.status}
 		}
 	}
 
-	return maxRecord.status, maxRecord.sectionNumber, maxRecord.topicNumber
+	return pos
 }
 
-func (p *Progress) start(section Section, topic Topic) {
+func (p *Progress) start(section Section, topic Topic) string {
 	for _, record := range p.records {
-		// 開始済み、完了済みの場合は何もしない
-		if record.courseSectionTopicId == topic.topicId && record.courseSectionId == section.sectionId {
-			return;
+		if record.courseSectionTopicId == topic.topicId {
+			return topic.topicId
 		}
 	}
-
 
 	p.records = append(p.records, ProgressRecord{
-		courseSectionId: section.sectionId,
 		courseSectionTopicId: topic.topicId,
-		sectionNumber: section.number,
-		topicNumber: topic.number,
-		status: "started",
-		startedAt: time.Now().Format(time.RFC3339),
-		completedAt: nil,
+		sectionNumber:        section.number,
+		topicNumber:          topic.number,
+		status:               "IN_PROGRESS",
+		startedAt:            time.Now().Format(time.RFC3339),
+		completedAt:          nil,
 	})
+	return topic.topicId
 }
 
+var ErrEnrollmentNumberIsNotFound = errors.New("enrollment number is not found")
+var ErrEnrollmentNotAllowed = errors.New("enrollment not allowed")
+var ErrTopicNumberRequireSectionNumber = errors.New("topic number require section number")
 
+func (course *Course) checkEnrollable(userId string) error {
+	if course.publishStatus != "published" && course.author.authorId != userId {
+		return ErrEnrollmentNotAllowed
+	}
+	return nil
+}
 
-var ErrEnrollmentNumberIsNotFound = errors.New("enrollment number is not found");
+func (course *Course) findTopicToStart(sectionNumber *int, topicNumber *int, lastPosition ProgressPosition) (Section, Topic, error) {
+	if sectionNumber == nil && topicNumber != nil {
+		return Section{}, Topic{}, ErrTopicNumberRequireSectionNumber
+	}
 
-func (course *Course)enroll(enrollNumber EnrollNumber, progress *Progress) (error){
-	sectionNumber := 0
-	topicNumber := 0
+	var secNum, topNum int
 
-	if enrollNumber.SectionNumber != nil {
-		sectionNumber = *enrollNumber.SectionNumber;
-
-		if enrollNumber.TopicNumber == nil {
-			topicNumber = 0;
-		} else {
-			topicNumber = *enrollNumber.TopicNumber;
+	if sectionNumber != nil {
+		secNum = *sectionNumber
+		if topicNumber != nil {
+			topNum = *topicNumber
 		}
-
-	} else if enrollNumber.SectionNumber == nil && enrollNumber.TopicNumber == nil {
-		status, lastSectionNumber, lastTopicNumber := progress.lastTopic();
-		if status== "completed" {
-			nextPosition, err := course.nextTopic(TopicPosition{sectionNumber: lastSectionNumber, topicNumber: lastTopicNumber})
-
+	} else {
+		switch lastPosition.status {
+		case "COMPLETED":
+			nextPosition, err := course.nextTopic(TopicPosition{sectionNumber: lastPosition.sectionNumber, topicNumber: lastPosition.topicNumber})
 			if err != nil {
-				return  ErrEnrollmentNumberIsNotFound
+				return Section{}, Topic{}, ErrEnrollmentNumberIsNotFound
 			}
-			sectionNumber, topicNumber = nextPosition.sectionNumber, nextPosition.topicNumber
-		} else if status == "started" {
-			sectionNumber = lastSectionNumber
-			topicNumber =  lastTopicNumber
-		} else {
-			sectionNumber = 1
-			topicNumber = 1
+			secNum, topNum = nextPosition.sectionNumber, nextPosition.topicNumber
+		case "IN_PROGRESS":
+			secNum = lastPosition.sectionNumber
+			topNum = lastPosition.topicNumber
+		default:
+			secNum = 0
+			topNum = 0
 		}
 	}
 
-	section, topic, err := course.getTopic(sectionNumber, topicNumber)
+	section, topic, err := course.getTopic(secNum, topNum)
 	if err != nil {
-		return  ErrEnrollmentNumberIsNotFound;
+		return Section{}, Topic{}, ErrEnrollmentNumberIsNotFound
 	}
-
-	progress.start(section, topic)
-
-	return nil;
+	return section, topic, nil
 }
 
 type TopicPosition struct {
 	sectionNumber int
-	topicNumber int
+	topicNumber   int
 }
 
 var ErrTopicPositionOutOfRange = errors.New("topic position is out of range")
 
 func (course *Course) getTopic(sectionNumber int, topicNumber int) (Section, Topic, error) {
-	if sectionNumber < 1 || sectionNumber > len(course.sections) {
+	if sectionNumber < 0 || sectionNumber >= len(course.sections) {
 		return Section{}, Topic{}, ErrTopicPositionOutOfRange
 	}
-	section := course.sections[sectionNumber-1]
-	if topicNumber < 1 || topicNumber > len(section.topics) {
+	section := course.sections[sectionNumber]
+	if topicNumber < 0 || topicNumber >= len(section.topics) {
 		return Section{}, Topic{}, ErrTopicPositionOutOfRange
 	}
-	return section, section.topics[topicNumber-1], nil
+	return section, section.topics[topicNumber], nil
 }
 
 func (course *Course) nextTopic(currentTopicPosition TopicPosition) (topicPosition TopicPosition, err error) {
-	if currentTopicPosition.sectionNumber >= len(course.sections) || currentTopicPosition.sectionNumber < 0 {
+	if currentTopicPosition.sectionNumber < 0 || currentTopicPosition.sectionNumber >= len(course.sections) {
 		return TopicPosition{}, ErrTopicPositionOutOfRange
 	}
 
-	if currentTopicPosition.topicNumber >= len(course.sections[currentTopicPosition.sectionNumber].topics) || currentTopicPosition.topicNumber < 0 {
+	section := course.sections[currentTopicPosition.sectionNumber]
+	if currentTopicPosition.topicNumber < 0 || currentTopicPosition.topicNumber >= len(section.topics) {
 		return TopicPosition{}, ErrTopicPositionOutOfRange
 	}
 
-	if currentTopicPosition.topicNumber == len(course.sections[currentTopicPosition.sectionNumber].topics) {
-		if currentTopicPosition.sectionNumber == len(course.sections) {
-			return TopicPosition{sectionNumber: 1, topicNumber: 1}, nil
+	if currentTopicPosition.topicNumber == len(section.topics)-1 {
+		if currentTopicPosition.sectionNumber == len(course.sections)-1 {
+			return TopicPosition{}, ErrTopicPositionOutOfRange
 		}
-
-		return TopicPosition{sectionNumber: currentTopicPosition.sectionNumber + 1, topicNumber: 1}, nil
+		return TopicPosition{sectionNumber: currentTopicPosition.sectionNumber + 1, topicNumber: 0}, nil
 	}
 
 	return TopicPosition{sectionNumber: currentTopicPosition.sectionNumber, topicNumber: currentTopicPosition.topicNumber + 1}, nil
-
 }

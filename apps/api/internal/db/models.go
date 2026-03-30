@@ -84,8 +84,6 @@ type User struct {
 }
 
 type UserTopicProgress struct {
-	CourseID             pgtype.UUID `json:"course_id"`
-	CourseSectionID      pgtype.UUID `json:"course_section_id"`
 	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
 	UserID               pgtype.UUID `json:"user_id"`
 	// IN_PROGRESS = 開始済み, COMPLETED = 完了済み, 開始していない場合はレコード自体がないので値として持たない

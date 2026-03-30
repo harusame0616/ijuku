@@ -189,3 +189,91 @@ func (q *Queries) GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCo
 	}
 	return items, nil
 }
+
+const getProgressByUserIdAndCourseId = `-- name: GetProgressByUserIdAndCourseId :many
+SELECT
+    utp.course_section_topic_id,
+    utp.user_id,
+    utp.status,
+    cs."index" AS section_index,
+    cst."index" AS topic_index
+FROM
+    user_topic_progresses utp
+    JOIN course_section_topics cst ON utp.course_section_topic_id = cst.course_section_topic_id
+    JOIN course_sections cs ON cst.course_section_id = cs.course_section_id
+WHERE
+    utp.user_id = $1 :: uuid
+    AND cst.course_id = $2 :: uuid
+`
+
+type GetProgressByUserIdAndCourseIdParams struct {
+	Userid   pgtype.UUID `json:"userid"`
+	Courseid pgtype.UUID `json:"courseid"`
+}
+
+type GetProgressByUserIdAndCourseIdRow struct {
+	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
+	UserID               pgtype.UUID `json:"user_id"`
+	Status               string      `json:"status"`
+	SectionIndex         int16       `json:"section_index"`
+	TopicIndex           int16       `json:"topic_index"`
+}
+
+func (q *Queries) GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error) {
+	rows, err := q.db.Query(ctx, getProgressByUserIdAndCourseId, arg.Userid, arg.Courseid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetProgressByUserIdAndCourseIdRow{}
+	for rows.Next() {
+		var i GetProgressByUserIdAndCourseIdRow
+		if err := rows.Scan(
+			&i.CourseSectionTopicID,
+			&i.UserID,
+			&i.Status,
+			&i.SectionIndex,
+			&i.TopicIndex,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const upsertProgress = `-- name: UpsertProgress :exec
+INSERT INTO
+    user_topic_progresses (
+        course_section_topic_id,
+        user_id,
+        status
+    )
+VALUES
+    (
+        $1 :: uuid,
+        $2 :: uuid,
+        $3
+    )
+ON CONFLICT (course_section_topic_id, user_id)
+DO UPDATE SET
+    status = EXCLUDED.status
+`
+
+type UpsertProgressParams struct {
+	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
+	Userid               pgtype.UUID `json:"userid"`
+	Status               string      `json:"status"`
+}
+
+func (q *Queries) UpsertProgress(ctx context.Context, arg UpsertProgressParams) error {
+	_, err := q.db.Exec(ctx, upsertProgress,
+		arg.Coursesectiontopicid,
+		arg.Userid,
+		arg.Status,
+	)
+	return err
+}

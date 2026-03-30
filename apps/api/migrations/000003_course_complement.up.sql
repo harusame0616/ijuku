@@ -88,15 +88,14 @@ ALTER TABLE
 ALTER COLUMN
     completion_criteria DROP DEFAULT;
 
-CREATE TABLE progress_topics (
-    progress_topic_id UUID,
-    course_id UUID NOT NULL,
-    course_section_topic_id UUID NOT NULL,
-    user_id UUID NOT NULL,
-    status TEXT NOT NULL,
-    _created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    _updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT pk_progress_topics PRIMARY KEY (progress_topic_id),
-    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-    CONSTRAINT fk_course_id FOREIGN KEY (course_id) REFERENCES courses(course_id),
-)
+ALTER TABLE user_topic_progresses DROP CONSTRAINT fk_course_id;
+
+ALTER TABLE user_topic_progresses DROP CONSTRAINT fk_course_section_id;
+
+DROP INDEX idx_user_topic_progresses_course_id;
+
+DROP INDEX idx_user_topic_progresses_course_section_id;
+
+ALTER TABLE user_topic_progresses DROP COLUMN course_id;
+
+ALTER TABLE user_topic_progresses DROP COLUMN course_section_id;

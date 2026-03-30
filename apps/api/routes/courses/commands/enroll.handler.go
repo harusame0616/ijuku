@@ -2,17 +2,24 @@ package commands
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"regexp"
 
 	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 )
 
-type handler struct {
-	usecase EnrollCourseUsecase
+var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
+
+type Handler struct {
+	usecase EnrollCourseUsecaseInterface
 }
 
-func (h *handler)PostEnrollmentHandler(w http.ResponseWriter, r *http.Request){
+func NewHandler(usecase EnrollCourseUsecaseInterface) *Handler {
+	return &Handler{usecase: usecase}
+}
+
+func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	courseId := r.PathValue("courseId")
 
@@ -22,39 +29,70 @@ func (h *handler)PostEnrollmentHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
 	if !uuidRegex.MatchString(courseId) {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "courseId must be UUID format"})
 		return
 	}
 
-
+	// TODO: 本来は API キーから userId を解決するべきだが、認証機能未実装のため暫定的に body から取得している
 	var enrollmentBodyParams struct {
-		SectionNumber *int `json:"sectionNumber"`
-		TopicNumber *int `json:"topicNumber"`
+		UserId        string `json:"userId"`
+		SectionNumber *int   `json:"sectionNumber"`
+		TopicNumber   *int   `json:"topicNumber"`
 	}
 
 	defer r.Body.Close()
-	if  err:=json.NewDecoder(r.Body).Decode(&enrollmentBodyParams); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&enrollmentBodyParams); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "body parameter is invalid json format"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "body parameter is invalid json format"})
 		return
 	}
 
-
-	err := h.usecase.execute(EnrollCourseUsecaseParams{
-		courseId: courseId,
-		sectionNumber: enrollmentBodyParams.SectionNumber,
-		topicNumber: enrollmentBodyParams.TopicNumber,
-	})
-
-
-	if err == ErrTopicNumberRequireSectionNumber {
-		w.WriteHeader(http.StatusBadRequest);
-		json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topic number require section number"})
-		return;
+	if enrollmentBodyParams.UserId == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be required"})
+		return
 	}
 
+	if !uuidRegex.MatchString(enrollmentBodyParams.UserId) {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be UUID format"})
+		return
+	}
 
+	topicId, err := h.usecase.execute(r.Context(), EnrollCourseUsecaseParams{
+		userId:        enrollmentBodyParams.UserId,
+		courseId:      courseId,
+		sectionNumber: enrollmentBodyParams.SectionNumber,
+		topicNumber:   enrollmentBodyParams.TopicNumber,
+	})
+
+	if err == ErrTopicNumberRequireSectionNumber {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topic number require section number"})
+		return
+	}
+
+	if err == ErrEnrollmentNumberIsNotFound {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "enrollment number is not found"})
+		return
+	}
+
+	if err == ErrEnrollmentNotAllowed {
+		w.WriteHeader(http.StatusForbidden)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": "FORBIDDEN", "message": "enrollment not allowed"})
+		return
+	}
+
+	if err != nil {
+		log.Printf("PostEnrollmentHandler error: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": "INTERNAL_SERVER_ERROR", "message": "internal server error"})
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	_ = json.NewEncoder(w).Encode(map[string]string{"topicId": topicId})
 }
