@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "22f5a007f079",
+  "session_id": "cf50b16b-d9bf-466a-93c7-823780cb9352",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-30T16:33:49.536079Z",
+  "branch": "13-api-medium-test-github-action",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/api/README.md",
+    ".github/workflows/api-medium-test.yml",
+    "Makefile",
+    "apps/api/Makefile"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "6b795b844457",
+  "checkpoint_transcript_start": 76,
+  "transcript_lines_at_start": 76,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-30T16:33:49.523989Z",
+    "agent_lines": 95,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 95,
+    "agent_percentage": 100
+  }
+}
