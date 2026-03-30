@@ -1,0 +1,20 @@
+/Library/Developer/CommandLineTools/usr/bin/make -C apps/api test-all
+go test -coverpkg=./... -coverprofile=coverage.out ./...
+        github.com/harusame0616/ijuku/apps/api          coverage: 0.0% of statements
+        github.com/harusame0616/ijuku/apps/api/internal/db              coverage: 0.0% of statements
+--- FAIL: TestUuidSmallTest (0.00s)
+    --- FAIL: TestUuidSmallTest/空文字の場合、_false_を返す (0.00s)
+        uuid.server.small_test.go:20: 戻り値が false であること: got true
+    --- FAIL: TestUuidSmallTest/不正な_UUID_文字列の場合、_false_を返す (0.00s)
+        uuid.server.small_test.go:29: 戻り値が false であること: got true
+FAIL
+coverage: 0.4% of statements in ./...
+FAIL    github.com/harusame0616/ijuku/apps/api/lib/uuid 0.441s
+?       github.com/harusame0616/ijuku/apps/api/lib/validation   [no test files]
+ok      github.com/harusame0616/ijuku/apps/api/routes/courses/commands  1.107s  coverage: 65.1% of statements in ./...
+ok      github.com/harusame0616/ijuku/apps/api/routes/courses/queries   0.764s  coverage: 19.0% of statements in ./...
+FAIL
+make[1]: *** [test-all] Error 1
+make: *** [api-test-all] Error 2
+
+~/ghq/github.com/harusame0616/ijuku-ws1 uuid-validator*
