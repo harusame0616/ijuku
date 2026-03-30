@@ -5,6 +5,7 @@
   "branch": "enrollment",
   "checkpoints_count": 3,
   "files_touched": [
+    "apps/api/go.mod",
     "apps/api/internal/db/courses.sql.go",
     "apps/api/internal/db/models.go",
     "apps/api/internal/db/querier.go",
@@ -14,6 +15,7 @@
     "apps/api/routes/courses/commands/course.entity.go",
     "apps/api/routes/courses/commands/course.sqrc-repository.go",
     "apps/api/routes/courses/commands/enroll.handler.go",
+    "apps/api/routes/courses/commands/enroll.handler.medium.server_test.go",
     "apps/api/routes/courses/commands/enroll.handler.small.server_test.go",
     "apps/api/routes/courses/commands/enroll.usecase.go",
     "apps/api/routes/courses/commands/sqrc-source.repository.go",
@@ -31,13 +33,19 @@
       "transcript": "/43/002992beb6/1/full.jsonl",
       "content_hash": "/43/002992beb6/1/content_hash.txt",
       "prompt": "/43/002992beb6/1/prompt.txt"
+    },
+    {
+      "metadata": "/43/002992beb6/2/metadata.json",
+      "transcript": "/43/002992beb6/2/full.jsonl",
+      "content_hash": "/43/002992beb6/2/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 90,
-    "cache_creation_tokens": 162743,
-    "cache_read_tokens": 4362467,
-    "output_tokens": 29561,
-    "api_call_count": 70
+    "input_tokens": 98,
+    "cache_creation_tokens": 181649,
+    "cache_read_tokens": 4503944,
+    "output_tokens": 31359,
+    "api_call_count": 77
   }
 }
