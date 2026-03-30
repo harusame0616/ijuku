@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "0efb8475c180",
+  "session_id": "cf50b16b-d9bf-466a-93c7-823780cb9352",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-30T16:06:47.998146Z",
+  "branch": "air",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/Makefile"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "6b795b844457",
+  "checkpoint_transcript_start": 9,
+  "transcript_lines_at_start": 9,
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 22192,
+    "cache_read_tokens": 184856,
+    "output_tokens": 3284,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-30T16:06:47.985536Z",
+    "agent_lines": 1,
+    "human_added": 1861,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1862,
+    "agent_percentage": 0.05370569280343716
+  }
+}
