@@ -1,0 +1,118 @@
+NewSqrcSourceRepository redeclared in this block (see details)compilerDuplicateDecl
+sqrc-source.repository.go(17, 6):
+
+---
+
+SqrcSourceRepository は user_topi_progress ように UserTopicProgressRepository と CourseRepository で分けて
+
+---
+
+vscode で langu server を再起動しても直らないけどキャッシュってどうやってクリアするの
+
+---
+
+ファイルが分かれていてもパッケージが同じだと同じ関数名は定義できない？
+
+---
+
+nullif てなんだっけ？
+
+---
+
+keyword = '' とは何が違うの？
+
+---
+
+~/ghq/github.com/harusame0616/ijuku enrollment*
+❯ curl http://localhost:8080/v1/courses
+{"courses":[],"cursor":null}
+
+---
+
+019d3638-9e74-7c5a-b820-8b19d6ef3481    Vue 初心者講座    Vue 初心者向けの講座です。    vue-beginner    "[""vue""]"    publish    019d3633-dc86-7df3-9102-11ce4abbd481    2026-03-28 20:52:53.490979+00    019d3634-a2de-7ccc-add9-1b94d34d6374    public    2026-03-28 20:52:53.490979+00    2026-03-28 20:52:53.490979+00
+019d3638-9e74-7c5a-b820-8b19d6ef3487    React 初心者講座    React 初心者向けの講座です。    react-beginner    "[""react""]"    publish    019d3633-7357-7449-9975-ab946db8c449    2026-03-28 20:52:53.490979+00    019d3634-a2de-7ccc-add9-1b94d34d6374    public    2026-03-28 20:52:53.490979+00    2026-03-28 20:52:53.490979+00
+
+---
+
+ここって post で受けるようになっている？
+
+---
+
+curl で　enrollment のテストをしたいんだけどコマンド考えて
+
+---
+
+~/ghq/github.com/harusame0616/ijuku enrollment*
+❯   curl -X POST http://localhost:8080/v1/courses/019d3638-9e74-7c5a-b820-8b19d6ef3481/enrollment \
+    -H "Content-Type: application/json" \
+    -d '{"userId": "019d3633-dc86-7df3-9102-11ce4abbd481"}'
+
+---
+
+~/ghq/github.com/harusame0616/ijuku enrollment*
+❯   curl -X POST http://localhost:8080/v1/courses/019d3638-9e74-7c5a-b820-8b19d6ef3481/enrollment \
+    -H "Content-Type: application/json" \
+    -d '{"userId": "019d3633-dc86-7df3-9102-11ce4abbd481"}'
+
+{"code":"INTERNAL_SERVER_ERROR","message":"internal server error"}
+
+---
+
+2026/03/30 05:39:05 Server starting on :8080
+2026/03/30 05:41:12 PostEnrollmentHandler error: ERROR: insert or update on table "user_topic_progresses" violates foreign key constraint "fk_user_id" (SQLSTATE 23503)
+
+---
+
+019d319f-4ca1-7ae1-aa39-4107cc9ded4e
+
+---
+
+レスポンスには受講を開始した topicId を含めてほしい
+
+---
+
+❯ curl -X POST http://localhost:8080/v1/courses/019d3638-9e74-7c5a-b820-8b19d6ef3481/enrollment -H "Content-Type: application/json" -d '{"userId": "019d319f-4ca1-7ae1-aa39-4107cc9ded4e", "sectionNumber": 1}'
+{"code":"INPUT_VALIDATION_ERROR","message":"enrollment number is not found"}
+
+---
+
+0 オリジンで揃えて
+
+---
+
+❯ curl -X POST http://localhost:8080/v1/courses/019d3638-9e74-7c5a-b820-8b19d6ef3481/enrollment -H "Content-Type: application/json" -d '{"userId": "019d319f-4ca1-7ae1-aa39-4107cc9ded4e", "sectionNumber": 0}'
+{"code":"INPUT_VALIDATION_ERROR","message":"enrollment number is not found"}
+
+---
+
+strings.newReader って何？
+
+---
+
+ここは medium テストで担保した方がいい
+
+---
+
+medium テストで担保されているの？
+
+---
+
+作成して
+
+---
+
+以下の観点で整理してテストを作成して
+
+受講のロジックが全然テストが足りない。また db の中身が(progress) 正しいかも確認が必要
+  - section number を指定するとその section number の topic number 1 を開始できる
+  - すでに inprogres になっていても section number を指定するとその section number の topic number 1 を開始できる
+  - すでに completed になっていても section number を指定するとその section number の topic number 1 を開始できる（ステータスは変わらない）
+  - section number と topic number を指定するとその topic を開始できる
+  - すでに inpgoress になっていても
+  - すでに compoted になっていても（ステータスは変わらない
+
+  
+  - 全く受講が開始されていないコースで section number と topic number を省略すると 1-1 から開始できる
+  - すでに受講が始まっているコースで一番大きい値の section number / topic number が完了済みの場合、次のトピックから開始できる（セクションの最後じゃない場合
+  - すでに受講が始まっているコースで一番大きい値の section number / topic number が完了済みの場合、次のセクションのトピック1から開始できる（セクションが最後の場合
+  - すでに受講が始まっているコースで一番大きい値の section number / topic number が開始済みみの場合、そのトピックを開始できる
