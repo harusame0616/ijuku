@@ -1,4 +1,4 @@
-name: API Medium テスト
+name: API テスト
 
 on:
   pull_request:
@@ -8,11 +8,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: api-medium-test-${{ github.ref }}
+  group: api-test-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  api-medium-test:
+  api-test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
@@ -64,8 +64,14 @@ jobs:
           DATABASE_URL: postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
         run: make migrate-up
 
-      - name: Medium テストの実行
+      - name: テストの実行
         if: steps.filter.outputs.target == 'true'
         run: |
           go mod download
-          go test -run Medium ./...
+          make test-all
+
+      - name: カバレッジのチェック
+        if: steps.filter.outputs.target == 'true'
+        # make check-coverage はテストも内部で実行するため、前ステップと二重実行になるのを避け直接コマンドを使用
+        run: |
+          go tool cover -func=coverage.out | tail -1 | awk '{gsub(/%/,"",$3); if ($3+0 < 80) {print "NG: " $3 "% < 80%"; exit 1} else {print "OK: " $3 "%"}}'
