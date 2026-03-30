@@ -1,0 +1,127 @@
+GO で API を開発中です。コードが修正されたら自動で再起動するには AIR を導入するのが一般的ですか？ GO 標準の仕組みはありますか
+
+---
+
+お願い
+
+---
+
+ちなみに air は tool にインストールするよりユーザー環境にインストールスノが一般的？
+
+---
+
+プロジェクトにインストールして
+
+---
+
+go get って tool にインストイールするコマンドってなかったっけ？
+
+---
+
+go get tidy だと勝手に消されちゃわない？ TOOL ようにパッケージをインストールするオプションがあったと思うんだけど
+
+---
+
+ツールにインストールしたツールはどうやって実行するの？
+
+---
+
+❯ go tool air
+go: no such tool "air"
+
+---
+
+go get --tool について教えて。これはこの時点でモジュール内に保存されるわけじゃなく、インストールコマンドを実行した時にそのバージョンが保存されるだけなの？
+
+---
+
+本当？調べて
+
+---
+
+❯   go mod tidy
+  go tool air
+
+go: finding module for package github.com/cosmtrek/air
+go: found github.com/cosmtrek/air in github.com/cosmtrek/air v1.64.5
+go: github.com/harusame0616/ijuku/apps/api imports
+        github.com/cosmtrek/air: github.com/cosmtrek/air@v1.64.5: parsing go.mod:
+        module declares its path as: github.com/air-verse/air
+                but was required as: github.com/cosmtrek/air
+go: no such tool "air"
+
+---
+
+air って毎回ビルドするみたいだけどビルドせず go run main.go す流のではダメなの？ビルドさせた方がいい理由は？
+
+---
+
+go run main.go は毎回コンパイルするの？
+
+---
+
+make ファイルを作成して dev とかで起動できるようにしたい
+
+---
+
+~/ghq/github.com/harusame0616/ijuku/apps/api enrollment
+❯ make dev
+make: *** No rule to make target `dev'.  Stop.
+
+---
+
+~/ghq/github.com/harusame0616/ijuku/apps/api enrollment
+❯ make dev
+make: *** No rule to make target `dev'.  Stop.
+
+---
+
+make dev は air を起動するようにして
+
+---
+
+go tool air
+
+---
+
+ちなみにものレポなのでルートで makefile 作成して一括で操作できるようにした方がいいかな？それともapps/api に作成してそのコマンドをルートの makefile で実行するような感じがいいのかな。web は nextjs なのでコマンド実行は makefile じゃなくて package.json の npm script になる想定
+
+---
+
+はい
+
+---
+
+ちなみに cd apps/api && make dev ってしたら待機しちゃって他のコマンド実行できないよね（例えば apps/web が出てきてwebサーバーも立ち上げたい場合
+
+---
+
+make dev:api
+
+---
+
+.PHONY って何？
+
+---
+
+make dev:api みたいな感じにしたいんだけどできない？
+
+---
+
+@echo って何？
+
+---
+
+他に @ ってある？
+
+---
+
+パス移動せずに実行する方法はある？
+
+---
+
+❯ make dev-api
+C apps/api & make dev
+/bin/sh: C: command not found
+make[1]: *** No rule to make target `dev'.  Stop.
+make: [dev-api] Error 2 (ignored)

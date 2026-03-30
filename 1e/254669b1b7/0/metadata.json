@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1e254669b1b7",
+  "session_id": "76dd0c93-c82e-4a8a-b4b3-dc172e090a5e",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-30T15:45:05.902552Z",
+  "branch": "air",
+  "checkpoints_count": 17,
+  "files_touched": [
+    "CLAUDE.md",
+    "Makefile",
+    "apps/api/.air.toml",
+    "apps/api/Makefile",
+    "apps/api/go.mod",
+    "apps/api/go.sum"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "a0d8cfe02aba",
+  "token_usage": {
+    "input_tokens": 783,
+    "cache_creation_tokens": 127961,
+    "cache_read_tokens": 1973991,
+    "output_tokens": 18141,
+    "api_call_count": 46
+  },
+  "session_metrics": {
+    "turn_count": 25
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-30T15:45:05.82749Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 101,
+    "human_removed": 120,
+    "total_committed": 43,
+    "agent_percentage": 0
+  }
+}
