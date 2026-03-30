@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"regexp"
 
+	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
 	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 )
-
-var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
 
 type Handlers struct {
 	query CourseQueryService
@@ -27,7 +25,7 @@ func parseGetCoursesQuery(r *http.Request) (keyword, cursor string, err error) {
 	if len([]rune(keyword)) > 40 {
 		return "", "", fmt.Errorf("keyword must be 40 characters or less")
 	}
-	if cursor != "" && !uuidRegex.MatchString(cursor) {
+	if cursor != "" && !uuid.IsValidUuid(cursor) {
 		return "", "", fmt.Errorf("invalid cursor")
 	}
 

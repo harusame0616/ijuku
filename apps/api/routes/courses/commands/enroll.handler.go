@@ -4,12 +4,10 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"regexp"
 
+	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
 	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 )
-
-var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
 
 type Handler struct {
 	usecase EnrollCourseUsecaseInterface
@@ -29,7 +27,7 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if !uuidRegex.MatchString(courseId) {
+	if !uuid.IsValidUuid(courseId) {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "courseId must be UUID format"})
 		return
@@ -55,7 +53,7 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if !uuidRegex.MatchString(enrollmentBodyParams.UserId) {
+	if !uuid.IsValidUuid(enrollmentBodyParams.UserId) {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be UUID format"})
 		return
