@@ -1,0 +1,16 @@
+Running tool: /opt/homebrew/bin/go test -test.fullpath=true -timeout 30s -run ^TestGetCoursesHandler$ github.com/harusame0616/ijuku/apps/api/routes/courses/queries
+
+--- FAIL: TestGetCoursesHandler (0.00s)
+    --- FAIL: TestGetCoursesHandler/不正なカーソル形式の場合400とエラーメッセージを返す (0.00s)
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-courses.handler.small.server_test.go:72: messageが一致すること: got "cursor must be a valid UUID"
+    --- FAIL: TestGetCoursesHandler/FindCoursesがエラーを返した場合500とエラーメッセージを返す (0.00s)
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-courses.handler.small.server_test.go:85: ステータスコードが500であること: got 400
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-courses.handler.small.server_test.go:89: codeが一致すること: got "INPUT_VALIDATION_ERROR"
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-courses.handler.small.server_test.go:92: messageが一致すること: got "cursor must be a valid UUID"
+FAIL
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/queries    0.516s
+FAIL
+
+---
+
+進めて
