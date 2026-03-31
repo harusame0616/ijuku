@@ -15,6 +15,9 @@ dev:
 migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
+query-generate:
+	sqlc generate
+
 test-all:
 	go test -coverpkg=./... -coverprofile=coverage.out ./...
 
