@@ -1,0 +1,99 @@
+map[completionCriteria:修了条件 description:トピック1の説明 flow:学習の流れ knowledge:習得知識 prerequisites:前提条件 quiz:クイズ title:トピック1 topicId:a37c1905-d0ed-4a70-8c9c-75d5683135db]  ここのテスト条件記載して
+
+---
+
+ちなみに GO ではこうやって値のチェックをするのが一般的なの？
+
+---
+
+testify を使うのが一般的と言う根拠は何かある？
+
+---
+
+ちなみに testify を使うとどうなるの？
+
+---
+
+ちなみに testify を使うと今の箇所はどうなるの？
+
+---
+
+ちなみに go ではテストフィクスチャーの登録って何か方法があるの？
+
+---
+
+tHelper って何？
+
+---
+
+t.cleanup はなに？
+
+---
+
+引数として draft / published を受け取れるようにして、戻り値として作成したデータの値を構造体で返す
+
+---
+
+お願い
+
+---
+
+testify 使うようにしてみて
+
+---
+
+OK
+
+---
+
+間違って戻しちゃっtからもう一回
+
+---
+
+fixture で author を指定できるようにして
+
+---
+
+fixture で authorId を指定できるようにして
+
+---
+
+Running tool: /opt/homebrew/bin/go test -test.fullpath=true -timeout 30s -run ^TestGetTopicDetailHandlerMedium$/^自分が作成した_draft_な講座のトピック詳細が取得できる$ github.com/harusame0616/ijuku/apps/api/routes/courses/queries
+
+--- FAIL: TestGetTopicDetailHandlerMedium (0.05s)
+    --- FAIL: TestGetTopicDetailHandlerMedium/自分が作成した_draft_な講座のトピック詳細が取得できる (0.05s)
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:155: 
+                Error Trace:    /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:155
+                Error:          Not equal: 
+                                expected: string("fdb55f3e-52f7-4091-9538-4643adae7da0")
+                                actual  : <nil>(<nil>)
+                Test:           TestGetTopicDetailHandlerMedium/自分が作成した_draft_な講座のトピック詳細が取得できる
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:156: 
+                Error Trace:    /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:156
+                Error:          Not equal: 
+                                expected: string("2478beb3-a951-484f-bb49-69272c5a4e1d")
+                                actual  : <nil>(<nil>)
+                Test:           TestGetTopicDetailHandlerMedium/自分が作成した_draft_な講座のトピック詳細が取得できる
+FAIL
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/queries    0.580s
+FAIL
+
+---
+
+進めて
+
+---
+
+Running tool: /opt/homebrew/bin/go test -test.fullpath=true -timeout 30s -run ^TestGetTopicDetailHandlerMedium$/^他人が作成した_draft_な講座のトピック詳細ができない$ github.com/harusame0616/ijuku/apps/api/routes/courses/queries
+
+no rows in result set--- FAIL: TestGetTopicDetailHandlerMedium (0.04s)
+    --- FAIL: TestGetTopicDetailHandlerMedium/他人が作成した_draft_な講座のトピック詳細ができない (0.04s)
+        /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:177: 
+                Error Trace:    /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go:177
+                Error:          Not equal: 
+                                expected: 200
+                                actual  : 404
+                Test:           TestGetTopicDetailHandlerMedium/他人が作成した_draft_な講座のトピック詳細ができない
+FAIL
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/queries    0.449s
+FAIL

@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3302576f94a3",
+  "session_id": "a4c124d3-4d8b-40c5-b119-979b3b4d9b04",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-31T23:10:49.934098Z",
+  "branch": "17-topic-detail",
+  "checkpoints_count": 14,
+  "files_touched": [
+    "Makefile",
+    "apps/api/Makefile",
+    "apps/api/go.mod",
+    "apps/api/go.sum",
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/courses.sql",
+    "apps/api/routes/courses/queries/get-topic-detail.handler.go",
+    "apps/api/routes/courses/queries/get-topic-detail.handler.medium.server_test.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4c0851b2f6ef",
+  "token_usage": {
+    "input_tokens": 121,
+    "cache_creation_tokens": 145277,
+    "cache_read_tokens": 2200766,
+    "output_tokens": 21314,
+    "api_call_count": 56
+  },
+  "session_metrics": {
+    "turn_count": 14
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-31T23:10:49.840583Z",
+    "agent_lines": 278,
+    "human_added": 186,
+    "human_modified": 18,
+    "human_removed": 0,
+    "total_committed": 481,
+    "agent_percentage": 57.7962577962578
+  }
+}
