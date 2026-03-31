@@ -1,0 +1,1 @@
+query は course_id なのに json encode した後 courseId になっています。 json encode の仕様ってどうなっているの？
