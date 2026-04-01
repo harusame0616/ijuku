@@ -3,7 +3,7 @@ package queries
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
@@ -73,16 +73,14 @@ func (handler *TopicDetailHandler) GetTopicDetailHandler(w http.ResponseWriter, 
 		UserID:    userId,
 	})
 
-	if err == pgx.ErrNoRows {
+	if errors.Is(err, pgx.ErrNoRows) {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Printf("%v", err)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": "TOPIC_DETAIL_NOT_FOUND", "message": "Topic detail is not found"})
 		return
 	}
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Printf("%v", err)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": "INTERNAL_ERROR", "message": "An internal error occurred"})
 		return
 	}

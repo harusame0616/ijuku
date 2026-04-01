@@ -164,11 +164,30 @@ func TestGetTopicDetailHandlerMedium(t *testing.T) {
 		assert.Equal(t, f.CompletionCriteria, body["completionCriteria"])
 	})
 
-	t.Run("他人が作成した draft な講座のトピック詳細ができない", func(t *testing.T) {
+	t.Run("他人が作成した draft な講座のトピック詳細が取得できない", func(t *testing.T) {
 		f := createTopicFixture(t, pool, "draft", "")
 
 		w := httptest.NewRecorder()
 		r := httptest.NewRequest("GET", "/v1/courses/"+f.CourseId+"/sections/"+f.SectionId+"/topics/"+f.TopicId+"?userId="+uuid.NewString(), nil)
+		r.SetPathValue("topicId", f.TopicId)
+		r.SetPathValue("sectionId", f.SectionId)
+		r.SetPathValue("courseId", f.CourseId)
+
+		handler.GetTopicDetailHandler(w, r)
+		assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+
+		var body map[string]any
+		json.NewDecoder(w.Body).Decode(&body)
+
+		assert.Equal(t, "TOPIC_DETAIL_NOT_FOUND", body["code"])
+		assert.Equal(t, "Topic detail is not found", body["message"])
+	})
+
+	t.Run("userId なしで draft な講座のトピック詳細が取得できない", func(t *testing.T) {
+		f := createTopicFixture(t, pool, "draft", "")
+
+		w := httptest.NewRecorder()
+		r := httptest.NewRequest("GET", "/v1/courses/"+f.CourseId+"/sections/"+f.SectionId+"/topics/"+f.TopicId, nil)
 		r.SetPathValue("topicId", f.TopicId)
 		r.SetPathValue("sectionId", f.SectionId)
 		r.SetPathValue("courseId", f.CourseId)
