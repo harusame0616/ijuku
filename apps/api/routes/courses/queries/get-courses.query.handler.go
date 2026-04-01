@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
 	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -32,38 +31,30 @@ func NewCoursesHandlers(qs GetCoursesQuery) *Handlers {
 	return &Handlers{query: qs}
 }
 
-func parseGetCoursesQuery(r *http.Request) (keyword, cursor string, err error) {
+func parseGetCoursesQuery(r *http.Request) (keyword string, cursorUuid pgtype.UUID, err error) {
 	keyword = r.URL.Query().Get("keyword")
-	cursor = r.URL.Query().Get("cursor")
+	cursor := r.URL.Query().Get("cursor")
 
 	if len([]rune(keyword)) > 40 {
-		return "", "", fmt.Errorf("keyword must be 40 characters or less")
+		return "", pgtype.UUID{}, fmt.Errorf("keyword must be 40 characters or less")
 	}
-	if cursor != "" && !uuid.IsValidUuid(cursor) {
-		return "", "", fmt.Errorf("invalid cursor")
+	if cursor != "" {
+		if err := cursorUuid.Scan(cursor); err != nil {
+			return "", pgtype.UUID{}, fmt.Errorf("invalid cursor")
+		}
 	}
 
-	return keyword, cursor, nil
+	return keyword, cursorUuid, nil
 }
 
 func (handler *Handlers) GetCoursesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	keyword, cursor, err := parseGetCoursesQuery(r)
+	keyword, cursorUuid, err := parseGetCoursesQuery(r)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": err.Error()})
 		return
-	}
-
-	var cursorUuid pgtype.UUID
-	if cursor != "" {
-		if err := cursorUuid.Scan(cursor); err != nil {
-			log.Printf("cursor scan error: %v", err)
-			w.WriteHeader(http.StatusBadRequest)
-			_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "invalid cursor"})
-			return
-		}
 	}
 
 	rawCourses, err := handler.query.GetCourses(r.Context(), db.GetCoursesParams{Cursor: cursorUuid, Keyword: keyword, Size: pageSize + 1})
