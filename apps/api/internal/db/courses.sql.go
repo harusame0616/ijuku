@@ -245,6 +245,78 @@ func (q *Queries) GetProgressByUserIdAndCourseId(ctx context.Context, arg GetPro
 	return items, nil
 }
 
+const getTopicDetail = `-- name: GetTopicDetail :one
+SELECT
+    courses.course_id AS "courseId",
+    course_sections.course_section_id AS "sectionId",
+    course_section_topics.course_section_topic_id as "topicId",
+    course_section_topics.title,
+    course_section_topics.description,
+    course_section_topics.prerequisites,
+    course_section_topics.knowledge,
+    course_section_topics.flow,
+    course_section_topics.quiz,
+    course_section_topics.completion_criteria AS "completionCriteria"
+FROM
+    course_section_topics
+    JOIN course_sections USING (course_section_id)
+    JOIN courses ON courses.course_id = course_sections.course_id
+WHERE
+    course_section_topic_id = $1 :: uuid
+    AND course_sections.course_section_id = $2 :: uuid
+    AND course_sections.course_id = $3 :: uuid
+    AND (
+        courses.publish_status = 'published'
+        OR (
+            $4 :: uuid IS NOT NULL
+            AND courses.author_id = $4 :: uuid
+        )
+    )
+`
+
+type GetTopicDetailParams struct {
+	TopicID   pgtype.UUID `json:"topic_id"`
+	SectionID pgtype.UUID `json:"section_id"`
+	CourseID  pgtype.UUID `json:"course_id"`
+	UserID    pgtype.UUID `json:"user_id"`
+}
+
+type GetTopicDetailRow struct {
+	CourseId           pgtype.UUID `json:"courseId"`
+	SectionId          pgtype.UUID `json:"sectionId"`
+	TopicId            pgtype.UUID `json:"topicId"`
+	Title              string      `json:"title"`
+	Description        string      `json:"description"`
+	Prerequisites      string      `json:"prerequisites"`
+	Knowledge          string      `json:"knowledge"`
+	Flow               string      `json:"flow"`
+	Quiz               string      `json:"quiz"`
+	CompletionCriteria string      `json:"completionCriteria"`
+}
+
+func (q *Queries) GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error) {
+	row := q.db.QueryRow(ctx, getTopicDetail,
+		arg.TopicID,
+		arg.SectionID,
+		arg.CourseID,
+		arg.UserID,
+	)
+	var i GetTopicDetailRow
+	err := row.Scan(
+		&i.CourseId,
+		&i.SectionId,
+		&i.TopicId,
+		&i.Title,
+		&i.Description,
+		&i.Prerequisites,
+		&i.Knowledge,
+		&i.Flow,
+		&i.Quiz,
+		&i.CompletionCriteria,
+	)
+	return i, err
+}
+
 const upsertProgress = `-- name: UpsertProgress :exec
 INSERT INTO
     user_topic_progresses (
@@ -257,9 +329,9 @@ VALUES
         $1 :: uuid,
         $2 :: uuid,
         $3
-    )
-ON CONFLICT (course_section_topic_id, user_id)
-DO UPDATE SET
+    ) ON CONFLICT (course_section_topic_id, user_id) DO
+UPDATE
+SET
     status = EXCLUDED.status
 `
 
@@ -270,10 +342,6 @@ type UpsertProgressParams struct {
 }
 
 func (q *Queries) UpsertProgress(ctx context.Context, arg UpsertProgressParams) error {
-	_, err := q.db.Exec(ctx, upsertProgress,
-		arg.Coursesectiontopicid,
-		arg.Userid,
-		arg.Status,
-	)
+	_, err := q.db.Exec(ctx, upsertProgress, arg.Coursesectiontopicid, arg.Userid, arg.Status)
 	return err
 }

@@ -23,9 +23,11 @@ func main() {
 
 	coursesHandler := queries.NewCoursesHandlers(queries.NewSqrcCourseQueryService(q))
 	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
+	topicDetailHandler := queries.NewTopicDetailHandler(q)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
+	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

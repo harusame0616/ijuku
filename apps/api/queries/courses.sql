@@ -134,7 +134,35 @@ VALUES
         @CourseSectionTopicId :: uuid,
         @UserId :: uuid,
         @Status
-    )
-ON CONFLICT (course_section_topic_id, user_id)
-DO UPDATE SET
+    ) ON CONFLICT (course_section_topic_id, user_id) DO
+UPDATE
+SET
     status = EXCLUDED.status;
+
+-- name: GetTopicDetail :one
+SELECT
+    courses.course_id AS "courseId",
+    course_sections.course_section_id AS "sectionId",
+    course_section_topics.course_section_topic_id as "topicId",
+    course_section_topics.title,
+    course_section_topics.description,
+    course_section_topics.prerequisites,
+    course_section_topics.knowledge,
+    course_section_topics.flow,
+    course_section_topics.quiz,
+    course_section_topics.completion_criteria AS "completionCriteria"
+FROM
+    course_section_topics
+    JOIN course_sections USING (course_section_id)
+    JOIN courses ON courses.course_id = course_sections.course_id
+WHERE
+    course_section_topic_id = @topic_id :: uuid
+    AND course_sections.course_section_id = @section_id :: uuid
+    AND course_sections.course_id = @course_id :: uuid
+    AND (
+        courses.publish_status = 'published'
+        OR (
+            @user_id :: uuid IS NOT NULL
+            AND courses.author_id = @user_id :: uuid
+        )
+    );

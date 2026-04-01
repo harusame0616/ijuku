@@ -13,6 +13,9 @@ dev-api:
 migrate-up:
 	$(MAKE) -C apps/api migrate-up
 
+query-generate:
+	$(MAKE) -C apps/api query-generate
+
 api-test-all:
 	$(MAKE) -C apps/api test-all
 
