@@ -11,3 +11,7 @@ query で course_id AS "courseId" とすれば問題ないよね
 ---
 
 一緒にやって
+
+---
+
+コミットして PR 作って
