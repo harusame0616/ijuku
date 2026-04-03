@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "c2aca69cb50c",
+  "strategy": "manual-commit",
+  "branch": "24-appsweb-next",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/README.md",
+    "apps/web/app/globals.css",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/public/file.svg",
+    "apps/web/public/globe.svg",
+    "apps/web/public/next.svg",
+    "apps/web/public/vercel.svg",
+    "apps/web/public/window.svg"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c2/aca69cb50c/0/metadata.json",
+      "transcript": "/c2/aca69cb50c/0/full.jsonl",
+      "content_hash": "/c2/aca69cb50c/0/content_hash.txt",
+      "prompt": "/c2/aca69cb50c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 21268,
+    "cache_read_tokens": 78880,
+    "output_tokens": 1808,
+    "api_call_count": 5
+  }
+}

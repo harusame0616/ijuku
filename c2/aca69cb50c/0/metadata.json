@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "c2aca69cb50c",
+  "session_id": "936bf8dc-19d5-43db-862a-e7fedcbcce1f",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-03T12:42:10.368856Z",
+  "branch": "24-appsweb-next",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/README.md",
+    "apps/web/app/globals.css",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/public/file.svg",
+    "apps/web/public/globe.svg",
+    "apps/web/public/next.svg",
+    "apps/web/public/vercel.svg",
+    "apps/web/public/window.svg"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "f9bbd337edcc",
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 21268,
+    "cache_read_tokens": 78880,
+    "output_tokens": 1808,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-03T12:42:10.307156Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 4,
+    "human_removed": 101,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}
