@@ -34,30 +34,30 @@ export function Features() {
     <section
       id="機能"
       className="relative py-28 px-8"
-      style={{ background: "var(--juku-bg-warm)" }}
+      style={{ background: "var(--background-warm)" }}
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
             <span
               className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--juku-text-muted)" }}
+              style={{ color: "var(--muted-foreground)" }}
             >
               Features
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
           </div>
           <h2
             className="font-noto-serif-jp font-black text-4xl lg:text-5xl leading-tight"
-            style={{ color: "var(--juku-text)" }}
+            style={{ color: "var(--foreground)" }}
           >
             学びを、自由に。
           </h2>
           <p
             className="text-sm max-w-lg leading-relaxed"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             塾の構造化された学習と、Jukebox のように
             「好きな曲を選んで流す」自由さを融合させた学習体験。
@@ -75,7 +75,7 @@ export function Features() {
               {/* シンボル */}
               <div
                 className="text-4xl leading-none"
-                style={{ color: "var(--juku-gold)" }}
+                style={{ color: "var(--gold)" }}
               >
                 {feature.symbol}
               </div>
@@ -83,7 +83,7 @@ export function Features() {
               {/* タイトル */}
               <h3
                 className="font-noto-serif-jp font-bold text-lg leading-snug"
-                style={{ color: "var(--juku-text)" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {feature.title}
               </h3>
@@ -91,7 +91,7 @@ export function Features() {
               {/* 説明 */}
               <p
                 className="text-sm leading-relaxed flex-1"
-                style={{ color: "var(--juku-text-muted)" }}
+                style={{ color: "var(--muted-foreground)" }}
               >
                 {feature.description}
               </p>

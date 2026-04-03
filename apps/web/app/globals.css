@@ -10,14 +10,10 @@
     --font-orbitron: var(--font-orbitron);
     --font-space-mono: var(--font-space-mono);
     --font-noto-serif-jp: var(--font-noto-serif-jp);
-    --color-juku-bg: var(--juku-bg);
-    --color-juku-bg-warm: var(--juku-bg-warm);
-    --color-juku-surface: var(--juku-surface);
-    --color-juku-text: var(--juku-text);
-    --color-juku-text-muted: var(--juku-text-muted);
-    --color-juku-gold: var(--juku-gold);
-    --color-juku-gold-dim: var(--juku-gold-dim);
-    --color-juku-teal: var(--juku-teal);
+    --color-background-warm: var(--background-warm);
+    --color-gold: var(--gold);
+    --color-gold-dim: var(--gold-dim);
+    --color-teal: var(--teal);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -60,33 +56,30 @@
 
 :root {
     /* JukuBox.ai — Warm Retro Chic */
-    --juku-bg: oklch(0.10 0.015 50);
-    --juku-bg-warm: oklch(0.13 0.02 50);
-    --juku-surface: oklch(0.17 0.02 50 / 0.9);
-    --juku-text: oklch(0.90 0.03 78);
-    --juku-text-muted: oklch(0.48 0.02 55);
-    --juku-gold: oklch(0.75 0.12 77);
-    --juku-gold-dim: oklch(0.50 0.08 77);
-    --juku-teal: oklch(0.72 0.09 190);
-    --juku-border: oklch(1 0 0 / 0.07);
-    --juku-grid: oklch(0.75 0.12 77 / 0.04);
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    /* システム共通デザイントークン（shadcn 変数を上書き） */
+    --background: oklch(0.10 0.015 50);
+    --foreground: oklch(0.90 0.03 78);
+    --card: oklch(0.17 0.02 50 / 0.9);
+    --card-foreground: oklch(0.90 0.03 78);
+    --popover: oklch(0.17 0.02 50 / 0.9);
+    --popover-foreground: oklch(0.90 0.03 78);
+    --muted-foreground: oklch(0.65 0.02 55);
+    --border: oklch(1 0 0 / 0.07);
+    --input: oklch(1 0 0 / 0.07);
+    /* shadcn に対応がないシステム共通トークン */
+    --background-warm: oklch(0.13 0.02 50);
+    --gold: oklch(0.75 0.12 77);
+    --gold-dim: oklch(0.50 0.08 77);
+    --teal: oklch(0.72 0.09 190);
+    --grid-line: oklch(0.75 0.12 77 / 0.04);
     --primary: oklch(0.205 0 0);
     --primary-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.97 0 0);
     --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.269 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
@@ -176,10 +169,10 @@ body::after {
 
 @keyframes juku-glow-gold {
   0%, 100% {
-    box-shadow: 0 0 8px var(--juku-gold-dim), 0 0 16px oklch(0.75 0.12 77 / 0.2);
+    box-shadow: 0 0 8px var(--gold-dim), 0 0 16px oklch(0.75 0.12 77 / 0.2);
   }
   50% {
-    box-shadow: 0 0 12px var(--juku-gold), 0 0 28px oklch(0.75 0.12 77 / 0.25);
+    box-shadow: 0 0 12px var(--gold), 0 0 28px oklch(0.75 0.12 77 / 0.25);
   }
 }
 
@@ -188,7 +181,7 @@ body::after {
 }
 
 .juku-glass {
-  background: var(--juku-surface);
+  background: var(--card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid oklch(1 0 0 / 0.07);
@@ -196,8 +189,8 @@ body::after {
 
 .juku-grid-bg {
   background-image:
-    linear-gradient(var(--juku-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--juku-grid) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
@@ -216,8 +209,8 @@ body::after {
 .juku-cta-btn-primary {
   position: relative;
   background: transparent;
-  border: 1px solid var(--juku-gold);
-  color: var(--juku-gold);
+  border: 1px solid var(--gold);
+  color: var(--gold);
   transition: all 0.35s ease;
   overflow: hidden;
   cursor: pointer;
@@ -227,7 +220,7 @@ body::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--juku-gold);
+  background: var(--gold);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s ease;
@@ -239,7 +232,7 @@ body::after {
 }
 
 .juku-cta-btn-primary:hover {
-  color: var(--juku-bg);
+  color: var(--background);
   box-shadow: 0 0 16px oklch(0.75 0.12 77 / 0.3);
 }
 
@@ -252,14 +245,14 @@ body::after {
   position: relative;
   background: transparent;
   border: 1px solid oklch(1 0 0 / 0.2);
-  color: var(--juku-text-muted);
+  color: var(--muted-foreground);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .juku-cta-btn-secondary:hover {
   border-color: oklch(1 0 0 / 0.45);
-  color: var(--juku-text);
+  color: var(--foreground);
 }
 
 .juku-feature-card {
@@ -275,7 +268,7 @@ body::after {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--juku-gold-dim), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
 }
 
 .juku-feature-card:hover {
@@ -286,6 +279,6 @@ body::after {
 .juku-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--juku-gold-dim) 30%, var(--juku-gold-dim) 70%, transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-dim) 30%, var(--gold-dim) 70%, transparent);
   opacity: 0.5;
 }

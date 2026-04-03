@@ -12,7 +12,7 @@ function AccuracyBar({ correct, total }: { correct: number; total: number }) {
   const pct = correct / total;
   const color =
     pct >= 0.9
-      ? "var(--juku-gold)"
+      ? "var(--gold)"
       : pct >= 0.7
       ? "oklch(0.72 0.09 190)"
       : "oklch(0.60 0.06 55)";
@@ -39,30 +39,30 @@ export function LearningRecords() {
     <section
       id="学習記録"
       className="relative py-28 px-8"
-      style={{ background: "var(--juku-bg-warm)" }}
+      style={{ background: "var(--background-warm)" }}
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
             <span
               className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--juku-text-muted)" }}
+              style={{ color: "var(--muted-foreground)" }}
             >
               Learning Records
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
           </div>
           <h2
             className="font-noto-serif-jp font-black text-4xl lg:text-5xl"
-            style={{ color: "var(--juku-text)" }}
+            style={{ color: "var(--foreground)" }}
           >
             記録が、成長をつくる。
           </h2>
           <p
             className="text-sm max-w-lg leading-relaxed"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             学習の全履歴が自動で残る。いつ・何を・どれだけ正解したか。
             弱点も強みも、データが教えてくれる。
@@ -76,7 +76,7 @@ export function LearningRecords() {
             className="lg:col-span-2 overflow-hidden"
             style={{
               background: "oklch(0.09 0.015 50)",
-              border: "1px solid var(--juku-gold-dim)",
+              border: "1px solid var(--gold-dim)",
             }}
           >
             {/* ターミナルバー */}
@@ -84,7 +84,7 @@ export function LearningRecords() {
               className="flex items-center gap-2 px-4 py-3"
               style={{
                 background: "oklch(0.12 0.02 50)",
-                borderBottom: "1px solid var(--juku-gold-dim)",
+                borderBottom: "1px solid var(--gold-dim)",
               }}
             >
               <div className="flex gap-1.5">
@@ -137,7 +137,7 @@ export function LearningRecords() {
                 </div>
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
-                <span className="juku-breathe" style={{ color: "var(--juku-gold)" }}>█</span>
+                <span className="juku-breathe" style={{ color: "var(--gold)" }}>█</span>
                 <span style={{ color: "oklch(0.38 0.05 60)" }}>waiting for input...</span>
               </div>
             </div>
@@ -152,7 +152,7 @@ export function LearningRecords() {
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--juku-text)" }}
+                style={{ color: "var(--foreground)" }}
               >
                 要強化エリア
               </span>
@@ -180,7 +180,7 @@ export function LearningRecords() {
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--juku-text)" }}
+                style={{ color: "var(--foreground)" }}
               >
                 習得済みスキル
               </span>
@@ -191,7 +191,7 @@ export function LearningRecords() {
                     className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider"
                     style={{
                       border: "1px solid oklch(0.72 0.09 190 / 0.4)",
-                      color: "var(--juku-teal)",
+                      color: "var(--teal)",
                       background: "oklch(0.72 0.09 190 / 0.06)",
                     }}
                   >
@@ -208,7 +208,7 @@ export function LearningRecords() {
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--juku-text)" }}
+                style={{ color: "var(--foreground)" }}
               >
                 今月の統計
               </span>
@@ -222,13 +222,13 @@ export function LearningRecords() {
                   <div key={stat.label} className="flex flex-col gap-1">
                     <span
                       className="font-space-mono text-xs"
-                      style={{ color: "var(--juku-text-muted)" }}
+                      style={{ color: "var(--muted-foreground)" }}
                     >
                       {stat.label}
                     </span>
                     <span
                       className="font-orbitron font-bold text-xl juku-glow-gold-text"
-                      style={{ color: "var(--juku-gold)" }}
+                      style={{ color: "var(--gold)" }}
                     >
                       {stat.value}
                     </span>

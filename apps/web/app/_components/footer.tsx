@@ -12,8 +12,8 @@ export function Footer() {
     <footer
       className="relative py-16 px-8"
       style={{
-        background: "var(--juku-bg)",
-        borderTop: "1px solid var(--juku-gold-dim)",
+        background: "var(--background)",
+        borderTop: "1px solid var(--gold-dim)",
         borderTopColor: "oklch(0.75 0.12 77 / 0.1)",
       }}
     >
@@ -23,20 +23,20 @@ export function Footer() {
           <div className="flex items-baseline gap-0.5">
             <span
               className="font-orbitron font-black text-2xl juku-glow-gold-text"
-              style={{ color: "var(--juku-gold)" }}
+              style={{ color: "var(--gold)" }}
             >
               JukuBox
             </span>
             <span
               className="font-orbitron font-bold text-sm"
-              style={{ color: "var(--juku-teal)" }}
+              style={{ color: "var(--teal)" }}
             >
               .ai
             </span>
           </div>
           <p
             className="font-noto-serif-jp text-xs text-center"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             AI エージェントと好きなことを好きなだけ学ぶ
           </p>

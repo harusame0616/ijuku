@@ -13,13 +13,13 @@ export function Nav() {
       <a href="#" className="flex items-baseline gap-0.5 no-underline">
         <span
           className="font-orbitron font-black text-xl tracking-wider juku-glow-gold-text"
-          style={{ color: "var(--juku-gold)" }}
+          style={{ color: "var(--gold)" }}
         >
           JukuBox
         </span>
         <span
           className="font-orbitron font-bold text-sm"
-          style={{ color: "var(--juku-teal)" }}
+          style={{ color: "var(--teal)" }}
         >
           .ai
         </span>
@@ -32,7 +32,7 @@ export function Nav() {
             key={label}
             href={`#${label}`}
             className="text-sm tracking-wide transition-colors duration-200"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             {label}
           </a>

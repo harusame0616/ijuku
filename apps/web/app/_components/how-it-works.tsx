@@ -30,24 +30,24 @@ export function HowItWorks() {
     <section
       id="使い方"
       className="relative py-28 px-8"
-      style={{ background: "var(--juku-bg)" }}
+      style={{ background: "var(--background)" }}
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
             <span
               className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--juku-text-muted)" }}
+              style={{ color: "var(--muted-foreground)" }}
             >
               How It Works
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
           </div>
           <h2
             className="font-noto-serif-jp font-black text-4xl lg:text-5xl"
-            style={{ color: "var(--juku-text)" }}
+            style={{ color: "var(--foreground)" }}
           >
             使い方は、シンプル。
           </h2>
@@ -61,7 +61,7 @@ export function HowItWorks() {
             className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, var(--juku-gold-dim) 20%, var(--juku-gold-dim) 80%, transparent)",
+                "linear-gradient(90deg, transparent, var(--gold-dim) 20%, var(--gold-dim) 80%, transparent)",
               opacity: 0.4,
             }}
           />
@@ -75,13 +75,13 @@ export function HowItWorks() {
               <div
                 className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0"
                 style={{
-                  background: "var(--juku-bg-warm)",
-                  border: "1px solid var(--juku-gold-dim)",
+                  background: "var(--background-warm)",
+                  border: "1px solid var(--gold-dim)",
                 }}
               >
                 <span
                   className="font-orbitron font-black text-2xl"
-                  style={{ color: "var(--juku-gold)" }}
+                  style={{ color: "var(--gold)" }}
                 >
                   {step.number}
                 </span>
@@ -90,7 +90,7 @@ export function HowItWorks() {
               {/* タイトル */}
               <h3
                 className="font-noto-serif-jp font-bold text-base leading-snug"
-                style={{ color: "var(--juku-text)" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {step.title}
               </h3>
@@ -98,7 +98,7 @@ export function HowItWorks() {
               {/* 説明 */}
               <p
                 className="text-sm leading-relaxed"
-                style={{ color: "var(--juku-text-muted)" }}
+                style={{ color: "var(--muted-foreground)" }}
               >
                 {step.description}
               </p>
@@ -107,7 +107,7 @@ export function HowItWorks() {
               {idx < steps.length - 1 && (
                 <div
                   className="lg:hidden text-lg mt-1"
-                  style={{ color: "var(--juku-gold-dim)" }}
+                  style={{ color: "var(--gold-dim)" }}
                 >
                   ↓
                 </div>

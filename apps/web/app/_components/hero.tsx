@@ -72,7 +72,7 @@ export function Hero() {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden juku-grid-bg"
-      style={{ background: "var(--juku-bg)" }}
+      style={{ background: "var(--background)" }}
     >
       {/* 背景ラジアルグロウ（控えめ） */}
       <div
@@ -89,11 +89,11 @@ export function Hero() {
           {/* 小ラベル */}
           <div
             className="flex items-center gap-3"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             <div
               className="w-8 h-px"
-              style={{ background: "var(--juku-gold-dim)" }}
+              style={{ background: "var(--gold-dim)" }}
             />
             <span className="font-space-mono text-xs uppercase tracking-[0.25em]">
               AI Learning Platform
@@ -104,13 +104,13 @@ export function Hero() {
           <h1 className="flex flex-col gap-0">
             <span
               className="font-orbitron font-black leading-none text-7xl lg:text-8xl juku-glow-gold-text"
-              style={{ color: "var(--juku-gold)" }}
+              style={{ color: "var(--gold)" }}
             >
               JukuBox
             </span>
             <span
               className="font-orbitron font-bold leading-none text-4xl lg:text-5xl"
-              style={{ color: "var(--juku-teal)" }}
+              style={{ color: "var(--teal)" }}
             >
               .ai
             </span>
@@ -119,7 +119,7 @@ export function Hero() {
           {/* キャッチコピー（明朝体） */}
           <p
             className="font-noto-serif-jp font-bold text-2xl lg:text-3xl leading-relaxed"
-            style={{ color: "var(--juku-text)" }}
+            style={{ color: "var(--foreground)" }}
           >
             AI エージェントと
             <br />
@@ -129,7 +129,7 @@ export function Hero() {
           {/* 説明 */}
           <p
             className="text-base leading-loose max-w-lg"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             自分が契約している AI エージェントをそのまま活用。
             コースを選んで学ぶも良し、自分で作るも良し。
@@ -149,7 +149,7 @@ export function Hero() {
           {/* 対応AIモデル */}
           <div
             className="flex items-center gap-2 mt-2"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             <span className="font-space-mono text-xs">対応:</span>
             {["Claude", "GPT-4o", "Gemini", "Llama"].map((m) => (
@@ -157,7 +157,7 @@ export function Hero() {
                 key={m}
                 className="font-space-mono text-xs px-2 py-0.5"
                 style={{
-                  border: "1px solid var(--juku-border)",
+                  border: "1px solid var(--border)",
                   color: "oklch(0.42 0.02 55)",
                 }}
               >
@@ -197,7 +197,7 @@ export function Hero() {
           className="w-px h-8"
           style={{
             background:
-              "linear-gradient(to bottom, var(--juku-gold-dim), transparent)",
+              "linear-gradient(to bottom, var(--gold-dim), transparent)",
           }}
         />
       </div>

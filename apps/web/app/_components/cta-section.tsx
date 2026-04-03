@@ -2,7 +2,7 @@ export function CtaSection() {
   return (
     <section
       className="relative py-32 px-8 overflow-hidden juku-grid-bg"
-      style={{ background: "var(--juku-bg)" }}
+      style={{ background: "var(--background)" }}
     >
       {/* ラジアルグロウ（控えめ） */}
       <div
@@ -16,31 +16,31 @@ export function CtaSection() {
       <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-10 text-center">
         {/* ラベル */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+          <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
           <span
             className="font-space-mono text-xs uppercase tracking-[0.25em]"
-            style={{ color: "var(--juku-text-muted)" }}
+            style={{ color: "var(--muted-foreground)" }}
           >
             Get Started
           </span>
-          <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+          <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
         </div>
 
         {/* 見出し */}
         <h2
           className="font-noto-serif-jp font-black text-4xl lg:text-6xl leading-snug"
-          style={{ color: "var(--juku-text)" }}
+          style={{ color: "var(--foreground)" }}
         >
           さあ、
           <br />
-          <span style={{ color: "var(--juku-gold)" }} className="juku-glow-gold-text">
+          <span style={{ color: "var(--gold)" }} className="juku-glow-gold-text">
             学びを始めよう。
           </span>
         </h2>
 
         <p
           className="text-base leading-relaxed max-w-lg"
-          style={{ color: "var(--juku-text-muted)" }}
+          style={{ color: "var(--muted-foreground)" }}
         >
           今すぐ無料でアカウントを作成。
           自分だけの学習スタジオを立ち上げよう。
