@@ -3,23 +3,23 @@ export function Nav() {
     <nav
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4"
       style={{
-        background: "oklch(0.08 0.02 260 / 0.85)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid oklch(0.85 0.18 195 / 0.12)",
+        background: "oklch(0.10 0.015 50 / 0.92)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        borderBottom: "1px solid oklch(0.75 0.12 77 / 0.1)",
       }}
     >
       {/* ロゴ */}
       <a href="#" className="flex items-baseline gap-0.5 no-underline">
         <span
-          className="font-orbitron font-black text-2xl tracking-wider juku-neon-text-cyan"
-          style={{ color: "var(--juku-neon-cyan)" }}
+          className="font-orbitron font-black text-xl tracking-wider juku-glow-gold-text"
+          style={{ color: "var(--juku-gold)" }}
         >
           JukuBox
         </span>
         <span
-          className="font-orbitron font-black text-sm juku-neon-text-magenta"
-          style={{ color: "var(--juku-neon-magenta)" }}
+          className="font-orbitron font-bold text-sm"
+          style={{ color: "var(--juku-teal)" }}
         >
           .ai
         </span>
@@ -31,9 +31,8 @@ export function Nav() {
           <a
             key={label}
             href={`#${label}`}
-            className="text-sm font-medium tracking-wide transition-all duration-200"
-            style={{ color: "oklch(0.7 0 0)" }}
-            onMouseEnter={undefined}
+            className="text-sm tracking-wide transition-colors duration-200"
+            style={{ color: "var(--juku-text-muted)" }}
           >
             {label}
           </a>
@@ -41,9 +40,7 @@ export function Nav() {
       </div>
 
       {/* CTA */}
-      <button
-        className="juku-cta-btn-primary px-6 py-2 text-sm font-bold font-orbitron uppercase tracking-widest"
-      >
+      <button className="juku-cta-btn-primary px-5 py-2 text-xs font-orbitron font-bold uppercase tracking-widest">
         <span>無料で始める</span>
       </button>
     </nav>

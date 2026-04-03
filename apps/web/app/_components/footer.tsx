@@ -1,10 +1,10 @@
 const links = [
-  { label: "機能", href: "#機能" },
-  { label: "使い方", href: "#使い方" },
-  { label: "学習記録", href: "#学習記録" },
+  { label: "機能",       href: "#機能" },
+  { label: "使い方",     href: "#使い方" },
+  { label: "学習記録",   href: "#学習記録" },
   { label: "ドキュメント", href: "#" },
   { label: "プライバシー", href: "#" },
-  { label: "利用規約", href: "#" },
+  { label: "利用規約",   href: "#" },
 ];
 
 export function Footer() {
@@ -13,7 +13,8 @@ export function Footer() {
       className="relative py-16 px-8"
       style={{
         background: "var(--juku-bg)",
-        borderTop: "1px solid oklch(0.85 0.18 195 / 0.08)",
+        borderTop: "1px solid var(--juku-gold-dim)",
+        borderTopColor: "oklch(0.75 0.12 77 / 0.1)",
       }}
     >
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
@@ -21,21 +22,21 @@ export function Footer() {
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-baseline gap-0.5">
             <span
-              className="font-orbitron font-black text-2xl juku-neon-text-cyan"
-              style={{ color: "var(--juku-neon-cyan)" }}
+              className="font-orbitron font-black text-2xl juku-glow-gold-text"
+              style={{ color: "var(--juku-gold)" }}
             >
               JukuBox
             </span>
             <span
-              className="font-orbitron font-black text-sm juku-neon-text-magenta"
-              style={{ color: "var(--juku-neon-magenta)" }}
+              className="font-orbitron font-bold text-sm"
+              style={{ color: "var(--juku-teal)" }}
             >
               .ai
             </span>
           </div>
           <p
-            className="text-xs font-space-mono text-center"
-            style={{ color: "oklch(0.45 0 0)" }}
+            className="font-noto-serif-jp text-xs text-center"
+            style={{ color: "var(--juku-text-muted)" }}
           >
             AI エージェントと好きなことを好きなだけ学ぶ
           </p>
@@ -47,8 +48,8 @@ export function Footer() {
             <a
               key={link.label}
               href={link.href}
-              className="text-xs font-space-mono uppercase tracking-widest transition-colors duration-200"
-              style={{ color: "oklch(0.4 0 0)" }}
+              className="text-xs transition-colors duration-200"
+              style={{ color: "oklch(0.38 0.02 55)" }}
             >
               {link.label}
             </a>
@@ -56,30 +57,24 @@ export function Footer() {
         </nav>
 
         {/* セパレーター */}
-        <div
-          className="w-full h-px"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, oklch(0.85 0.18 195 / 0.15) 30%, oklch(0.65 0.28 330 / 0.15) 70%, transparent)",
-          }}
-        />
+        <div className="juku-divider w-full" />
 
         {/* コピーライト */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 text-center">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <p
-            className="text-xs font-space-mono"
-            style={{ color: "oklch(0.35 0 0)" }}
+            className="font-space-mono text-xs"
+            style={{ color: "oklch(0.32 0.02 55)" }}
           >
             © 2025 JukuBox.ai — All rights reserved.
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {["Claude", "GPT-4o", "Gemini"].map((model) => (
               <span
                 key={model}
-                className="text-[10px] font-space-mono px-2 py-0.5"
+                className="font-space-mono text-[10px] px-2 py-0.5"
                 style={{
-                  border: "1px solid oklch(0.85 0.18 195 / 0.15)",
-                  color: "oklch(0.35 0 0)",
+                  border: "1px solid oklch(0.75 0.12 77 / 0.12)",
+                  color: "oklch(0.32 0.02 55)",
                 }}
               >
                 {model}

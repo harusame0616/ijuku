@@ -1,101 +1,75 @@
 export function CtaSection() {
   return (
     <section
-      className="relative py-32 px-8 overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, oklch(0.1 0.025 260) 0%, var(--juku-bg) 100%)",
-      }}
+      className="relative py-32 px-8 overflow-hidden juku-grid-bg"
+      style={{ background: "var(--juku-bg)" }}
     >
-      {/* 背景の円形グロウ */}
+      {/* ラジアルグロウ（控えめ） */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, oklch(0.85 0.18 195 / 0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 55% at 50% 50%, oklch(0.75 0.12 77 / 0.04) 0%, transparent 65%)",
         }}
       />
 
-      {/* デコレーティブグリッド */}
-      <div
-        className="absolute inset-0 juku-grid-bg opacity-50 pointer-events-none"
-      />
-
-      {/* コンテンツ */}
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-10 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-10 text-center">
         {/* ラベル */}
-        <span
-          className="font-space-mono text-xs uppercase tracking-[0.3em]"
-          style={{ color: "var(--juku-neon-cyan)" }}
-        >
-          ✦ Get Started
-        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+          <span
+            className="font-space-mono text-xs uppercase tracking-[0.25em]"
+            style={{ color: "var(--juku-text-muted)" }}
+          >
+            Get Started
+          </span>
+          <div className="w-8 h-px" style={{ background: "var(--juku-gold-dim)" }} />
+        </div>
 
-        {/* メインコピー */}
+        {/* 見出し */}
         <h2
-          className="font-orbitron font-black text-4xl lg:text-6xl leading-tight juku-neon-text-cyan"
-          style={{ color: "var(--juku-neon-cyan)" }}
+          className="font-noto-serif-jp font-black text-4xl lg:text-6xl leading-snug"
+          style={{ color: "var(--juku-text)" }}
         >
           さあ、
           <br />
-          <span style={{ color: "oklch(0.92 0 0)" }}>
+          <span style={{ color: "var(--juku-gold)" }} className="juku-glow-gold-text">
             学びを始めよう。
           </span>
         </h2>
 
         <p
-          className="text-lg leading-relaxed max-w-xl"
-          style={{ color: "oklch(0.6 0 0)" }}
+          className="text-base leading-relaxed max-w-lg"
+          style={{ color: "var(--juku-text-muted)" }}
         >
           今すぐ無料でアカウントを作成。
           自分だけの学習スタジオを立ち上げよう。
         </p>
 
-        {/* CTA ボタン群 */}
+        {/* ボタン群 */}
         <div className="flex flex-wrap items-center gap-4">
           <button
-            className="juku-cta-btn-primary juku-glow-border px-10 py-4 font-orbitron font-black text-base uppercase tracking-widest"
+            className="juku-cta-btn-primary juku-glow-border px-10 py-4 font-orbitron font-black text-sm uppercase tracking-widest"
           >
             <span>無料で始める —</span>
           </button>
           <button
-            className="juku-cta-btn-secondary px-10 py-4 font-orbitron font-bold text-base uppercase tracking-widest"
+            className="juku-cta-btn-secondary px-10 py-4 font-orbitron font-bold text-sm uppercase tracking-widest"
           >
             デモを見る
           </button>
         </div>
 
-        {/* 補足テキスト */}
+        {/* 補足 */}
         <p
           className="font-space-mono text-xs"
-          style={{ color: "oklch(0.4 0 0)" }}
+          style={{ color: "oklch(0.35 0.02 55)" }}
         >
           クレジットカード不要 · いつでもキャンセル可 · 商用利用可
         </p>
 
-        {/* 装飾ライン */}
-        <div className="flex items-center gap-4 w-full max-w-xs">
-          <div
-            className="flex-1 h-px"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, oklch(0.85 0.18 195 / 0.3))",
-            }}
-          />
-          <span
-            className="font-space-mono text-xs"
-            style={{ color: "oklch(0.3 0 0)" }}
-          >
-            ◈
-          </span>
-          <div
-            className="flex-1 h-px"
-            style={{
-              background:
-                "linear-gradient(90deg, oklch(0.85 0.18 195 / 0.3), transparent)",
-            }}
-          />
-        </div>
+        {/* セパレーター */}
+        <div className="juku-divider w-full max-w-sm mt-2" />
       </div>
     </section>
   );

@@ -9,12 +9,15 @@
     --font-sans: var(--font-sans);
     --font-orbitron: var(--font-orbitron);
     --font-space-mono: var(--font-space-mono);
+    --font-noto-serif-jp: var(--font-noto-serif-jp);
     --color-juku-bg: var(--juku-bg);
-    --color-juku-neon-cyan: var(--juku-neon-cyan);
-    --color-juku-neon-magenta: var(--juku-neon-magenta);
-    --color-juku-neon-gold: var(--juku-neon-gold);
-    --color-juku-neon-green: var(--juku-neon-green);
+    --color-juku-bg-warm: var(--juku-bg-warm);
     --color-juku-surface: var(--juku-surface);
+    --color-juku-text: var(--juku-text);
+    --color-juku-text-muted: var(--juku-text-muted);
+    --color-juku-gold: var(--juku-gold);
+    --color-juku-gold-dim: var(--juku-gold-dim);
+    --color-juku-teal: var(--juku-teal);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -56,13 +59,17 @@
 }
 
 :root {
-    --juku-bg: oklch(0.08 0.02 260);
-    --juku-neon-cyan: oklch(0.85 0.18 195);
-    --juku-neon-magenta: oklch(0.65 0.28 330);
-    --juku-neon-gold: oklch(0.82 0.15 85);
-    --juku-neon-green: oklch(0.82 0.2 145);
-    --juku-surface: oklch(0.12 0.03 260 / 0.8);
-    --juku-grid: oklch(0.85 0.18 195 / 0.05);
+    /* JukuBox.ai — Warm Retro Chic */
+    --juku-bg: oklch(0.10 0.015 50);
+    --juku-bg-warm: oklch(0.13 0.02 50);
+    --juku-surface: oklch(0.17 0.02 50 / 0.9);
+    --juku-text: oklch(0.90 0.03 78);
+    --juku-text-muted: oklch(0.48 0.02 55);
+    --juku-gold: oklch(0.75 0.12 77);
+    --juku-gold-dim: oklch(0.50 0.08 77);
+    --juku-teal: oklch(0.72 0.09 190);
+    --juku-border: oklch(1 0 0 / 0.07);
+    --juku-grid: oklch(0.75 0.12 77 / 0.04);
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -145,78 +152,46 @@
 
 /* ===== JukuBox.ai ランディングページ用スタイル ===== */
 
+/* フィルムグレイン質感 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.18'/></svg>");
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 9000;
+  mix-blend-mode: overlay;
+}
+
 @keyframes juku-record-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-@keyframes juku-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+@keyframes juku-breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
 }
 
-@keyframes juku-neon-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.65; }
-}
-
-@keyframes juku-glow-expand {
+@keyframes juku-glow-gold {
   0%, 100% {
-    box-shadow:
-      0 0 5px var(--juku-neon-cyan),
-      0 0 10px var(--juku-neon-cyan),
-      inset 0 0 5px oklch(0.85 0.18 195 / 0.1);
+    box-shadow: 0 0 8px var(--juku-gold-dim), 0 0 16px oklch(0.75 0.12 77 / 0.2);
   }
   50% {
-    box-shadow:
-      0 0 15px var(--juku-neon-cyan),
-      0 0 40px var(--juku-neon-cyan),
-      0 0 80px oklch(0.85 0.18 195 / 0.4),
-      inset 0 0 10px oklch(0.85 0.18 195 / 0.2);
+    box-shadow: 0 0 12px var(--juku-gold), 0 0 28px oklch(0.75 0.12 77 / 0.25);
   }
 }
 
-@keyframes juku-scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-@keyframes juku-border-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.juku-neon-text-cyan {
-  text-shadow:
-    0 0 7px var(--juku-neon-cyan),
-    0 0 21px var(--juku-neon-cyan),
-    0 0 42px var(--juku-neon-cyan);
-}
-
-.juku-neon-text-magenta {
-  text-shadow:
-    0 0 7px var(--juku-neon-magenta),
-    0 0 21px var(--juku-neon-magenta);
-}
-
-.juku-neon-text-gold {
-  text-shadow:
-    0 0 7px var(--juku-neon-gold),
-    0 0 21px var(--juku-neon-gold);
-}
-
-.juku-neon-text-green {
-  text-shadow:
-    0 0 7px var(--juku-neon-green),
-    0 0 21px var(--juku-neon-green);
+.juku-glow-gold-text {
+  text-shadow: 0 0 18px oklch(0.75 0.12 77 / 0.45);
 }
 
 .juku-glass {
   background: var(--juku-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid oklch(1 0 0 / 0.08);
+  border: 1px solid oklch(1 0 0 / 0.07);
 }
 
 .juku-grid-bg {
@@ -227,53 +202,35 @@
 }
 
 .juku-record-spin {
-  animation: juku-record-spin 24s linear infinite;
+  animation: juku-record-spin 32s linear infinite;
 }
 
-.juku-float {
-  animation: juku-float 5s ease-in-out infinite;
-}
-
-.juku-neon-pulse {
-  animation: juku-neon-pulse 3s ease-in-out infinite;
+.juku-breathe {
+  animation: juku-breathe 4s ease-in-out infinite;
 }
 
 .juku-glow-border {
-  animation: juku-glow-expand 3s ease-in-out infinite;
-}
-
-.juku-scanline::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    oklch(0 0 0 / 0.04) 2px,
-    oklch(0 0 0 / 0.04) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
+  animation: juku-glow-gold 4s ease-in-out infinite;
 }
 
 .juku-cta-btn-primary {
   position: relative;
   background: transparent;
-  border: 1px solid var(--juku-neon-cyan);
-  color: var(--juku-neon-cyan);
-  transition: all 0.3s ease;
+  border: 1px solid var(--juku-gold);
+  color: var(--juku-gold);
+  transition: all 0.35s ease;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .juku-cta-btn-primary::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--juku-neon-cyan);
+  background: var(--juku-gold);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
   z-index: 0;
 }
 
@@ -283,7 +240,7 @@
 
 .juku-cta-btn-primary:hover {
   color: var(--juku-bg);
-  box-shadow: 0 0 20px var(--juku-neon-cyan), 0 0 40px oklch(0.85 0.18 195 / 0.3);
+  box-shadow: 0 0 16px oklch(0.75 0.12 77 / 0.3);
 }
 
 .juku-cta-btn-primary span {
@@ -294,14 +251,15 @@
 .juku-cta-btn-secondary {
   position: relative;
   background: transparent;
-  border: 1px solid oklch(1 0 0 / 0.3);
-  color: oklch(0.85 0 0);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  color: var(--juku-text-muted);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .juku-cta-btn-secondary:hover {
-  border-color: oklch(1 0 0 / 0.6);
-  color: white;
+  border-color: oklch(1 0 0 / 0.45);
+  color: var(--juku-text);
 }
 
 .juku-feature-card {
@@ -317,26 +275,17 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--juku-card-accent, var(--juku-neon-cyan)), transparent);
-  opacity: 0.8;
+  background: linear-gradient(90deg, transparent, var(--juku-gold-dim), transparent);
 }
 
 .juku-feature-card:hover {
-  transform: translateY(-4px);
-  border-color: oklch(1 0 0 / 0.15);
+  transform: translateY(-3px);
+  border-color: oklch(1 0 0 / 0.12);
 }
 
-.juku-step-connector {
-  position: relative;
-}
-
-.juku-step-connector::after {
-  content: '';
-  position: absolute;
-  top: 24px;
-  left: 100%;
+.juku-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, var(--juku-neon-cyan), transparent);
-  opacity: 0.3;
+  background: linear-gradient(90deg, transparent, var(--juku-gold-dim) 30%, var(--juku-gold-dim) 70%, transparent);
+  opacity: 0.5;
 }
