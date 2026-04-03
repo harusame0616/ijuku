@@ -1,0 +1,5 @@
+juku-muted-foreground と　バックグラウンドのコントラスト差が低くて見づらい
+
+---
+
+現在 juke の prefix がついているけど、システム全体で同じデザインにしていくので例えば juke-text-muted などほかのシステム共通のものは text-muted として定義が必要です
