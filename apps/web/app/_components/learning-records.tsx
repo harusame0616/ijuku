@@ -12,23 +12,29 @@ const mockStrong = ["REST API", "Git Flow", "CSS Grid"];
 
 function AccuracyBar({ correct, total }: { correct: number; total: number }) {
   const pct = correct / total;
-  const color =
+  const textClass =
     pct >= 0.9
-      ? "var(--primary)"
+      ? "text-primary"
       : pct >= 0.7
-      ? "var(--secondary)"
-      : "oklch(0.76 0.08 60)";
+      ? "text-secondary"
+      : "text-warning";
+  const bgClass =
+    pct >= 0.9
+      ? "bg-primary"
+      : pct >= 0.7
+      ? "bg-secondary"
+      : "bg-warning";
   return (
     <div className="flex items-center gap-2 shrink-0">
       <div
         className="w-20 h-1 overflow-hidden bg-[oklch(1_0_0_/_0.15)]"
       >
         <div
-          className="h-full transition-all"
-          style={{ width: `${pct * 100}%`, background: color }}
+          className={`h-full transition-all ${bgClass}`}
+          style={{ width: `${pct * 100}%` }}
         />
       </div>
-      <span className="font-space-mono text-xs w-10 text-right" style={{ color }}>
+      <span className={`font-space-mono text-xs w-10 text-right ${textClass}`}>
         {correct}/{total}
       </span>
     </div>
@@ -39,9 +45,9 @@ export function LearningRecords() {
   return (
     <section
       id="学習記録"
-      className="relative py-28 px-8 bg-background-warm"
+      className="relative py-28 px-8 overflow-hidden bg-background [background-image:radial-gradient(circle,oklch(0.75_0.12_77/0.055)_1px,transparent_1px)] [background-size:28px_28px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:z-20 before:bg-[linear-gradient(90deg,transparent,oklch(0.75_0.12_77/0.55)_25%,oklch(0.75_0.12_77/0.55)_75%,transparent)] after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:z-0 after:bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,oklch(0.165_0.035_50),oklch(0.10_0.015_50))]"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
@@ -86,7 +92,7 @@ export function LearningRecords() {
                 ))}
               </div>
               <span
-                className="flex-1 text-center font-space-mono text-xs text-[oklch(0.80_0.08_72)]"
+                className="flex-1 text-center font-space-mono text-xs text-terminal-primary"
               >
                 jukubox — learning_log
               </span>
@@ -94,7 +100,7 @@ export function LearningRecords() {
 
             {/* ログ内容 */}
             <div className="p-6 flex flex-col gap-4 font-space-mono">
-              <div className="text-xs mb-1 text-[oklch(0.78_0.10_77)]">
+              <div className="text-xs mb-1 text-terminal-primary">
                 $ jukubox log --recent 4
               </div>
               {mockLog.map((entry) => (
@@ -103,18 +109,18 @@ export function LearningRecords() {
                   className="flex items-center gap-4 pb-3 border-b border-[oklch(1_0_0_/_0.12)]"
                 >
                   <span
-                    className="text-xs shrink-0 w-24 text-[oklch(0.78_0.08_72)]"
+                    className="text-xs shrink-0 w-24 text-terminal-muted"
                   >
                     {entry.date}
                   </span>
                   <span
-                    className="text-sm flex-1 truncate text-[oklch(0.80_0.08_75)]"
+                    className="text-sm flex-1 truncate text-terminal-primary"
                   >
                     {entry.topic}
                   </span>
                   <AccuracyBar correct={entry.correct} total={entry.total} />
                   <span
-                    className="text-xs shrink-0 w-16 text-right text-[oklch(0.76_0.07_68)]"
+                    className="text-xs shrink-0 w-16 text-right text-terminal-muted"
                   >
                     {entry.duration}
                   </span>
@@ -122,7 +128,7 @@ export function LearningRecords() {
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
                 <span className="animate-[juku-breathe_4s_ease-in-out_infinite] text-primary">█</span>
-                <span className="text-[oklch(0.76_0.07_68)]">waiting for input...</span>
+                <span className="text-terminal-muted">waiting for input...</span>
               </div>
             </div>
           </div>
@@ -142,7 +148,7 @@ export function LearningRecords() {
                 {mockWeak.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.65_0.08_77_/_0.75)] text-[oklch(0.82_0.10_77)] bg-[oklch(0.75_0.12_77_/_0.08)]"
+                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.65_0.08_77_/_0.75)] text-terminal-primary bg-[oklch(0.75_0.12_77_/_0.08)]"
                   >
                     {tag}
                   </span>

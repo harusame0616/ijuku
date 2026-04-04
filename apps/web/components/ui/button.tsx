@@ -13,9 +13,9 @@ const buttonVariants = cva(
         default:
           "relative bg-transparent border border-primary text-primary transition-all duration-350 ease-in overflow-hidden cursor-pointer rounded-none h-auto before:content-[''] before:absolute before:inset-0 before:bg-primary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-background hover:shadow-[0_0_16px_oklch(0.75_0.12_77/0.3)]",
         outline:
-          "border-border hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-input/30",
-        secondary:
           "relative bg-transparent border border-[oklch(1_0_0/0.2)] text-muted-foreground transition-all duration-300 ease-in cursor-pointer rounded-none h-auto hover:border-[oklch(1_0_0/0.45)] hover:text-foreground",
+        secondary:
+          "relative bg-transparent border border-secondary text-secondary transition-all duration-350 ease-in overflow-hidden cursor-pointer rounded-none h-auto before:content-[''] before:absolute before:inset-0 before:bg-secondary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-secondary-foreground hover:shadow-[0_0_16px_oklch(0.72_0.09_190/0.3)]",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:

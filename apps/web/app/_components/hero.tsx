@@ -94,7 +94,7 @@ function VinylRecord() {
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background [background-image:linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] [background-size:48px_48px]">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-size-[48px_48px]">
       {/* 背景ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_55%_45%_at_68%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -136,7 +136,7 @@ export function Hero() {
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
             <Button>無料で始める →</Button>
-            <Button variant="secondary">デモを見る</Button>
+            <Button variant="outline">デモを見る</Button>
           </div>
 
           {/* 対応AIモデル */}
@@ -145,7 +145,7 @@ export function Hero() {
             {["Claude", "GPT-4o", "Gemini", "Llama"].map((m) => (
               <span
                 key={m}
-                className="font-space-mono text-xs px-2 py-0.5 border border-border text-[oklch(0.75_0.04_55)]"
+                className="font-space-mono text-xs px-2 py-0.5 border border-border text-muted-foreground"
               >
                 {m}
               </span>
@@ -166,7 +166,7 @@ export function Hero() {
       </div>
 
       {/* スクロールヒント */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[oklch(0.72_0.04_55)]">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground">
         <span className="font-space-mono text-xs uppercase tracking-widest">
           Scroll
         </span>

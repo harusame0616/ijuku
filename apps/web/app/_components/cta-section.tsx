@@ -39,13 +39,13 @@ export function CtaSection() {
           >
             無料で始める —
           </Button>
-          <Button type="button" variant="secondary" size="lg">
+          <Button type="button" variant="outline" size="lg">
             デモを見る
           </Button>
         </div>
 
         {/* 補足 */}
-        <p className="font-space-mono text-xs text-[oklch(0.35_0.02_55)]">
+        <p className="font-space-mono text-xs text-subtle-foreground">
           クレジットカード不要 · いつでもキャンセル可 · 商用利用可
         </p>
 
