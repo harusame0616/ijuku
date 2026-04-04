@@ -1,0 +1,2 @@
+@apps/web/app/_components/ui/cta-button.tsx  を @apps/web/components/ui/button.tsx  に統合してほしい
+デザインは cta-button を採用します
