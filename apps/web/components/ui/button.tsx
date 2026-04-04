@@ -56,7 +56,7 @@ function Button({
       {...props}
     >
       {wrapChildren ? (
-        <span className="relative z-[1]">{children}</span>
+        <span className="relative z-1">{children}</span>
       ) : (
         children
       )}

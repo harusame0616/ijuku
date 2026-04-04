@@ -3,9 +3,9 @@ import { LandingDivider } from "@/app/_components/ui/landing-divider";
 const steps = [
   {
     number: "01",
-    title: "AIエージェントを接続",
+    title: "AIサービスを接続",
     description:
-      "Claude、GPT-4o など、自分が使っているAIをそのまま接続。MCP や Skill 経由で簡単に連携できます。",
+      "ChatGPT、Claude、Gemini など、自分が使っているAIサービスをそのまま接続。MCP や Skill 経由で簡単に連携できます。",
   },
   {
     number: "02",
@@ -17,7 +17,7 @@ const steps = [
     number: "03",
     title: "AIと学習スタート",
     description:
-      "AIエージェントがコースに沿って出題・解説・フィードバック。まるで専属の家庭教師がいるような感覚。",
+      "AIがコースに沿って出題・解説・フィードバック。まるで専属の家庭教師がいるような感覚。",
   },
   {
     number: "04",

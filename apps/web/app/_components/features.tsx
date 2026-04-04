@@ -5,7 +5,7 @@ const features = [
     symbol: "◈",
     title: "自分のAIで学ぶ",
     description:
-      "Claude、GPT-4o、Gemini など、すでに契約しているAIエージェントをそのまま活用。追加コスト不要で最先端AIによる個別指導を実現します。",
+      "ChatGPT、Claude、Gemini など、すでに契約しているAIサービスをそのまま活用。追加コスト不要で最先端AIによる個別指導を実現します。",
     tag: "Bring Your Own AI",
   },
   {

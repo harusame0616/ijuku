@@ -18,7 +18,7 @@ export function Footer() {
         <div className="flex flex-col items-center gap-2">
           <JukuBoxLogo size="lg" />
           <p className="font-noto-serif-jp text-xs text-center text-muted-foreground">
-            AI エージェントと好きなことを好きなだけ学ぶ
+            あなたの AI で好きなことを好きなだけ学ぶ
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export function Footer() {
             © 2025 JukuBox.ai — All rights reserved.
           </p>
           <div className="flex items-center gap-2">
-            {["Claude", "GPT-4o", "Gemini"].map((model) => (
+            {["ChatGPT", "Claude", "Gemini"].map((model) => (
               <span
                 key={model}
                 className="font-space-mono text-[10px] px-2 py-0.5 border border-[oklch(0.75_0.12_77/0.12)] text-subtle-foreground"

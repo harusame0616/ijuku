@@ -37,7 +37,7 @@ export function CtaSection() {
             size="lg"
             className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
           >
-            無料で始める —
+            無料で始める
           </Button>
           <Button type="button" variant="outline" size="lg">
             デモを見る

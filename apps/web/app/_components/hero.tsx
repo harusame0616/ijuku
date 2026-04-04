@@ -121,28 +121,30 @@ export function Hero() {
 
           {/* キャッチコピー（明朝体） */}
           <p className="font-noto-serif-jp font-bold text-2xl lg:text-3xl leading-relaxed text-foreground">
-            AI エージェントと
+            あなたの AI で
             <br />
             好きなことを好きなだけ学ぶ
           </p>
 
           {/* 説明 */}
           <p className="text-base leading-loose max-w-lg text-muted-foreground">
-            自分が契約している AI エージェントをそのまま活用。
-            コースを選んで学ぶも良し、自分で作るも良し。
-            記録が積み重なるほど、学びは深くなる。
+            いつもの AI が、あなたの先生になる。
+            <br />
+            カリキュラムは選ぶも作るも自由。
+            <br />
+            使うほどに、学びは深まる。
           </p>
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <Button>無料で始める →</Button>
+            <Button>無料で始める</Button>
             <Button variant="outline">デモを見る</Button>
           </div>
 
           {/* 対応AIモデル */}
           <div className="flex items-center gap-2 mt-2 text-muted-foreground">
             <span className="font-space-mono text-xs">対応:</span>
-            {["Claude", "GPT-4o", "Gemini", "Llama"].map((m) => (
+            {["ChatGPT", "Claude", "Gemini"].map((m) => (
               <span
                 key={m}
                 className="font-space-mono text-xs px-2 py-0.5 border border-border text-muted-foreground"
