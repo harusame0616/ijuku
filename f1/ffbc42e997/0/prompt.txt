@@ -1,0 +1,8 @@
+@apps/web/app/_components/cta-section.tsx  138 のリンク先が間違っている /login に修正
+
+learning-record.tsx text-warning や bg-warning は このコンポーネント特有でデザインシステムにトークンを追加するべきではない。 console を表現するための独自のカラーなのでデザインシステムから削除し、任意値を直接指定すること。コメントで補足して
+
+textClass, bgClass を変数として持って指定しているが、cn を使ってコンポーネントで分岐し直接指定すること
+
+footer.tsx 277-279 
+リンク先が暫定値なので TODO でページ作成後に URL を変更することを記載

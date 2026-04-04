@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f1ffbc42e997",
+  "strategy": "manual-commit",
+  "branch": "top",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/features.tsx",
+    "apps/web/app/_components/footer.tsx",
+    "apps/web/app/_components/learning-records.tsx",
+    "apps/web/app/globals.css"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f1/ffbc42e997/0/metadata.json",
+      "transcript": "/f1/ffbc42e997/0/full.jsonl",
+      "content_hash": "/f1/ffbc42e997/0/content_hash.txt",
+      "prompt": "/f1/ffbc42e997/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 77,
+    "cache_creation_tokens": 20277,
+    "cache_read_tokens": 323292,
+    "output_tokens": 3636,
+    "api_call_count": 13
+  }
+}
