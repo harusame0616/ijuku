@@ -1,4 +1,4 @@
-import { CtaPrimaryButton, CtaSecondaryButton } from "@/app/_components/ui/cta-button";
+import { Button } from "@/components/ui/button";
 import { LandingDivider } from "@/app/_components/ui/landing-divider";
 
 export function CtaSection() {
@@ -32,18 +32,16 @@ export function CtaSection() {
 
         {/* ボタン群 */}
         <div className="flex flex-wrap items-center gap-4">
-          <CtaPrimaryButton
+          <Button
             type="button"
-            className="animate-[juku-glow-gold_4s_ease-in-out_infinite] px-10 py-4 font-orbitron font-black text-sm uppercase tracking-widest"
+            size="lg"
+            className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
           >
             無料で始める —
-          </CtaPrimaryButton>
-          <CtaSecondaryButton
-            type="button"
-            className="px-10 py-4 font-orbitron font-bold text-sm uppercase tracking-widest"
-          >
+          </Button>
+          <Button type="button" variant="secondary" size="lg">
             デモを見る
-          </CtaSecondaryButton>
+          </Button>
         </div>
 
         {/* 補足 */}

@@ -1,7 +1,4 @@
-import {
-  CtaPrimaryButton,
-  CtaSecondaryButton,
-} from "@/app/_components/ui/cta-button";
+import { Button } from "@/components/ui/button";
 
 function VinylRecord() {
   const grooves = Array.from({ length: 26 }, (_, i) => i);
@@ -138,12 +135,8 @@ export function Hero() {
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <CtaPrimaryButton className="px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
-              無料で始める →
-            </CtaPrimaryButton>
-            <CtaSecondaryButton className="px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
-              デモを見る
-            </CtaSecondaryButton>
+            <Button>無料で始める →</Button>
+            <Button variant="secondary">デモを見る</Button>
           </div>
 
           {/* 対応AIモデル */}

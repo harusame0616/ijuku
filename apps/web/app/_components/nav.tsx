@@ -1,4 +1,4 @@
-import { CtaPrimaryButton } from "@/app/_components/ui/cta-button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export function Nav() {
@@ -9,7 +9,9 @@ export function Nav() {
         <span className="font-orbitron font-black text-xl tracking-wider [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">
           JukuBox
         </span>
-        <span className="font-orbitron font-bold text-sm text-secondary">.ai</span>
+        <span className="font-orbitron font-bold text-sm text-secondary">
+          .ai
+        </span>
       </Link>
 
       {/* ナビリンク */}
@@ -26,12 +28,9 @@ export function Nav() {
       </div>
 
       {/* CTA */}
-      <CtaPrimaryButton
-        type="button"
-        className="px-5 py-2 text-xs font-orbitron font-bold uppercase tracking-widest"
-      >
+      <Button type="button" size="sm">
         無料で始める
-      </CtaPrimaryButton>
+      </Button>
     </nav>
   );
 }
