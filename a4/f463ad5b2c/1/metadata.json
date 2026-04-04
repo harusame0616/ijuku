@@ -1,7 +1,9 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "a4f463ad5b2c",
+  "session_id": "80f6ac9d-e127-4d9f-9ede-ea49cd33d0c8",
   "strategy": "manual-commit",
+  "created_at": "2026-04-04T12:27:27.473243Z",
   "branch": "top",
   "checkpoints_count": 0,
   "files_touched": [
@@ -11,25 +13,25 @@
     "apps/web/app/login/page.tsx",
     "apps/web/app/register/page.tsx"
   ],
-  "sessions": [
-    {
-      "metadata": "/a4/f463ad5b2c/0/metadata.json",
-      "transcript": "/a4/f463ad5b2c/0/full.jsonl",
-      "content_hash": "/a4/f463ad5b2c/0/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/a4/f463ad5b2c/1/metadata.json",
-      "transcript": "/a4/f463ad5b2c/1/full.jsonl",
-      "content_hash": "/a4/f463ad5b2c/1/content_hash.txt",
-      "prompt": ""
-    }
-  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "a6f4a0de48c9",
+  "checkpoint_transcript_start": 130,
+  "transcript_lines_at_start": 130,
   "token_usage": {
     "input_tokens": 0,
     "cache_creation_tokens": 0,
     "cache_read_tokens": 0,
     "output_tokens": 0,
     "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T12:27:27.371276Z",
+    "agent_lines": 25,
+    "human_added": 6,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 31,
+    "agent_percentage": 80.64516129032258
   }
 }
