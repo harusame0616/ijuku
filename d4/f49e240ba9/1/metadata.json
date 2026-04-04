@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "d4f49e240ba9",
+  "session_id": "80f6ac9d-e127-4d9f-9ede-ea49cd33d0c8",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T12:33:50.972772Z",
+  "branch": "top",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/web/.entire/.gitignore"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "a6f4a0de48c9",
+  "checkpoint_transcript_start": 130,
+  "transcript_lines_at_start": 130,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T12:33:50.872552Z",
+    "agent_lines": 4,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "agent_percentage": 100
+  }
+}
