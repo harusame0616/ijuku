@@ -3,7 +3,7 @@
   "checkpoint_id": "8cb23f18588b",
   "strategy": "manual-commit",
   "branch": "top",
-  "checkpoints_count": 3,
+  "checkpoints_count": 6,
   "files_touched": [
     "apps/web/app/_components/cta-section.tsx",
     "apps/web/app/_components/features.tsx",
@@ -31,13 +31,19 @@
       "transcript": "/8c/b23f18588b/2/full.jsonl",
       "content_hash": "/8c/b23f18588b/2/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/8c/b23f18588b/3/metadata.json",
+      "transcript": "/8c/b23f18588b/3/full.jsonl",
+      "content_hash": "/8c/b23f18588b/3/content_hash.txt",
+      "prompt": "/8c/b23f18588b/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 26,
-    "cache_creation_tokens": 23709,
-    "cache_read_tokens": 448083,
-    "output_tokens": 4581,
-    "api_call_count": 18
+    "input_tokens": 35,
+    "cache_creation_tokens": 31671,
+    "cache_read_tokens": 494752,
+    "output_tokens": 6371,
+    "api_call_count": 21
   }
 }
