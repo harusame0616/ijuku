@@ -1,0 +1,76 @@
+ヘッダーを無料で始めるじゃなくて ログイン　新規登録 　の２つにして ログインは outline で 新規登録は primary
+
+---
+
+ヒーロや cta お
+
+---
+
+お願い
+
+---
+
+## Error Type
+Console Error
+
+## Error Message
+React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+
+
+    at button (<anonymous>:null:null)
+    at Button (components/ui/button.tsx:53:5)
+    at Nav (app/_components/nav.tsx:28:9)
+    at Home (app/_components/footer.tsx:27:30)
+
+## Code Frame
+  51 |   const wrapChildren = variant === "default" || variant === "secondary";
+  52 |   return (
+> 53 |     <ButtonPrimitive
+     |     ^
+  54 |       data-slot="button"
+  55 |       className={cn(buttonVariants({ variant, size, className }))}
+  56 |       {...props}
+
+Next.js version: 16.2.2 (Turbopack)
+
+---
+
+なぜ asChild が非対応なの？
+
+---
+
+baseui ベースなので asChild じゃなくて render props を使う必要があります
+
+---
+
+ヒーローやフッターも同じように修正して
+
+---
+
+## Error Type
+Console Error
+
+## Error Message
+Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://localhost:60000/_next/static/chunks/_10g-nky._.js:129:429)
+    at Nav (about://React/Prerender/file:///Users/haru/ghq/github.com/harusame0616/ijuku/apps/web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__00irnel._.js?35:181:485)
+    at Home (about://React/Prerender/file:///Users/haru/ghq/github.com/harusame0616/ijuku/apps/web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__00irnel._.js?0:1750:477)
+
+
+    at Button (components/ui/button.tsx:53:5)
+    at Nav (app/_components/nav.tsx:28:9)
+    at Home (app/page.tsx:12:7)
+    at Button (components/ui/button.tsx:53:5)
+    at Nav (app/_components/nav.tsx:28:9)
+    at Home (app/page.tsx:12:7)
+
+## Code Frame
+  51 |   const wrapChildren = variant === "default" || variant === "secondary";
+  52 |   return (
+> 53 |     <ButtonPrimitive
+     |     ^
+  54 |       data-slot="button"
+  55 |       className={cn(buttonVariants({ variant, size, className }))}
+  56 |       {...props}
+
+Next.js version: 16.2.2 (Turbopack)
