@@ -1,3 +1,5 @@
+import { LandingDivider } from "@/app/_components/ui/landing-divider";
+
 const steps = [
   {
     number: "01",
@@ -48,7 +50,7 @@ export function HowItWorks() {
           >
             使い方は、シンプル。
           </h2>
-          <div className="juku-divider max-w-xs mt-2" />
+          <LandingDivider className="max-w-xs mt-2" />
         </div>
 
         {/* ステップ */}

@@ -1,3 +1,5 @@
+import { LandingDivider } from "@/app/_components/ui/landing-divider";
+
 const links = [
   { label: "機能", href: "#機能" },
   { label: "使い方", href: "#使い方" },
@@ -14,7 +16,7 @@ export function Footer() {
         {/* ロゴ */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-baseline gap-0.5">
-            <span className="font-orbitron font-black text-2xl juku-glow-gold-text text-gold">
+            <span className="font-orbitron font-black text-2xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold">
               JukuBox
             </span>
             <span className="font-orbitron font-bold text-sm text-teal">
@@ -40,7 +42,7 @@ export function Footer() {
         </nav>
 
         {/* セパレーター */}
-        <div className="juku-divider w-full" />
+        <LandingDivider />
 
         {/* コピーライト */}
         <div className="flex flex-col sm:flex-row items-center gap-4">

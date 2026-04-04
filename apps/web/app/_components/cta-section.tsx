@@ -1,6 +1,9 @@
+import { CtaPrimaryButton, CtaSecondaryButton } from "@/app/_components/ui/cta-button";
+import { LandingDivider } from "@/app/_components/ui/landing-divider";
+
 export function CtaSection() {
   return (
-    <section className="relative py-32 px-8 overflow-hidden juku-grid-bg bg-background">
+    <section className="relative py-32 px-8 overflow-hidden bg-background [background-image:linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] [background-size:48px_48px]">
       {/* ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -18,7 +21,7 @@ export function CtaSection() {
         <h2 className="font-noto-serif-jp font-black text-4xl lg:text-6xl leading-snug text-foreground">
           さあ、
           <br />
-          <span className="text-gold juku-glow-gold-text">
+          <span className="text-gold [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)]">
             学びを始めよう。
           </span>
         </h2>
@@ -29,18 +32,18 @@ export function CtaSection() {
 
         {/* ボタン群 */}
         <div className="flex flex-wrap items-center gap-4">
-          <button
+          <CtaPrimaryButton
             type="button"
-            className="juku-cta-btn-primary juku-glow-border px-10 py-4 font-orbitron font-black text-sm uppercase tracking-widest"
+            className="animate-[juku-glow-gold_4s_ease-in-out_infinite] px-10 py-4 font-orbitron font-black text-sm uppercase tracking-widest"
           >
-            <span>無料で始める —</span>
-          </button>
-          <button
-            className="juku-cta-btn-secondary px-10 py-4 font-orbitron font-bold text-sm uppercase tracking-widest"
+            無料で始める —
+          </CtaPrimaryButton>
+          <CtaSecondaryButton
             type="button"
+            className="px-10 py-4 font-orbitron font-bold text-sm uppercase tracking-widest"
           >
             デモを見る
-          </button>
+          </CtaSecondaryButton>
         </div>
 
         {/* 補足 */}
@@ -49,7 +52,7 @@ export function CtaSection() {
         </p>
 
         {/* セパレーター */}
-        <div className="juku-divider w-full max-w-sm mt-2" />
+        <LandingDivider className="max-w-sm mt-2" />
       </div>
     </section>
   );

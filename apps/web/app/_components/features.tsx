@@ -1,3 +1,5 @@
+import { LandingDivider } from "@/app/_components/ui/landing-divider";
+
 const features = [
   {
     symbol: "◈",
@@ -58,7 +60,7 @@ export function Features() {
             塾の構造化された学習と、Jukebox のように
             「好きな曲を選んで流す」自由さを融合させた学習体験。
           </p>
-          <div className="juku-divider max-w-xs mt-2" />
+          <LandingDivider className="max-w-xs mt-2" />
         </div>
 
         {/* カードグリッド */}
@@ -66,7 +68,7 @@ export function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="juku-glass juku-feature-card p-8 flex flex-col gap-5"
+              className="bg-card backdrop-blur-[20px] border border-[oklch(1_0_0/0.18)] relative overflow-hidden transition-all duration-[400ms] ease-in p-8 flex flex-col gap-5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--gold-dim),transparent)] hover:-translate-y-[3px] hover:border-[oklch(1_0_0/0.12)]"
             >
               {/* シンボル */}
               <div

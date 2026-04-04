@@ -1,3 +1,5 @@
+import { CtaPrimaryButton, CtaSecondaryButton } from "@/app/_components/ui/cta-button";
+
 function VinylRecord() {
   const grooves = Array.from({ length: 26 }, (_, i) => i);
   return (
@@ -91,7 +93,7 @@ function VinylRecord() {
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden juku-grid-bg bg-background">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background [background-image:linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] [background-size:48px_48px]">
       {/* 背景ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_55%_45%_at_68%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -108,7 +110,7 @@ export function Hero() {
 
           {/* ロゴ */}
           <h1 className="flex flex-col gap-0">
-            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl juku-glow-gold-text text-gold">
+            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold">
               JukuBox
             </span>
             <span className="font-orbitron font-bold leading-none text-4xl lg:text-5xl text-teal">
@@ -132,12 +134,12 @@ export function Hero() {
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <button className="juku-cta-btn-primary px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
-              <span>無料で始める →</span>
-            </button>
-            <button className="juku-cta-btn-secondary px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
+            <CtaPrimaryButton className="px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
+              無料で始める →
+            </CtaPrimaryButton>
+            <CtaSecondaryButton className="px-8 py-3.5 font-orbitron font-bold text-sm uppercase tracking-widest">
               デモを見る
-            </button>
+            </CtaSecondaryButton>
           </div>
 
           {/* 対応AIモデル */}
@@ -157,7 +159,7 @@ export function Hero() {
         {/* 右: ビニールレコード */}
         <div className="flex-shrink-0 w-full lg:w-[400px] relative flex items-center justify-center">
           <div className="relative w-72 h-72 lg:w-88 lg:h-88">
-            <div className="juku-record-spin w-full h-full juku-breathe">
+            <div className="[animation:juku-record-spin_32s_linear_infinite,juku-breathe_4s_ease-in-out_infinite] w-full h-full">
               <VinylRecord />
             </div>
             {/* 控えめなアンバーグロウ */}

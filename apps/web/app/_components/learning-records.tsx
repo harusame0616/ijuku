@@ -1,3 +1,5 @@
+import { LandingDivider } from "@/app/_components/ui/landing-divider";
+
 const mockLog = [
   { date: "2025-04-03", topic: "React Server Components", correct: 8, total: 10, duration: "42 min" },
   { date: "2025-04-02", topic: "TypeScript Generics",     correct: 6, total: 9,  duration: "35 min" },
@@ -62,7 +64,7 @@ export function LearningRecords() {
             学習の全履歴が自動で残る。いつ・何を・どれだけ正解したか。
             弱点も強みも、データが教えてくれる。
           </p>
-          <div className="juku-divider max-w-xs mt-2" />
+          <LandingDivider className="max-w-xs mt-2" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -119,7 +121,7 @@ export function LearningRecords() {
                 </div>
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
-                <span className="juku-breathe text-gold">█</span>
+                <span className="animate-[juku-breathe_4s_ease-in-out_infinite] text-gold">█</span>
                 <span className="text-[oklch(0.76_0.07_68)]">waiting for input...</span>
               </div>
             </div>
@@ -129,7 +131,7 @@ export function LearningRecords() {
           <div className="flex flex-col gap-5">
             {/* 要強化 */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
+              className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm text-foreground"
@@ -150,7 +152,7 @@ export function LearningRecords() {
 
             {/* 習得済み */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
+              className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm text-foreground"
@@ -171,7 +173,7 @@ export function LearningRecords() {
 
             {/* 統計 */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
+              className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
                 className="font-noto-serif-jp font-bold text-sm text-foreground"
@@ -192,7 +194,7 @@ export function LearningRecords() {
                       {stat.label}
                     </span>
                     <span
-                      className="font-orbitron font-bold text-xl juku-glow-gold-text text-gold"
+                      className="font-orbitron font-bold text-xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold"
                     >
                       {stat.value}
                     </span>
