@@ -62,7 +62,7 @@ export function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="bg-card backdrop-blur-[20px] border border-[oklch(1_0_0/0.18)] relative overflow-hidden transition-all duration-400 ease-in p-8 flex flex-col gap-5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--primary-dim),transparent)] hover:-translate-y-0.75 hover:border-[oklch(1_0_0/0.12)]"
+              className="bg-card backdrop-blur-[20px] border border-border/18 relative overflow-hidden transition-all duration-400 ease-in p-8 flex flex-col gap-5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--primary-dim),transparent)] hover:-translate-y-0.75 hover:border-border/12"
             >
               {/* シンボル */}
               <div className="text-4xl leading-none text-primary">

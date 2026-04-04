@@ -14,7 +14,7 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="py-16 px-8 border-t border-[oklch(0.75_0.12_77/0.1)]">
+    <footer className="py-16 px-8 border-t border-primary/10">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-2">
           <JukuBoxLogo size="lg" />

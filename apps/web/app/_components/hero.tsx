@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { GridSection } from "@/app/_components/ui/grid-section";
 import { JukuBoxLogo } from "./jukubox-logo";
 import Link from "next/link";
 
@@ -90,7 +91,7 @@ function VinylRecord() {
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-size-[48px_48px]">
+    <GridSection className="relative min-h-screen flex items-center overflow-hidden">
       {/* 背景ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_55%_45%_at_68%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -167,6 +168,6 @@ export function Hero() {
         </span>
         <div className="w-px h-8 bg-[linear-gradient(to_bottom,var(--primary-dim),transparent)]" />
       </div>
-    </section>
+    </GridSection>
   );
 }

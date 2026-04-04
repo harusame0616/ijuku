@@ -4,7 +4,7 @@ import { JukuBoxLogo } from "@/app/_components/jukubox-logo";
 
 export function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-[oklch(0.10_0.015_50/0.92)] backdrop-blur-xl border-b border-[oklch(0.75_0.12_77/0.1)]">
+    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-background/20 backdrop-blur-xl border-b border-primary/10">
       {/* ロゴ */}
       <Link href="/" className="no-underline">
         <JukuBoxLogo />
@@ -33,7 +33,11 @@ export function Nav() {
         >
           ログイン
         </Button>
-        <Button size="sm" nativeButton={false} render={<Link href="/register" />}>
+        <Button
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/register" />}
+        >
           新規登録
         </Button>
       </div>

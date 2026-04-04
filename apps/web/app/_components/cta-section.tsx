@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { GridSection } from "@/app/_components/ui/grid-section";
 import Link from "next/link";
 
 export function CtaSection() {
   return (
-    <section className="relative py-32 px-8 overflow-hidden bg-background bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-size-[48px_48px]">
+    <GridSection className="relative py-32 px-8 overflow-hidden">
       {/* ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -54,6 +55,6 @@ export function CtaSection() {
         {/* セパレーター */}
         <LandingDivider className="max-w-sm mt-2" />
       </div>
-    </section>
+    </GridSection>
   );
 }
