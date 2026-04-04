@@ -25,7 +25,7 @@
       "metadata": "/66/eb2019570e/1/metadata.json",
       "transcript": "/66/eb2019570e/1/full.jsonl",
       "content_hash": "/66/eb2019570e/1/content_hash.txt",
-      "prompt": "/66/eb2019570e/1/prompt.txt"
+      "prompt": ""
     },
     {
       "metadata": "/66/eb2019570e/2/metadata.json",
@@ -35,10 +35,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 104,
-    "cache_creation_tokens": 159770,
-    "cache_read_tokens": 4721887,
-    "output_tokens": 57765,
-    "api_call_count": 92
+    "input_tokens": 78,
+    "cache_creation_tokens": 100039,
+    "cache_read_tokens": 3964444,
+    "output_tokens": 36723,
+    "api_call_count": 72
   }
 }
