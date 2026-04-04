@@ -1,4 +1,5 @@
 import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { JukuBoxLogo } from "@/app/_components/jukubox-logo";
 
 const links = [
   { label: "機能", href: "#機能" },
@@ -15,14 +16,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
         {/* ロゴ */}
         <div className="flex flex-col items-center gap-2">
-          <div className="flex items-baseline gap-0.5">
-            <span className="font-orbitron font-black text-2xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">
-              JukuBox
-            </span>
-            <span className="font-orbitron font-bold text-sm text-secondary">
-              .ai
-            </span>
-          </div>
+          <JukuBoxLogo size="lg" />
           <p className="font-noto-serif-jp text-xs text-center text-muted-foreground">
             AI エージェントと好きなことを好きなだけ学ぶ
           </p>
