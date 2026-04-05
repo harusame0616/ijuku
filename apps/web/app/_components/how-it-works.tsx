@@ -48,9 +48,6 @@ export function HowItWorks() {
 
         {/* ステップ */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-0 relative">
-          {/* コネクターライン（デスクトップ） */}
-          <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-[linear-gradient(90deg,transparent,var(--primary-dim)_20%,var(--primary-dim)_80%,transparent)] opacity-40" />
-
           {steps.map((step, idx) => (
             <div
               key={step.number}

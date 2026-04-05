@@ -35,7 +35,7 @@ export function Features() {
   return (
     <section
       id="機能"
-      className="relative py-28 px-8 overflow-hidden bg-background bg-[radial-gradient(circle,oklch(0.75_0.12_77/0.055)_1px,transparent_1px)] [background-size:28px_28px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:z-20 before:bg-[linear-gradient(90deg,transparent,oklch(0.75_0.12_77/0.55)_25%,oklch(0.75_0.12_77/0.55)_75%,transparent)] after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:z-0 after:bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,oklch(0.165_0.035_50),oklch(0.10_0.015_50))]"
+      className="relative py-28 px-8 overflow-hidden bg-background bg-[radial-gradient(circle,oklch(0.75_0.12_77/0.055)_1px,transparent_1px)] bg-size-[28px_28px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:z-20 before:bg-[linear-gradient(90deg,transparent,oklch(0.75_0.12_77/0.55)_25%,oklch(0.75_0.12_77/0.55)_75%,transparent)] after:content-[''] after:absolute after:inset-0 after:pointer-events-none after:z-0 after:bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,oklch(0.165_0.035_50),oklch(0.10_0.015_50))]"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         {/* ヘッダー */}
