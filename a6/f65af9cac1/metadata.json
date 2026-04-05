@@ -3,7 +3,7 @@
   "checkpoint_id": "a6f65af9cac1",
   "strategy": "manual-commit",
   "branch": "top",
-  "checkpoints_count": 0,
+  "checkpoints_count": 1,
   "files_touched": [
     "apps/web/app/_components/ui/grid-section.tsx"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/a6/f65af9cac1/0/full.jsonl",
       "content_hash": "/a6/f65af9cac1/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/a6/f65af9cac1/1/metadata.json",
+      "transcript": "/a6/f65af9cac1/1/full.jsonl",
+      "content_hash": "/a6/f65af9cac1/1/content_hash.txt",
+      "prompt": "/a6/f65af9cac1/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 0,
-    "cache_creation_tokens": 0,
-    "cache_read_tokens": 0,
-    "output_tokens": 0,
-    "api_call_count": 0
+    "input_tokens": 8,
+    "cache_creation_tokens": 26742,
+    "cache_read_tokens": 80827,
+    "output_tokens": 1138,
+    "api_call_count": 6
   }
 }
