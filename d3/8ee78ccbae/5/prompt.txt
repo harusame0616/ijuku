@@ -1,0 +1,13 @@
+@.github/workflows/api-test.yml  で apps/api のテストを行う CI を書いて git の履歴やすでにあるワークフローを参考にせず、ルールとあなたの知識だけをもとに作成して
+
+---
+
+なぜ github actions の paths filter を使ったの？
+
+---
+
+新たに作成する際に「Require status checks to pass」に登録するかどうかユーザーから明示されない場合は登録する前提で作成すること　ってあるはずだけど
+
+---
+
+なぜ見落とした
