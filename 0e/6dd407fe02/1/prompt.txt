@@ -1,0 +1,24 @@
+こういう書き方できない？
+
+---
+
+func NewHashedApiKey(params NewHashedApiKeyParams) (HashedApiKey, plainKey string) {
+    b := make([]byte, 32)
+    rand.Read(b)
+
+    plainKey = generatePlainApiKey()
+
+    return HashedApiKey{
+            ApiKeyID:          uuid.MustNewUuidString(),
+            UserID:            params.UserID,
+            HashedApiKey:      getHash(plainKey),
+            PlainApiKeySuffix: plainKey[len(plainKey)-4:],
+            ExpiredAt:         params.ExpiredAt,
+        },
+        plainKey
+}
+
+---
+
+HashedApiKey (result variable) is not a typecompilerNotAType
+var HashedApiKey string
