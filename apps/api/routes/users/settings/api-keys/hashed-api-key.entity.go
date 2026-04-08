@@ -30,7 +30,6 @@ var ErrApiKeyCountExceedsLimit = errors.New("API key count exceeds the limit")
 const apiKeyMaxCount = 5
 
 func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
-
 	plainKey := generatePlainApiKey()
 	key := hashedApiKey{
 		apiKeyID:          uuid.MustNewUuidString(),
