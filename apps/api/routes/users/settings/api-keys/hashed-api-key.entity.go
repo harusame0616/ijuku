@@ -30,11 +30,6 @@ var ErrApiKeyCountExceedsLimit = errors.New("API key count exceeds the limit")
 const apiKeyMaxCount = 5
 
 func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
-	b := make([]byte, 32)
-
-	if _, err := rand.Read(b); err != nil {
-		panic(err)
-	}
 
 	plainKey := generatePlainApiKey()
 	key := hashedApiKey{
@@ -59,7 +54,10 @@ func getHash(plain string) string {
 
 func generatePlainApiKey() string {
 	b := make([]byte, 32)
-	rand.Read(b)
+
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
 
 	return fmt.Sprintf("jukubox_%s", base64.RawURLEncoding.EncodeToString(b))
 }
