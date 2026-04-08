@@ -27,7 +27,7 @@ type NewHashedApiKeyParams struct {
 
 var ErrApiKeyCountExceedsLimit = errors.New("API key count exceeds the limit")
 
-const ApiKeyMaxCount = 5
+const apiKeyMaxCount = 5
 
 func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
 	b := make([]byte, 32)
@@ -48,6 +48,10 @@ func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
 	return key, plainKey
 }
 
+// SHA256 を使用しているが、API キーは crypto/rand で生成した 32 バイト（256 ビット）の
+// 高エントロピーなトークンであるため、高速なハッシュでも総当たり攻撃は現実的に不可能。
+// また、リクエストごとに検証が発生するため bcrypt などの低速アルゴリズムは不適切。
+// nolint:gosec
 func getHash(plain string) string {
 	hash := sha256.Sum256([]byte(plain))
 	return hex.EncodeToString(hash[:])
