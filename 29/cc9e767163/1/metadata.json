@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "29cc9e767163",
+  "session_id": "9d194239-906c-4908-af18-b728a2d1dd8e",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-08T20:25:44.643114Z",
+  "branch": "hashed-api-key-entity",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/lib/uuid/uuid.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "b388c1486a61",
+  "token_usage": {
+    "input_tokens": 6,
+    "cache_creation_tokens": 5877,
+    "cache_read_tokens": 68258,
+    "output_tokens": 1043,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-08T20:25:44.634505Z",
+    "agent_lines": 10,
+    "human_added": 0,
+    "human_modified": 4,
+    "human_removed": 1,
+    "total_committed": 14,
+    "agent_percentage": 71.42857142857143
+  }
+}
