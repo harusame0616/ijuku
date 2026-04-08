@@ -3,7 +3,7 @@
   "checkpoint_id": "0e6dd407fe02",
   "strategy": "manual-commit",
   "branch": "hashed-api-key-entity",
-  "checkpoints_count": 8,
+  "checkpoints_count": 9,
   "files_touched": [
     "apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go",
     "apps/api/routes/users/settings/api-keys/hashed-api-key.entity.server_test.go"
@@ -38,13 +38,19 @@
       "transcript": "/0e/6dd407fe02/4/full.jsonl",
       "content_hash": "/0e/6dd407fe02/4/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/0e/6dd407fe02/5/metadata.json",
+      "transcript": "/0e/6dd407fe02/5/full.jsonl",
+      "content_hash": "/0e/6dd407fe02/5/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 35,
-    "cache_creation_tokens": 33798,
-    "cache_read_tokens": 271876,
-    "output_tokens": 10266,
-    "api_call_count": 16
+    "input_tokens": 44,
+    "cache_creation_tokens": 59934,
+    "cache_read_tokens": 407919,
+    "output_tokens": 13961,
+    "api_call_count": 23
   }
 }
