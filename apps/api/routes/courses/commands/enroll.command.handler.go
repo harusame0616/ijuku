@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
-	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
+	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 )
 
 type Handler struct {
@@ -27,7 +27,7 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if !uuid.IsValidUuid(courseId) {
+	if !uuidutils.IsValidUuid(courseId) {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be UUID format"})
 		return
@@ -53,7 +53,7 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	if !uuid.IsValidUuid(enrollmentBodyParams.UserId) {
+	if !uuidutils.IsValidUuid(enrollmentBodyParams.UserId) {
 		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be UUID format"})
 		return

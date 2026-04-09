@@ -8,6 +8,7 @@ import (
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
+	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -24,10 +25,12 @@ func main() {
 	coursesHandler := queries.NewCoursesHandlers(q)
 	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
+	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(q)))
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
+	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

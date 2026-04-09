@@ -15,6 +15,7 @@ type Apikey struct {
 	ExpiredAt   pgtype.Timestamptz `json:"expired_at"`
 	CreatedAt   pgtype.Timestamptz `json:"_created_at"`
 	UpdatedAt   pgtype.Timestamptz `json:"_updated_at"`
+	ApikeyID    pgtype.UUID        `json:"apikey_id"`
 }
 
 type Author struct {
