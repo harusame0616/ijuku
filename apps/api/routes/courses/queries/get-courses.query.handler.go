@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/validation"
+	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -53,7 +53,7 @@ func (handler *Handlers) GetCoursesHandler(w http.ResponseWriter, r *http.Reques
 	keyword, cursorUuid, err := parseGetCoursesQuery(r)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": err.Error()})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": err.Error()})
 		return
 	}
 

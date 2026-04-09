@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
-	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 )
 
 type Handler struct {
@@ -23,13 +23,13 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 
 	if courseId == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "courseId must be required"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be required"})
 		return
 	}
 
 	if !uuid.IsValidUuid(courseId) {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "courseId must be UUID format"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be UUID format"})
 		return
 	}
 
@@ -43,19 +43,19 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 	defer r.Body.Close()
 	if err := json.NewDecoder(r.Body).Decode(&enrollmentBodyParams); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "body parameter is invalid json format"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "body parameter is invalid json format"})
 		return
 	}
 
 	if enrollmentBodyParams.UserId == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be required"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be required"})
 		return
 	}
 
 	if !uuid.IsValidUuid(enrollmentBodyParams.UserId) {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be UUID format"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be UUID format"})
 		return
 	}
 
@@ -68,13 +68,13 @@ func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) 
 
 	if err == ErrTopicNumberRequireSectionNumber {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topic number require section number"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "topic number require section number"})
 		return
 	}
 
 	if err == ErrEnrollmentNumberIsNotFound {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "enrollment number is not found"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "enrollment number is not found"})
 		return
 	}
 
