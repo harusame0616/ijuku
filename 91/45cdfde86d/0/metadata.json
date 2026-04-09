@@ -3,11 +3,11 @@
   "checkpoint_id": "9145cdfde86d",
   "session_id": "9d194239-906c-4908-af18-b728a2d1dd8e",
   "strategy": "manual-commit",
-  "created_at": "2026-04-09T13:28:33.905428Z",
+  "created_at": "2026-04-09T13:29:55.663211Z",
   "branch": "add-db-reset-command",
   "checkpoints_count": 1,
   "files_touched": [
-    "Makefile"
+    "apps/api/Makefile"
   ],
   "agent": "Claude Code",
   "turn_id": "af2841856743",
@@ -22,12 +22,12 @@
     "turn_count": 2
   },
   "initial_attribution": {
-    "calculated_at": "2026-04-09T13:28:33.876955Z",
-    "agent_lines": 3,
-    "human_added": 20,
+    "calculated_at": "2026-04-09T13:29:55.607855Z",
+    "agent_lines": 5,
+    "human_added": 0,
     "human_modified": 0,
     "human_removed": 0,
-    "total_committed": 23,
-    "agent_percentage": 13.043478260869565
+    "total_committed": 5,
+    "agent_percentage": 100
   }
 }
