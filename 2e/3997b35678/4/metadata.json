@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2e3997b35678",
+  "session_id": "d27384ff-b893-4256-b8af-e44b916640a4",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-09T23:49:35.96525Z",
+  "branch": "generate-api-key",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/internal/db/apikeys.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/lib/uuid/uuid.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000004_apikeys.down.sql",
+    "apps/api/migrations/000004_apikeys.up.sql",
+    "apps/api/queries/apikeys.sql",
+    "apps/api/routes/courses/commands/enroll.command.handler.small.server_test.go",
+    "apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go",
+    "apps/api/routes/users/settings/api-keys/hashed-api-key.entity.server_test.go",
+    "apps/api/routes/users/settings/apikeys/api-key.sqrc-repository.go",
+    "apps/api/routes/users/settings/apikeys/generate-api-key.command.handler.go",
+    "apps/api/routes/users/settings/apikeys/generate-api-key.usecase.go",
+    "apps/api/routes/users/settings/apikeys/generate-apikey.command.handler.medium.server_test.go",
+    "apps/api/routes/users/settings/apikeys/hashed-api-key.entity.go",
+    "apps/api/routes/users/settings/apikeys/hashed-api-key.entity.server_test.go"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "ed9ffe54f3b1",
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 14155,
+    "cache_read_tokens": 88082,
+    "output_tokens": 6054,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-09T23:49:35.958497Z",
+    "agent_lines": 504,
+    "human_added": 38,
+    "human_modified": 45,
+    "human_removed": 0,
+    "total_committed": 587,
+    "agent_percentage": 85.8603066439523
+  }
+}
