@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/validation"
+	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -45,23 +45,23 @@ func (handler *TopicDetailHandler) GetTopicDetailHandler(w http.ResponseWriter, 
 
 	if err := topicId.Scan(r.PathValue("topicId")); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topicId must be a valid UUID"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "topicId must be a valid UUID"})
 		return
 	}
 	if err := sectionId.Scan(r.PathValue("sectionId")); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "sectionId must be a valid UUID"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "sectionId must be a valid UUID"})
 		return
 	}
 	if err := courseId.Scan(r.PathValue("courseId")); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "courseId must be a valid UUID"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be a valid UUID"})
 		return
 	}
 	if userIdStr := r.URL.Query().Get("userId"); userIdStr != "" {
 		if err := userId.Scan(userIdStr); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "userId must be a valid UUID"})
+			_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be a valid UUID"})
 			return
 		}
 	}
