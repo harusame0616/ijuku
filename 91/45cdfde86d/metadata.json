@@ -5,7 +5,8 @@
   "branch": "add-db-reset-command",
   "checkpoints_count": 1,
   "files_touched": [
-    "apps/api/Makefile"
+    "apps/api/Makefile",
+    "compose.yml"
   ],
   "sessions": [
     {
