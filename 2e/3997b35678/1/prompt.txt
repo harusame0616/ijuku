@@ -1,0 +1,43 @@
+33 をレビューして
+
+---
+
+Step 1 call to generatePlainApiKey
+Source
+apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go:34
+
+func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
+
+    plainKey := generatePlainApiKey()
+    key := hashedApiKey{
+        apiKeyID:          uuid.MustNewUuidString(),
+        userID:            params.UserID,
+Step 2 plainKey
+apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go:38
+    key := hashedApiKey{
+        apiKeyID:          uuid.MustNewUuidString(),
+        userID:            params.UserID,
+        hashedApiKey:      getHash(plainKey),
+        plainApiKeySuffix: plainKey[len(plainKey)-4:],
+        expiredAt:         params.ExpiredAt,
+    }
+Step 3 definition of plain
+apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go:50
+// 高エントロピーなトークンであるため、高速なハッシュでも総当たり攻撃は現実的に不可能。
+// また、リクエストごとに検証が発生するため bcrypt などの低速アルゴリズムは不適切。
+// nolint:gosec
+func getHash(plain string) string {
+    hash := sha256.Sum256([]byte(plain))
+    return hex.EncodeToString(hash[:])
+}
+Step 4 type conversion
+Sink
+apps/api/routes/users/settings/api-keys/hashed-api-key.entity.go:51
+// また、リクエストごとに検証が発生するため bcrypt などの低速アルゴリズムは不適切。
+// nolint:gosec
+func getHash(plain string) string {
+    hash := sha256.Sum256([]byte(plain))
+Sensitive data (password)
+ is used in a hashing algorithm (SHA256) that is insecure for password hashing, since it is not a computationally expensive hash function.
+    return hex.EncodeToString(hash[:])
+}
