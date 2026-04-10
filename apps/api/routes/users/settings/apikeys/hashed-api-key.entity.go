@@ -9,19 +9,20 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/harusame0616/ijuku/apps/api/lib/uuid"
+	"github.com/google/uuid"
+	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 )
 
 type hashedApiKey struct {
-	apiKeyID          string
+	apiKeyID          uuid.UUID
 	hashedApiKey      string
 	plainApiKeySuffix string
-	userID            string
+	userID            uuid.UUID
 	expiredAt         *time.Time
 }
 
 type NewHashedApiKeyParams struct {
-	UserID    string
+	UserID    uuid.UUID
 	ExpiredAt *time.Time
 }
 
@@ -32,7 +33,7 @@ const apiKeyMaxCount = 5
 func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
 	plainKey := generatePlainApiKey()
 	key := hashedApiKey{
-		apiKeyID:          uuid.MustNewUuidString(),
+		apiKeyID:          uuidutils.MustNewUUID(),
 		userID:            params.UserID,
 		hashedApiKey:      getHash(plainKey),
 		plainApiKeySuffix: plainKey[len(plainKey)-4:],

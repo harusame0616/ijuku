@@ -78,6 +78,7 @@ func TestPostEnrollmentHandler(t *testing.T) {
 	t.Run("リクエストボディが不正なJSONの場合400を返す", func(t *testing.T) {
 		h := NewHandler(&mockUsecase{})
 		req := newRequest(t, validCourseId, `invalid-json`)
+		req.SetPathValue("userID", "")
 		w := httptest.NewRecorder()
 
 		h.PostEnrollmentHandler(w, req)
