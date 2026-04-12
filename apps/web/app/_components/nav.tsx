@@ -29,14 +29,14 @@ export function Nav() {
           variant="outline"
           size="sm"
           nativeButton={false}
-          render={<Link href="/login" />}
+          render={<Link href="/login" prefetch={false} />}
         >
           ログイン
         </Button>
         <Button
           size="sm"
           nativeButton={false}
-          render={<Link href="/register" />}
+          render={<Link href="/register" prefetch={false} />}
         >
           新規登録
         </Button>

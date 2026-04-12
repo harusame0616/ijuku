@@ -38,7 +38,7 @@ export function CtaSection() {
             size="lg"
             className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
             nativeButton={false}
-            render={<Link href="/register" />}
+            render={<Link href="/register" prefetch={false} />}
           >
             新規登録
           </Button>
@@ -46,7 +46,7 @@ export function CtaSection() {
             variant="outline"
             size="lg"
             nativeButton={false}
-            render={<Link href="/login" />}
+            render={<Link href="/login" prefetch={false} />}
           >
             ログイン
           </Button>

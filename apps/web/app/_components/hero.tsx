@@ -129,13 +129,16 @@ export function Hero() {
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <Button nativeButton={false} render={<Link href="/register" />}>
+            <Button
+              nativeButton={false}
+              render={<Link href="/register" prefetch={false} />}
+            >
               新規登録
             </Button>
             <Button
               variant="outline"
               nativeButton={false}
-              render={<Link href="/login" />}
+              render={<Link href="/login" prefetch={false} />}
             >
               ログイン
             </Button>

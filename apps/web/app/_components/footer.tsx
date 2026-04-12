@@ -30,6 +30,7 @@ export function Footer() {
               key={link.label}
               href={link.href}
               className="text-xs text-muted-foreground underline underline-offset-2"
+              prefetch={false}
             >
               {link.label}
             </Link>
