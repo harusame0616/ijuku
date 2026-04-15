@@ -3,7 +3,7 @@
   "checkpoint_id": "ed9841ce19c1",
   "strategy": "manual-commit",
   "branch": "nemoto/86ex8pmq5",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     ".claude/settings.json"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/ed/9841ce19c1/0/full.jsonl",
       "content_hash": "/ed/9841ce19c1/0/content_hash.txt",
       "prompt": "/ed/9841ce19c1/0/prompt.txt"
+    },
+    {
+      "metadata": "/ed/9841ce19c1/1/metadata.json",
+      "transcript": "/ed/9841ce19c1/1/full.jsonl",
+      "content_hash": "/ed/9841ce19c1/1/content_hash.txt",
+      "prompt": "/ed/9841ce19c1/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 4,
-    "cache_creation_tokens": 3471,
-    "cache_read_tokens": 30558,
-    "output_tokens": 181,
-    "api_call_count": 2
+    "input_tokens": 13,
+    "cache_creation_tokens": 15562,
+    "cache_read_tokens": 162858,
+    "output_tokens": 4780,
+    "api_call_count": 9
   }
 }
