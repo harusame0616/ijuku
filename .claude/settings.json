@@ -337,7 +337,8 @@
         "json.schemastore.org",
         "www.schemastore.org",
         "*.modelcontextprotocol.io",
-        "fonts.gstatic.com"
+        "fonts.gstatic.com",
+        "api.clickup.com"
       ],
       "allowLocalBinding": true
     }
