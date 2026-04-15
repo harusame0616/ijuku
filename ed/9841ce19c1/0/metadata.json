@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "ed9841ce19c1",
+  "session_id": "0fde407b-1579-4ecd-90fa-e357f091c54b",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-15T00:43:25.31855Z",
+  "branch": "nemoto/86ex8pmq5",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/settings.json"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "69dd1b434ffa",
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 3471,
+    "cache_read_tokens": 30558,
+    "output_tokens": 181,
+    "api_call_count": 2
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-15T00:43:25.296455Z",
+    "agent_lines": 1,
+    "human_added": 37,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 39,
+    "agent_percentage": 2.564102564102564
+  }
+}
