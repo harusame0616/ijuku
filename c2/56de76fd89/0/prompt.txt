@@ -1,0 +1,85 @@
+チケット実装して
+
+---
+
+トランザクション関連って api-key 限定にする必要あるの？汎用的にしたほうがいいんじゃない？
+
+---
+
+アドバイザリーロックは apikey 専用の方がいい？
+
+---
+
+汎用化して
+
+---
+
+プランをも一度見せて
+
+---
+
+step2 は手動で追加せず sqlc のコード生成機能を使って
+
+---
+
+1. sqrcQueries インターフェースに AdvisoryLockForApiKeyGen を追加 ってなんで必要なんだっけ？　あと saveとcount は saveWithTx と countWithTx に変更するっていう話じゃなかった？
+
+---
+
+チケットが間違っているね countWithTx / saveWithTx にして tx を受け取るインターフェイスに修正が必要。
+
+---
+
+プランをもう一度見せて
+
+---
+
+acquireAdvisoryLockWithTx を apiKeyRepository に生やすのっておかしくない？ apikeyRepository 特有じゃないよね
+
+---
+
+RunInTransaction にロックを統合するんじゃなくて transactionRunnner のメソッドとしてアニバーサリーロックを追加して
+
+---
+
+実装をす末mて
+
+---
+
+ちなみにテストでロックがかかって同時に実行した時にちゃんと片方がエラーになることって確認する方法あるかな？
+
+---
+
+その方法って厳密には countWithTx を両方が同時に実行したことをチェックできないであっている？
+
+---
+
+ちなみに aniversaly lock を取得しようとするタイミングですでにロック済みなら待つであっている？
+
+---
+
+待機上限を儲けてタイムアウト時間を超えたらどうなるの？エラー？
+
+---
+
+タイムアウトを設定しましょう。  503 と 429 ってそれぞれどういう意味ですか？
+
+---
+
+503 で実装して
+
+---
+
+内部実装により過ぎている。片方は repository のところで待機し続ける mock を使って実現できる？
+
+---
+
+進めて
+
+---
+
+ちなみにトランザクションって lock しないものにつかたっとしてなんか影響ある？
+
+---
+
+@apps/api/routes/users/settings/apikeys/api-key.sqrc-repository.go  @apps/api/main.go  現在は tx を受け取って db.New していて ApiKeySqrcRepository の queories を使っていないから使わない様にして。それと db.New について解説してほしい

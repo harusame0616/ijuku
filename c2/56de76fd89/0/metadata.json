@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "c256de76fd89",
+  "session_id": "0308e768-4732-49b2-bfe4-4a5d63e6a789",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-17T21:07:36.909446Z",
+  "branch": "86ex9fu3f",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "apps/api/lib/txrunner/pgx-transaction-runner.go",
+    "apps/api/main.go",
+    "apps/api/routes/users/settings/apikeys/api-key.sqrc-repository.go",
+    "apps/api/routes/users/settings/apikeys/generate-api-key.command.handler.go",
+    "apps/api/routes/users/settings/apikeys/generate-api-key.usecase.go",
+    "apps/api/routes/users/settings/apikeys/generate-apikey.command.handler.medium.server_test.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "da944a270b48",
+  "token_usage": {
+    "input_tokens": 157,
+    "cache_creation_tokens": 529487,
+    "cache_read_tokens": 7996094,
+    "output_tokens": 61348,
+    "api_call_count": 101
+  },
+  "session_metrics": {
+    "turn_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-17T21:07:36.579293Z",
+    "agent_lines": 46,
+    "human_added": 49,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 103,
+    "agent_percentage": 44.66019417475729
+  }
+}
