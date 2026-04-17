@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
@@ -15,6 +16,7 @@ import (
 func main() {
 	ctx := context.Background()
 	pool, err := pgxpool.New(ctx, "postgresql://postgres:password@localhost:5432/postgres")
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +27,7 @@ func main() {
 	coursesHandler := queries.NewCoursesHandlers(q)
 	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
-	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(q)))
+	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)

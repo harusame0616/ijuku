@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
+	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 )
 
 type generateApiKey struct {
@@ -64,6 +65,8 @@ func (generateApiKey generateApiKey) GenerateApiKeyHandler(w http.ResponseWriter
 		switch {
 		case errors.Is(err, ErrApiKeyCountExceedsLimit):
 			response.WriteErrorResponse(w, http.StatusConflict, "APIKEY_QUOTA_EXCEEDS_LIMIT", "Api key quota exceeds limit. Api key quota limit is "+strconv.Itoa(apiKeyMaxCount))
+		case errors.Is(err, txrunner.ErrLockTimeout):
+			response.WriteErrorResponse(w, http.StatusServiceUnavailable, "APIKEY_LOCK_TIMEOUT", "Api key generation is temporarily unavailable. Please try again later.")
 		default:
 			fmt.Printf("err %v", err)
 			response.WriteInternalServerErrorResponse(w)
