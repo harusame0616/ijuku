@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
