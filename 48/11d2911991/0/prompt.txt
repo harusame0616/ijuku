@@ -1,0 +1,225 @@
+❯ @agent-docs/チケット管理.md 86ex7e64b 実装計画を立てて
+  ⎿  Read agent-docs/チケット管理.md (62 lines)
+
+⏺ Bash(curl -s -H "Authorization: $CLICKUP_API_KEY" "https://api.clickup.com/api/v2/task/86ex7e64b?include_markdown_description=true")
+  ⎿  {
+       "id": "86ex7e64b",
+       "custom_id": null,
+     … +71 lines (ctrl+o to expand)
+
+  Searched for 3 patterns, read 6 files, listed 3 directories (ctrl+o to expand)
+  ⎿  Loaded apps/api/routes/CLAUDE.md
+  ⎿  Loaded apps/web/CLAUDE.md
+  ⎿  Loaded apps/web/AGENTS.md
+  ⎿  Loaded .claude/rules/migration-up.md
+
+⏺ 実装計画を提示します。
+
+  認証機能 実装計画 (86ex7e64b)
+
+  概要
+
+  Google OAuth 認証を API 側に集約。Supabase auth-go で OAuth フロー処理 → JWT を Next.js の Cookie（Domain=jukubox.net）に発行。
+
+  前提確認事項
+
+  1. Supabase プロジェクト: Supabase Auth で Google Provider が設定済みか、SUPABASE_URL / SUPABASE_ANON_KEY / SUPABASE_JWT_SECRET の発行
+  2. auth-go の採用可否: Go 側は github.com/supabase-community/auth-go（公式）想定。現状 go.mod 未導入
+  3. Vercel Lab emulate: ローカル OAuth シミュレーション方法の具体的な手順
+
+  実装順序
+
+  1. DB マイグレーション (apps/api/migrations/000005_users.up.sql)
+
+  - users テーブル作成
+    - user_id UUID PK（Supabase Auth の auth.users.id と同値）
+    - email TEXT NOT NULL UNIQUE
+    - display_name TEXT NOT NULL
+    - _created_at, _updated_at + トリガー（ルール準拠）
+  - 既存 apikeys.user_id への FK 追加は別チケット扱い（やらないこと範囲）
+
+  2. API 側実装 (apps/api/)
+
+  - go.mod: supabase-community/auth-go 追加
+  - lib/auth/: Supabase クライアント初期化、JWT 検証ヘルパー
+  - lib/middleware/auth.go: Cookie の JWT 検証 → context にユーザー ID 注入
+  - routes/auth/（CQRS ではなく薄いハンドラ群）
+    - oauth.handler.go: GET /v1/auth/oauth → Supabase の Google OAuth URL に 302
+    - callback.handler.go: GET /v1/auth/callback → code → Supabase でトークン交換 → users upsert → JWT を JSON で返す（Cookie は Next.js 側で設定）
+    - logout.handler.go: POST /v1/auth/logout → Supabase セッション失効
+  - main.go: ルート登録、DB pool に加え Supabase クライアント注入
+  - テスト: small（JWT 検証）+ medium（handler、Supabase はフェイク）
+
+  3. Web 側実装 (apps/web/)
+
+  - next.config.ts: rewrites 追加（/api/:path* → https://api.jukubox.net/v1/:path*）
+  - app/auth/callback/route.ts: API Route。バックエンド /v1/auth/callback に code を委譲 → 返却 JWT を
+  Set-Cookie（HttpOnly/Secure/SameSite=Lax/Domain=jukubox.net）→ / に 302
+  - middleware.ts: 未認証時に /login にリダイレクト（公開パス許可リスト運用）
+  - app/login/page.tsx: 既存を修正し「Google でログイン」を <a href="/api/auth/oauth"> で実装
+  - lib/auth/: サーバーコンポーネント用にセッション取得ヘルパー
+
+  4. ローカル開発
+
+  - Vercel Lab emulate 設定ファイル追加（要調査）
+  - .env.example に SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_JWT_SECRET, GOOGLE_OAUTH_REDIRECT_URL を追記
+
+  5. 検証
+
+  - make migrate-up / make api-test-coverage（80%）/ make dev-api + make web-dev
+  - playwright-cli でログイン → 保護ページ遷移 → ログアウト の E2E
+
+  確認したい点
+
+  - auth-go 採用で問題ないか（代替: 自前で Supabase REST + golang-jwt）
+  - users テーブルの追加カラム（例: avatar_url, provider）は必要か
+  - Next.js 16 の middleware.ts 規約（AGENTS.md 注意：node_modules/next/dist/docs/ を要参照）で書き方確認が必要
+
+  進めて良いか、または調整ポイントがあれば指示してください。
+
+✻ Worked for 49s
+
+❯ auth-go 採用で問題ないか -> OK。メールアドレスは現時点でアプリがわでは使わないので email は不要です。 provider も supabase auth
+  側になんのプロバイダーを使ったか情報残るよね。アプリがわで保持しておく理由ってなんかある？
+
+⏺ 結論：現時点では保持理由なし、provider は不要でよいです。
+
+  考えられる保持理由と現状評価：
+  - 表示用（「Google 連携済み」ラベル等） → Supabase Auth API から取得可能。UI で必要になった時点で考えれば OK
+  - 分析/集計を自前 DB のクエリで完結させたい → 現状そのユースケースなし
+  - プロバイダ別のビジネスロジック分岐 → 現状なし
+
+  なので users テーブルは最小構成にします：
+
+  users
+  - user_id UUID PK (= auth.users.id)
+  - display_name TEXT NOT NULL
+  - _created_at / _updated_at + トリガー
+
+  email / provider / avatar_url は Supabase Auth 側に任せ、必要になれば都度参照。この方針で実装に進めて良いですか？
+
+ 実装を進めて
+
+---
+
+nickname で OK  . OAuth コールバック時の users upsert は、user_id を Supabase Auth の auth.users.id と同じ UUID で作成する方針で OK か？ OK
+
+---
+
+A 。ただし auth-go は使わないように変更
+
+---
+
+makefile の dev-api で環境変数を設定する様にして
+
+方法が考えられますか？
+ls                 │
+├─────────┬────────────────────────────┤
+│ Studio  │ http://127.0.0.1:54323     │
+│ Mailpit │ http://127.0.0.1:54324     │
+│ MCP     │ http://127.0.0.1:54321/mcp │
+╰─────────┴────────────────────────────╯
+
+╭─────────────────────────────────────────────────╮
+│ 🌐 APIs                                         │
+├─────────────┬───────────────────────────────────┤
+│ Project URL │ http://127.0.0.1:54321            │
+│ REST        │ http://127.0.0.1:54321/rest/v1    │
+│ GraphQL     │ http://127.0.0.1:54321/graphql/v1 │
+╰─────────────┴───────────────────────────────────╯
+
+╭───────────────────────────────────────────────────────────────╮
+│ ⛁ Database                                                    │
+├─────┬─────────────────────────────────────────────────────────┤
+│ URL │ postgresql://postgres:postgres@127.0.0.1:54322/postgres │
+╰─────┴─────────────────────────────────────────────────────────╯
+
+╭──────────────────────────────────────────────────────────────╮
+│ 🔑 Authentication Keys                                       │
+├─────────────┬────────────────────────────────────────────────┤
+│ Publishable │ REDACTED │
+│ Secret      │ REDACTED      │
+╰─────────────┴────────────────────────────────────────────────╯
+
+
+Local dev security notice
+All services bind to 0.0.0.0 (network-accessible, not just localhost)
+API keys and JWT secrets are shared defaults. Do not use in production
+Studio, pgMeta (/pg/*), and analytics have no authentication
+
+---
+
+DB も supabase の url にして
+
+---
+
+ソー��コードで DB URL 直指定してあるやつも修正してほしい
+
+---
+
+requireEnv と envOrDefault  は lib/env にうつして欲しい
+
+---
+
+テストで DB の値を指定しているところを env.require で取得する様にして
+
+---
+
+supabase 関連のところだけ先にコミットして PR に出そうと思います。対象箇所のみコミットして欲しいです
+
+---
+
+@.github/workflows/api-test.yml  postgres を起動していますが、 supabase を起動する様に修正してください
+
+---
+
+@.github/workflows/migration-test.yml もお願い
+
+---
+
+compose はいらなくなりましたよね。また make ファイルの修正は不要ですか・
+
+---
+
+同じ makefile ないのコマンドを実行することってできる？
+
+---
+
+migration は supabase ではなく golang で行うので migrate up が必要です
+
+---
+
+Run supabase start
+  supabase start
+  shell: /usr/bin/bash -e {0}
+  env:
+    SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
+failed to parse config: 6 error(s) decoding:                 
+                                                             
+* 'auth' has invalid keys: oauth_server, web3                
+* 'auth.external[apple]' has invalid keys: email_optional    
+* 'auth.rate_limit' has invalid keys: web3                   
+* 'db' has invalid keys: health_timeout, network_restrictions
+* 'db.migrations' has invalid keys: enabled                  
+* 'storage' has invalid keys: analytics, s3_protocol, vector 
+Try rerunning the command with --debug to troubleshoot the error.
+Error: Process completed with exit code 1.
+
+---
+
+2.92.1 でした
+
+---
+
+Run go mod download
+go test -coverpkg=./... -coverprofile=coverage.out ./...
+# github.com/harusame0616/ijuku/apps/api
+Error: ./main.go:17:32: undefined: env
+FAIL    github.com/harusame0616/ijuku/apps/api [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/internal/db [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/lib/env [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/lib/response [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/lib/uuidutils [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/commands [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/courses/queries [build failed]
+FAIL    github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys [build failed]
