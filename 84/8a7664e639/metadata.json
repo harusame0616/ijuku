@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "848a7664e639",
+  "strategy": "manual-commit",
+  "branch": "86exa0x7v",
+  "checkpoints_count": 10,
+  "files_touched": [
+    ".github/workflows/api-test.yml",
+    ".github/workflows/migration-test.yml",
+    "apps/api/Makefile",
+    "apps/api/main.go",
+    "apps/api/routes/courses/commands/enroll.command.handler.medium.server_test.go",
+    "apps/api/routes/courses/queries/get-courses.query.handler.medium.server_test.go",
+    "apps/api/routes/courses/queries/get-topic-detail.query.handler.medium.server_test.go",
+    "apps/api/routes/users/settings/apikeys/generate-apikey.command.handler.medium.server_test.go",
+    "compose.yml",
+    "supabase/.gitignore",
+    "supabase/config.toml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/84/8a7664e639/0/metadata.json",
+      "transcript": "/84/8a7664e639/0/full.jsonl",
+      "content_hash": "/84/8a7664e639/0/content_hash.txt",
+      "prompt": "/84/8a7664e639/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 171,
+    "cache_creation_tokens": 373361,
+    "cache_read_tokens": 7713682,
+    "output_tokens": 43855,
+    "api_call_count": 121
+  }
+}
