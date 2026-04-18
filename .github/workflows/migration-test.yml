@@ -14,22 +14,7 @@ concurrency:
 jobs:
   migration-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    services:
-      postgres:
-        image: postgres:18
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    timeout-minutes: 15
 
     steps:
       - name: リポジトリのチェックアウト
@@ -42,6 +27,17 @@ jobs:
           filters: |
             migrations:
               - apps/api/migrations/**
+              - supabase/**
+
+      - name: Supabase CLI のセットアップ
+        if: steps.filter.outputs.migrations == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.92.1
+
+      - name: Supabase の起動
+        if: steps.filter.outputs.migrations == 'true'
+        run: supabase start
 
       - name: golang-migrate のインストール
         if: steps.filter.outputs.migrations == 'true'
@@ -53,5 +49,5 @@ jobs:
         if: steps.filter.outputs.migrations == 'true'
         run: |
           migrate -path apps/api/migrations \
-            -database "postgresql://postgres:password@localhost:5432/postgres?sslmode=disable" \
+            -database "postgresql://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable" \
             up

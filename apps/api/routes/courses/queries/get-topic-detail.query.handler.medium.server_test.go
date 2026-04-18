@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -101,7 +102,7 @@ func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, 
 
 func TestGetTopicDetailHandlerMedium(t *testing.T) {
 	ctx := context.Background()
-	pool, err := pgxpool.New(ctx, "postgresql://postgres:password@localhost:5432/postgres")
+	pool, err := pgxpool.New(ctx, env.Require("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}

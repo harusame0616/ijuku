@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"strings"
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -30,10 +30,7 @@ const (
 )
 
 func enrollDatabaseURL() string {
-	if dsn := os.Getenv("DATABASE_URL"); dsn != "" {
-		return dsn
-	}
-	return "postgresql://postgres:password@localhost:5432/postgres"
+	return env.Require("DATABASE_URL")
 }
 
 func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {

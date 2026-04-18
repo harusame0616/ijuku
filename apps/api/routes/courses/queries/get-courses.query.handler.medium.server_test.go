@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"os"
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -22,10 +22,7 @@ const (
 )
 
 func databaseURL() string {
-	if dsn := os.Getenv("DATABASE_URL"); dsn != "" {
-		return dsn
-	}
-	return "postgresql://postgres:password@localhost:5432/postgres"
+	return env.Require("DATABASE_URL")
 }
 
 func setupTestData(ctx context.Context, pool *pgxpool.Pool) error {

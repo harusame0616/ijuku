@@ -1,6 +1,19 @@
 .PHONY: dev migrate-up test-all test-coverage test-coverage-show
 
-DATABASE_URL ?= postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
+DATABASE_URL ?= postgresql://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable
+
+SUPABASE_URL ?= http://127.0.0.1:54321
+SUPABASE_ANON_KEY ?= sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH
+SUPABASE_JWT_SECRET ?= super-secret-jwt-token-with-at-least-32-characters-long
+WEB_ORIGIN ?= http://localhost:60000
+COOKIE_SECURE ?= false
+
+export DATABASE_URL
+export SUPABASE_URL
+export SUPABASE_ANON_KEY
+export SUPABASE_JWT_SECRET
+export WEB_ORIGIN
+export COOKIE_SECURE
 
 help:
 	@echo "make dev: 開発サーバー起動（ホットリロード付き）"
@@ -16,9 +29,8 @@ migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
 db-reset:
-	docker compose down -v
-	docker compose up -d --wait
-	make migrate-up
+	pnpm dlx supabase db reset
+	$(MAKE) migrate-up
 
 query-generate:
 	sqlc generate

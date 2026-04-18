@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -17,7 +18,7 @@ import (
 
 func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 	ctx := context.Background()
-	pool, err := pgxpool.New(ctx, "postgresql://postgres:password@localhost:5432/postgres")
+	pool, err := pgxpool.New(ctx, env.Require("DATABASE_URL"))
 	if err != nil {
 		t.Fatalf("DBへの接続に失敗しました: %v", err)
 	}

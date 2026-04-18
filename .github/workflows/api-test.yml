@@ -37,24 +37,23 @@ jobs:
               - '!apps/api/.air.toml'
               - '!apps/api/.gitignore'
               - '!apps/api/.claude/**'
-            compose:
-              - compose.yml
+            supabase:
+              - supabase/**
 
       - name: 実行要否の判定
         id: should-run
-        run: echo "result=${{ steps.filter.outputs.api == 'true' || steps.filter.outputs.compose == 'true' }}" >> $GITHUB_OUTPUT
+        run: echo "result=${{ steps.filter.outputs.api == 'true' || steps.filter.outputs.supabase == 'true' }}" >> $GITHUB_OUTPUT
 
-      - name: PostgreSQL の起動
+      - name: Supabase CLI のセットアップ
+        if: steps.should-run.outputs.result == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.92.1
+
+      - name: Supabase の起動
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
-        run: docker compose up -d db
-
-      - name: PostgreSQL の起動待機
-        if: steps.should-run.outputs.result == 'true'
-        run: |
-          until pg_isready -h localhost -p 5432 -U postgres; do
-            sleep 1
-          done
+        run: supabase start
 
       - name: Go のセットアップ
         if: steps.should-run.outputs.result == 'true'
@@ -69,8 +68,6 @@ jobs:
 
       - name: マイグレーションの実行
         if: steps.should-run.outputs.result == 'true'
-        env:
-          DATABASE_URL: postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
         run: make migrate-up
 
       - name: テストの実行
