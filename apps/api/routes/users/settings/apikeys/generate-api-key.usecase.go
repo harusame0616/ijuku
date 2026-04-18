@@ -2,46 +2,69 @@ package apikeys
 
 import (
 	"context"
+	"hash/fnv"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 )
 
+type transactionRunner interface {
+	RunInTransaction(ctx context.Context, f func(tx pgx.Tx) error) error
+	AcquireAdvisoryLock(ctx context.Context, tx pgx.Tx, lockKey int64) error
+}
+
 type generateApiKeyRepository interface {
-	count(ctx context.Context, userId uuid.UUID) int
-	save(ctx context.Context, apiKey hashedApiKey) error
+	countWithTx(ctx context.Context, tx pgx.Tx, userId uuid.UUID) int
+	saveWithTx(ctx context.Context, tx pgx.Tx, apiKey hashedApiKey) error
 }
 
 type generateApiKeyUsecase struct {
 	apiKeyRepository generateApiKeyRepository
+	txRunner         transactionRunner
 }
 
-func NewGenerateApiKeyUsecase(repository generateApiKeyRepository) generateApiKeyUsecase {
-	return generateApiKeyUsecase{apiKeyRepository: repository}
+func NewGenerateApiKeyUsecase(repository generateApiKeyRepository, txRunner transactionRunner) generateApiKeyUsecase {
+	return generateApiKeyUsecase{
+		apiKeyRepository: repository,
+		txRunner:         txRunner,
+	}
 }
 
 type generateApiKeyExecuteResult struct {
 	Apikey string `json:"apikey"`
 }
 
-func (usecase *generateApiKeyUsecase) Execute(ctx context.Context, userId uuid.UUID, expiredAt *time.Time) (generateApiKeyExecuteResult, error) {
-	// 不変条件が上限チェックのみのため、Usecase 層でチェックする
-	// 複数の不変条件が加わる場合は UserApiKeys ドメインコレクションへの昇格を検討する
-	userApiKeyCount := usecase.apiKeyRepository.count(ctx, userId)
-	if userApiKeyCount >= apiKeyMaxCount {
-		return generateApiKeyExecuteResult{}, ErrApiKeyCountExceedsLimit
-	}
+func apiKeyGenLockKey(userID uuid.UUID) int64 {
+	h := fnv.New64a()
+	h.Write([]byte("APIKEY_GEN_LOCK_" + userID.String()))
+	return int64(h.Sum64())
+}
 
-	hashedApiKey, plainApiKey := NewHashedApiKey(NewHashedApiKeyParams{
-		UserID:    userId,
-		ExpiredAt: expiredAt,
+func (usecase *generateApiKeyUsecase) Execute(ctx context.Context, userId uuid.UUID, expiredAt *time.Time) (generateApiKeyExecuteResult, error) {
+	var result generateApiKeyExecuteResult
+
+	err := usecase.txRunner.RunInTransaction(ctx, func(tx pgx.Tx) error {
+		if err := usecase.txRunner.AcquireAdvisoryLock(ctx, tx, apiKeyGenLockKey(userId)); err != nil {
+			return err
+		}
+
+		if usecase.apiKeyRepository.countWithTx(ctx, tx, userId) >= apiKeyMaxCount {
+			return ErrApiKeyCountExceedsLimit
+		}
+
+		hashedApiKey, plainApiKey := NewHashedApiKey(NewHashedApiKeyParams{
+			UserID:    userId,
+			ExpiredAt: expiredAt,
+		})
+
+		if err := usecase.apiKeyRepository.saveWithTx(ctx, tx, hashedApiKey); err != nil {
+			return err
+		}
+
+		result = generateApiKeyExecuteResult{Apikey: plainApiKey}
+		return nil
 	})
 
-	if err := usecase.apiKeyRepository.save(ctx, hashedApiKey); err != nil {
-		return generateApiKeyExecuteResult{}, err
-	}
-
-	return generateApiKeyExecuteResult{
-		Apikey: plainApiKey,
-	}, nil
+	return result, err
 }

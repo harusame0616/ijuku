@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/harusame0616/ijuku/apps/api/internal/db"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
+	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -24,8 +24,7 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 	}
 	defer pool.Close()
 
-	q := db.New(pool)
-	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(q)))
+	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 
 	t.Run("userId が未定義の場合 Internal Server Error を返す", (func(t *testing.T) {
 		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
