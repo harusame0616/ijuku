@@ -32,6 +32,8 @@ jobs:
       - name: Supabase CLI のセットアップ
         if: steps.filter.outputs.migrations == 'true'
         uses: supabase/setup-cli@v1
+        with:
+          version: 2.92.1
 
       - name: Supabase の起動
         if: steps.filter.outputs.migrations == 'true'

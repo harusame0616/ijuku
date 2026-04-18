@@ -47,6 +47,8 @@ jobs:
       - name: Supabase CLI のセットアップ
         if: steps.should-run.outputs.result == 'true'
         uses: supabase/setup-cli@v1
+        with:
+          version: 2.92.1
 
       - name: Supabase の起動
         if: steps.should-run.outputs.result == 'true'
