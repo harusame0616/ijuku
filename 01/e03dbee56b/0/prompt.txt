@@ -1,0 +1,53 @@
+claude code action @1 のwith パラメーター一覧と各パラメーターの解説をして
+
+---
+
+@.github/workflows/claude-code-review.yml  claude code action @1 のwith パラメーター一覧と各パラメーターの解説をして
+
+---
+
+デバッグモード見たいのなかったっけ
+
+---
+
+show_full_output を一旦有効にして
+
+---
+
+max_turns も上限 20 にして
+
+---
+
+max_turns って with の option にあるんじゃない？
+https://github.com/anthropics/claude-code-action/tree/main/base-action
+
+---
+
+非推奨なの？どこに非推奨って記載があるの？
+
+---
+
+# Or limiting the conversation turns
+- name: Run Claude Code with limited turns
+  uses: anthropics/claude-code-base-action@beta
+  with:
+    prompt: "Your prompt here"
+    allowed_tools: "Bash(git:*),View,GlobTool,GrepTool,BatchTool"
+    max_turns: "5" # Limit conversation to 5 turns
+    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+---
+
+https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md だと deprecated ってあったは
+
+---
+
+show_full_output もなくなっている
+
+---
+
+usage.md を確認して出力する方法がないか確認して
+
+---
+
+verbose つけよう

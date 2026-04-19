@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "01e03dbee56b",
+  "strategy": "manual-commit",
+  "branch": "86exa2rjp",
+  "checkpoints_count": 8,
+  "files_touched": [
+    ".github/workflows/claude-code-review.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/01/e03dbee56b/0/metadata.json",
+      "transcript": "/01/e03dbee56b/0/full.jsonl",
+      "content_hash": "/01/e03dbee56b/0/content_hash.txt",
+      "prompt": "/01/e03dbee56b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 51,
+    "cache_creation_tokens": 58423,
+    "cache_read_tokens": 693215,
+    "output_tokens": 5222,
+    "api_call_count": 27
+  }
+}
