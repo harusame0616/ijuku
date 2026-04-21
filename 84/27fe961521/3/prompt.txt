@@ -1,0 +1,21 @@
+@agent-docs/チケット管理.md 86ex7e64b のチケットを整備します。考慮もれや検討が必要な項目はありますか？
+
+---
+
+ログアウトは今回除外。ログイン成功後は / にリダイレクト Supabase の config.toml の設定を行う。 Supabase URL anon key は環境変数
+
+---
+
+proxy で session の更新が行われていません。公式の方法を調査し対応してください
+
+---
+
+middleware は現在 deprecated で proxy.ts となっています。
+
+---
+
+route handler だと redirect って使えないんだっけ？
+
+---
+
+NextResponse じゃなくて redirect
