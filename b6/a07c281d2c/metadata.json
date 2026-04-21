@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "b6a07c281d2c",
+  "strategy": "manual-commit",
+  "branch": "86exb4038",
+  "checkpoints_count": 9,
+  "files_touched": [
+    ".claude/rules/skeleton-component.md",
+    "apps/web/app/(main)/_components/header.server.tsx",
+    "apps/web/app/(main)/_components/user-menu.container.server.tsx",
+    "apps/web/app/(main)/_components/user-menu.presenter.client.tsx",
+    "apps/web/app/(main)/_components/user-menu.skeleton.universal.tsx",
+    "apps/web/app/(main)/layout.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/components/ui/skeleton.tsx",
+    "apps/web/lib/user.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b6/a07c281d2c/0/metadata.json",
+      "transcript": "/b6/a07c281d2c/0/full.jsonl",
+      "content_hash": "/b6/a07c281d2c/0/content_hash.txt",
+      "prompt": "/b6/a07c281d2c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 385,
+    "cache_creation_tokens": 68262,
+    "cache_read_tokens": 4806100,
+    "output_tokens": 28431,
+    "api_call_count": 81
+  }
+}
