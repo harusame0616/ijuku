@@ -1,0 +1,115 @@
+86ex9fu3f の設計を行います。私と議論をして設計を固め、方針が定まったらチケットに追記してください。
+
+
+参照ファイル
+@apps/api/routes/users/settings/apikeys/generate-api-key.usecase.go
+@apps/api/routes/users/settings/apikeys/api-key.sqrc-repository.go 
+
+FOR UPDATE を使って DB のロックをする方針がいいと思います。
+その上で DDD / クリーンアーキテクチャのような方針をとっているので
+トランザクションの扱う際にどのようにするべきか考えたいです。
+
+まず今回の実装を行う上でFOR UPDATE を使った方法以外に何かないか、
+FOR UPDATE を使う方法をとった場合の懸念事項を考えてください
+
+---
+
+楽観ロックについて解説して。おそらくバージョン情報を持たせるということだろうけど、今回どの様に適用するの？
+
+---
+
+FOR UPDATE を使った場合のロックする行がない問題はクリティカルです。ユーザーテーブルをロックするも考えられますが、関係ない箇所でロック待ちをしてしまったり、他に同様なケースが出た時に競合するため適切ではないと思います。そのため、 アドバイザリーロックが適切かと思いますがどう思いますか？
+
+---
+
+ユーザーID だけだと他の同様なケースに対応できないので prefix をつけて`APIKEY_GEN_LOCK_ユーザーID` でハッシュを撮りましょう
+
+---
+
+再度トランザクションを扱う方法について教えて、ユースケースそうでトランザクション管理をするというあんが含まれていませんでしたが他にもあんがあれば教えて
+
+---
+
+https://tech.yappli.io/entry/ddd_usecase の形はどれ？
+
+---
+
+この記事の形にしましょう。tx は pgx が露出しても OK です。不必要に複雑性がましてしまうのと、テストは DB に接続した結合テストを集めにする予定なのでてスタビリティー的には問題ないです。ここまでの内容をチケットにまとめて欲しいです。チケットを記載する上でさらに深掘りが必要だったり不明点があれば確認してください
+
+---
+
+いや、メソッド自体を tx を受け取る形に変えようと思います。トレードオフは何かありますか？
+
+---
+
+withLock というメソッドにするしかないかな。
+
+---
+
+withTx というメソッドにしようと思います。
+
+---
+
+とりあえず不要なケースはないの既存の count / save はなしで countWithTx / countWithSave でいいです
+
+---
+
+CLICK UP の装飾が使われていないけど
+
+---
+
+やることがチェックボックスになっていないけど
+
+---
+
+間違わないように @agent-docs/チケット管理.md を修正して
+
+---
+
+チケット管理.md 自体の修正をして（markdown_descriptionを使ったり checkbox を使うように）
+
+---
+
+@agent-docs/チケット管理.md チケット更新して
+
+---
+
+@supabase/config.toml 
+
+{"web":{"client_id":"769509518330-c8h4tlj5bhmbj7rqlr866se5vns4tsjc.apps.googleusercontent.com","project_id":"jukubox-493822","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"REDACTED","redirect_uris":["http://localhost:60000/api/auth/callback"],"javascript_origins":["http://localhost:60000"]}}
+
+google の oauth 設定を行って
+
+---
+
+どうやって再生成するの？
+
+---
+
+Google でログイン
+アクセスをブロック: このアプリのリクエストは無効です
+
+nemoto.masaharu.it@gmail.com
+このアプリが無効なリクエストを送信したため、ログインできません。しばらくしてからもう一度お試しいただくか、この問題についてデベロッパーにお問い合わせください。 このエラーの詳細
+このアプリのデベロッパーの場合は、エラーの詳細をご確認ください。
+エラー 400: redirect_uri_mismatch
+
+---
+
+config.toml の設定の問題じゃない？
+
+---
+
+redirect の設定は？
+
+---
+
+localhost にして
+
+---
+
+google gloud console と supabase の redirect の設定って何が違うの？どっちがどっち？
+
+---
+
+クライアントからログインボタンをおすと /api/auth/oauth にアクセスして oauth.handler.go を呼び出す様にしています。calback の指定の処理は正しい？

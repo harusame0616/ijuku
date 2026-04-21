@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "8427fe961521",
+  "session_id": "2dfd0cdd-4973-424d-856d-dfe5632f2d1d",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-21T12:53:00.509213Z",
+  "branch": "86ex7e64b",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "apps/api/go.mod",
+    "apps/api/go.sum",
+    "apps/api/lib/auth/jwt.go",
+    "apps/api/main.go",
+    "apps/web/app/login/page.tsx",
+    "apps/web/proxy.ts",
+    "supabase/config.toml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "9951c944b8f0",
+  "checkpoint_transcript_start": 128,
+  "transcript_lines_at_start": 128,
+  "token_usage": {
+    "input_tokens": 36,
+    "cache_creation_tokens": 72670,
+    "cache_read_tokens": 1239015,
+    "output_tokens": 9373,
+    "api_call_count": 21
+  },
+  "session_metrics": {
+    "turn_count": 21
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-21T12:53:00.386881Z",
+    "agent_lines": 490,
+    "human_added": 523,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 1021,
+    "agent_percentage": 47.992164544564154
+  }
+}
