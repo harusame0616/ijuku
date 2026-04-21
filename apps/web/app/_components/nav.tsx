@@ -24,23 +24,13 @@ export function Nav() {
       </div>
 
       {/* CTA */}
-      <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          nativeButton={false}
-          render={<Link href="/login" prefetch={false} />}
-        >
-          ログイン
-        </Button>
-        <Button
-          size="sm"
-          nativeButton={false}
-          render={<Link href="/register" prefetch={false} />}
-        >
-          新規登録
-        </Button>
-      </div>
+      <Button
+        size="sm"
+        nativeButton={false}
+        render={<Link href="/login" prefetch={false} />}
+      >
+        ログイン
+      </Button>
     </nav>
   );
 }

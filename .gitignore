@@ -2,3 +2,5 @@
 
 .claude.local.json
 .work
+
+node_modules

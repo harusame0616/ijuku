@@ -29,33 +29,18 @@ export function CtaSection() {
         </h2>
 
         <p className="text-base leading-relaxed max-w-lg text-muted-foreground">
-          今すぐ無料でアカウントを作成。 自分だけの学習スタジオを立ち上げよう。
+          今すぐログインして、自分だけの学習スタジオを立ち上げよう。
         </p>
 
         {/* ボタン群 */}
-        <div className="flex flex-wrap items-center gap-4">
-          <Button
-            size="lg"
-            className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
-            nativeButton={false}
-            render={<Link href="/register" prefetch={false} />}
-          >
-            新規登録
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/login" prefetch={false} />}
-          >
-            ログイン
-          </Button>
-        </div>
-
-        {/* 補足 */}
-        <p className="font-mono text-xs text-subtle-foreground">
-          クレジットカード不要 · いつでもキャンセル可 · 商用利用可
-        </p>
+        <Button
+          size="lg"
+          className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
+          nativeButton={false}
+          render={<Link href="/login" prefetch={false} />}
+        >
+          ログイン
+        </Button>
 
         {/* セパレーター */}
         <LandingDivider className="max-w-sm mt-2" />
