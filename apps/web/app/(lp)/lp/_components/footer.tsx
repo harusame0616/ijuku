@@ -1,5 +1,5 @@
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
-import { JukuBoxLogo } from "@/app/_components/jukubox-logo";
+import { Divider } from "@/components/divider";
+import { JukuBoxLogo } from "@/components/jukubox-logo";
 import Link from "next/link";
 import type { Route } from "next";
 
@@ -38,7 +38,7 @@ export function Footer() {
         </nav>
 
         {/* セパレーター */}
-        <LandingDivider />
+        <Divider />
 
         <p className="font-mono text-xs text-muted-foreground">
           © 2025 JukuBox.ai — All rights reserved.

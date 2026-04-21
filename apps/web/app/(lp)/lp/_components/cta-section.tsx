@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
-import { GridSection } from "@/app/_components/ui/grid-section";
+import { Divider } from "@/components/divider";
+import { GridSection } from "@/components/grid-section";
 import Link from "next/link";
 
 export function CtaSection() {
@@ -43,7 +43,7 @@ export function CtaSection() {
         </Button>
 
         {/* セパレーター */}
-        <LandingDivider className="max-w-sm mt-2" />
+        <Divider className="max-w-sm mt-2" />
       </div>
     </GridSection>
   );

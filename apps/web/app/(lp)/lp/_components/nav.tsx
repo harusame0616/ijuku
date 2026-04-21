@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { JukuBoxLogo } from "@/app/_components/jukubox-logo";
+import { JukuBoxLogo } from "@/components/jukubox-logo";
 
 export function Nav() {
   return (

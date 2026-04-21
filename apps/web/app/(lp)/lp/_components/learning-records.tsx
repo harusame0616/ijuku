@@ -1,4 +1,4 @@
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { Divider } from "@/components/divider";
 import { cn } from "@/lib/utils";
 
 const mockLog = [
@@ -94,7 +94,7 @@ export function LearningRecords() {
             学習の全履歴が自動で残る。いつ・何を・どれだけ正解したか。
             弱点も強みも、データが教えてくれる。
           </p>
-          <LandingDivider className="max-w-xs mt-2" />
+          <Divider className="max-w-xs mt-2" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

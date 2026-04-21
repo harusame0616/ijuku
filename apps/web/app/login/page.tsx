@@ -1,6 +1,6 @@
-import { JukuBoxLogo } from "@/app/_components/jukubox-logo";
-import { GridSection } from "@/app/_components/ui/grid-section";
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { JukuBoxLogo } from "@/components/jukubox-logo";
+import { GridSection } from "@/components/grid-section";
+import { Divider } from "@/components/divider";
 import Link from "next/link";
 import { OAuthLoginButton } from "./oauth-login-button";
 
@@ -26,10 +26,9 @@ export default function Page() {
           <p className="text-sm text-muted-foreground text-center leading-relaxed">
             以下のアカウントでログインしてください
           </p>
-          <LandingDivider />
+          <Divider />
           <OAuthLoginButton />
         </div>
-
       </div>
     </GridSection>
   );

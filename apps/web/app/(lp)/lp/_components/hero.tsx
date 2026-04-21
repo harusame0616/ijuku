@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { GridSection } from "@/app/_components/ui/grid-section";
-import { JukuBoxLogo } from "./jukubox-logo";
+import { GridSection } from "@/components/grid-section";
+import { JukuBoxLogo } from "../../../../components/jukubox-logo";
 import Link from "next/link";
 
 function VinylRecord() {

@@ -1,4 +1,4 @@
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { Divider } from "@/components/divider";
 
 const steps = [
   {
@@ -43,7 +43,7 @@ export function HowItWorks() {
           <h2 className="font-serif font-black text-4xl lg:text-5xl text-foreground">
             使い方は、シンプル。
           </h2>
-          <LandingDivider className="max-w-xs mt-2" />
+          <Divider className="max-w-xs mt-2" />
         </div>
 
         {/* ステップ */}

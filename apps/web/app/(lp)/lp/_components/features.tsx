@@ -1,4 +1,4 @@
-import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { Divider } from "@/components/divider";
 
 const features = [
   {
@@ -54,7 +54,7 @@ export function Features() {
             塾の構造化された学習と、Jukebox のように
             「好きな曲を選んで流す」自由さを融合させた学習体験。
           </p>
-          <LandingDivider className="max-w-xs mt-2" />
+          <Divider className="max-w-xs mt-2" />
         </div>
 
         {/* カードグリッド */}
