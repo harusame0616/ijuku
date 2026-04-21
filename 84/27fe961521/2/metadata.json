@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "8427fe961521",
+  "session_id": "4dc395e0-9f1d-4db3-ab31-b17ff3104cbc",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-21T12:53:00.616022Z",
+  "branch": "86ex7e64b",
+  "checkpoints_count": 8,
+  "files_touched": [
+    ".claude/rules/next-page.md",
+    ".gitignore",
+    "apps/api/go.mod",
+    "apps/api/go.sum",
+    "apps/api/lib/auth/jwt.go",
+    "apps/api/main.go",
+    "apps/api/routes/auth/handler.go",
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/hero.tsx",
+    "apps/web/app/_components/nav.tsx",
+    "apps/web/app/auth/callback/route.ts",
+    "apps/web/app/login/oauth-login-button.tsx",
+    "apps/web/app/login/page.tsx",
+    "apps/web/lib/supabase/client.ts",
+    "apps/web/lib/supabase/config.ts",
+    "apps/web/lib/supabase/server.ts",
+    "apps/web/package.json",
+    "apps/web/pnpm-lock.yaml",
+    "apps/web/proxy.ts",
+    "supabase/config.toml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "2bc972dbb25b",
+  "token_usage": {
+    "input_tokens": 57,
+    "cache_creation_tokens": 43264,
+    "cache_read_tokens": 1478693,
+    "output_tokens": 13026,
+    "api_call_count": 37
+  },
+  "session_metrics": {
+    "turn_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-21T12:53:00.542793Z",
+    "agent_lines": 455,
+    "human_added": 51,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 514,
+    "agent_percentage": 88.52140077821011
+  }
+}
