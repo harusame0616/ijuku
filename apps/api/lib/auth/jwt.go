@@ -82,6 +82,25 @@ func (v *Verifier) Verify(tokenString string) error {
 	return nil
 }
 
+func (v *Verifier) GetUserID(tokenString string) (string, error) {
+	token, err := jwt.Parse(tokenString, v.keyFunc)
+	if err != nil {
+		return "", ErrUnauthorized
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", ErrUnauthorized
+	}
+
+	sub, ok := claims["sub"].(string)
+	if !ok || sub == "" {
+		return "", ErrUnauthorized
+	}
+
+	return sub, nil
+}
+
 func (v *Verifier) keyFunc(token *jwt.Token) (any, error) {
 	switch token.Method.(type) {
 	case *jwt.SigningMethodHMAC:

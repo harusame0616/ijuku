@@ -13,6 +13,8 @@ import (
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
+	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
+	usersqueries "github.com/harusame0616/ijuku/apps/api/routes/users/queries"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -33,11 +35,19 @@ func main() {
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
 	authHandler := auth.NewHandler(verifier)
 
+	getUserHandler := usersqueries.NewGetUserHandler(q)
+	updateUserHandler := userscommands.NewUpdateUserHandler(
+		userscommands.NewUpdateUserUsecase(userscommands.NewUserSqrcRepository(q)),
+		verifier,
+	)
+
 	http.HandleFunc("GET /v1/auth/check", authHandler.CheckHandler)
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
 	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
+	http.HandleFunc("GET /v1/users/{userID}", getUserHandler.GetUserHandler)
+	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
