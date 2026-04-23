@@ -27,3 +27,15 @@ next.js の file convention は除外する（page.tsx など）
 ## presenter コンポーネント
 
 \*.presenter.[server|client|universal].tsx
+
+## form コンポーネント
+
+\*.form.client.tsx
+
+## Server Action
+
+\*.action.ts
+
+## RSC 用データフェッチ
+
+\*.data.ts

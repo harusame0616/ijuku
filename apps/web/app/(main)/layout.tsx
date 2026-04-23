@@ -6,9 +6,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="grid grid-rows-[auto_1fr] overflow-hidden h-screen">
       <Header />
-      {children}
-    </>
+      <main className="overflow-y-auto p-4 [scrollbar-gutter:stable]">
+        {children}
+      </main>
+    </div>
   );
 }

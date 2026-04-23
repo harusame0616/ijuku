@@ -82,6 +82,7 @@ type User struct {
 	Nickname  string             `json:"nickname"`
 	CreatedAt pgtype.Timestamptz `json:"_created_at"`
 	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+	Introduce string             `json:"introduce"`
 }
 
 type UserTopicProgress struct {
