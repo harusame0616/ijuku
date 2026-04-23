@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2153d5c99f95",
+  "strategy": "manual-commit",
+  "branch": "86exb4ex0",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".claude/rules/container-server-component.md",
+    ".claude/rules/next-page.md",
+    ".claude/rules/skeleton-component.md",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/package.json",
+    "apps/web/pnpm-lock.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/21/53d5c99f95/0/metadata.json",
+      "transcript": "/21/53d5c99f95/0/full.jsonl",
+      "content_hash": "/21/53d5c99f95/0/content_hash.txt",
+      "prompt": "/21/53d5c99f95/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2824,
+    "cache_creation_tokens": 294002,
+    "cache_read_tokens": 11080832,
+    "output_tokens": 70526,
+    "api_call_count": 160
+  }
+}
