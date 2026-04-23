@@ -1,0 +1,53 @@
+ルールを遵守してください
+
+---
+
+コンポーネントを shadcn を使う様にしてください
+
+---
+
+標準じゃないってどういうこと？ shadcn の base-ui タイプだよね？普通に shadcn のコンポーネントとしてインストールして
+
+---
+
+tanstack form の validator にスキーマを設定して
+
+---
+
+H1 要素で「プロフィール」としてください。component-architecture.md に準拠して form を修正してください
+
+---
+
+H1 要素で「プロフィール」としてください。component-architecture.md に準拠して placeholder を削除して任意、必死のバッジを表示してください
+
+---
+
+Outline にしてほしい。あと RequireOptionalBudge としてコンポーネントに切り出して
+
+---
+
+require は primary 、 optional は secondary にして欲しい
+
+---
+
+アウトラ�ンの線を
+
+---
+
+説明はフォームの下ではなくラベルの下
+
+---
+
+説明文には described by 的な aria を設定して欲しい
+
+---
+
+shadcn の field / fieldlabel を使う方式に変えてください https://ui.shadcn.com/docs/forms/tanstack-form
+
+---
+
+aria-describedby が不要になります
+
+---
+
+useForm で validators を指定しているけど、form.Field でも validators の指定が必要？
