@@ -9,7 +9,6 @@ import (
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
-	"github.com/harusame0616/ijuku/apps/api/routes/auth"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
@@ -33,7 +32,6 @@ func main() {
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
-	authHandler := auth.NewHandler(verifier)
 
 	getUserHandler := usersqueries.NewGetUserHandler(q)
 	updateUserHandler := userscommands.NewUpdateUserHandler(
@@ -41,7 +39,6 @@ func main() {
 		verifier,
 	)
 
-	http.HandleFunc("GET /v1/auth/check", authHandler.CheckHandler)
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)

@@ -120,6 +120,22 @@ func TestPatchUserHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
 	})
 
+	t.Run("ユーザーが存在しない場合404を返す", func(t *testing.T) {
+		h := NewUpdateUserHandler(&mockUpdateUsecase{err: ErrUserNotFound}, newTestVerifier(t))
+		token := signToken(t, testUserID, false)
+		w := httptest.NewRecorder()
+		h.PatchUserHandler(w, newPatchRequest(t, testUserID, validBody, token))
+		assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+	})
+
+	t.Run("予期しないエラーの場合500を返す", func(t *testing.T) {
+		h := NewUpdateUserHandler(&mockUpdateUsecase{err: fmt.Errorf("unexpected error")}, newTestVerifier(t))
+		token := signToken(t, testUserID, false)
+		w := httptest.NewRecorder()
+		h.PatchUserHandler(w, newPatchRequest(t, testUserID, validBody, token))
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+	})
+
 	t.Run("正常な場合200とnickname・introduceを返す", func(t *testing.T) {
 		h := NewUpdateUserHandler(&mockUpdateUsecase{}, newTestVerifier(t))
 		token := signToken(t, testUserID, false)
