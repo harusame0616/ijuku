@@ -46,6 +46,8 @@ jobs:
       - name: pnpm のセットアップ
         if: steps.should-run.outputs.result == 'true'
         uses: pnpm/action-setup@v4
+        with:
+          package_json_file: apps/web/package.json
 
       - name: Node.js のセットアップ
         if: steps.should-run.outputs.result == 'true'
@@ -53,11 +55,10 @@ jobs:
         with:
           node-version-file: apps/web/.node-version
           cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          cache-dependency-path: apps/web/pnpm-lock.yaml
 
       - name: 依存パッケージのインストール
         if: steps.should-run.outputs.result == 'true'
-        working-directory: ${{ github.workspace }}
         run: pnpm install --frozen-lockfile
 
       - name: Playwright ブラウザのインストール
