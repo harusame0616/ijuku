@@ -1,0 +1,121 @@
+@agent-docs/チケット管理.md 86exc3h92
+
+---
+
+1
+
+---
+
+進めて
+
+---
+
+フロントエンドテストルールにそってテストを修正して
+
+---
+
+@profile-edit.presenter.form.client.tsx のテストも書いてみて
+
+---
+
+document.craeteElement などを使っているの？ブラウザーモードってhttps://github.com/vitest-community/vitest-browser-reactを使うんじゃないの？
+
+---
+
+最大文字数と最小文字数のチェックも追加して
+
+---
+
+edit profile で success false が帰ってきた場合と例外が投げられた場合のテストは？
+
+---
+
+message を返すのではなくエラーコードを返してください
+
+---
+
+message を返すのではなくエラーコードを返してください。フロントエンドはエラーコードをもとにメッセージを組み立ててください
+
+---
+
+マウント前は false のテストが必要
+
+---
+
+renderHook は？
+
+---
+
+renderToString って何？ renderHook についても解説して
+
+---
+
+getProfile のテストも必要
+
+---
+
+getData もresult 型を返す様にしてエラー時はエラーコードを返す様にしてください
+
+---
+
+NOT FOUND とログインしていない場合は login ページへ redirect
+
+---
+
+TRY キャッチで囲んでその他不明なエラーは INTERNAL_SERVER_ERROR を返して
+
+---
+
+try catch で囲んでその他のエラーの場合は 500 エラーにして
+
+---
+
+switch で条件分岐が不足しない様にして
+
+---
+
+switch で default で never を指定してチェックが不足しない様にして
+
+---
+
+API って not found を返す？FETCH_FAILED だと大きくまとめすぎ。
+
+---
+
+handleGetProfileResult 関数を別ファイルに作成して。テストも作成が必要
+
+---
+
+saffix がついていない .server が必要
+
+---
+
+auto って何？
+
+---
+
+なんで配列にしているの？配列にするとどういう挙動になるの？
+
+---
+
+バリデーションエラーがある場合は server action が呼び出されないことのテストある？なければ追加して
+
+---
+
+form requestSubmit まで検証する必要ないんじゃない。どういう状況でそれが発生する必要があるの？ disabled になっていることを確認するんじゃなくてクリックできないことを確認できないの？
+
+---
+
+それはクリックできsないが disabled になっているという実装に依存してしまっています。
+
+---
+
+button の実装で disabled にしていません。（アクセシビリティーの問題で
+
+---
+
+medium テストは supabase だけじゃなく api の起動も前提だよね
+
+---
+
+不要��ファイルが差分に出てしまっているので .gitignore に登録してください
