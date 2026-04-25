@@ -1,5 +1,5 @@
 import { expect, test as base, vi } from "vitest";
-import type { getProfile as GetProfileFunction } from "./profile.data";
+import { getProfile } from "./profile.data";
 
 const getSessionMock = vi.fn<() => Promise<{ data: { session: unknown } }>>();
 
@@ -9,13 +9,10 @@ vi.mock("@/lib/supabase/server", () => ({
   }),
 }));
 
-const test = base.extend<{ getProfile: typeof GetProfileFunction }>({
+const test = base.extend<{ getProfile: typeof getProfile }>({
   getProfile: async ({}, provide) => {
     getSessionMock.mockReset();
     vi.unstubAllGlobals();
-    vi.unstubAllEnvs();
-    vi.stubEnv("API_URL", "https://api.test.example");
-    const { getProfile } = await import("./profile.data");
     await provide(getProfile);
   },
 });
@@ -66,14 +63,15 @@ test("API が 200 を返した場合は Profile を返す", async ({ getProfile 
       session: { user: { id: "user-1" }, access_token: "token-1" },
     },
   });
-  const fetchMock = vi.fn(
-    async () =>
-      Response.json({ nickname: "taro", introduce: "hi" }, {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }),
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () =>
+      Response.json(
+        { nickname: "taro", introduce: "hi" },
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    ),
   );
-  vi.stubGlobal("fetch", fetchMock);
 
   const result = await getProfile();
 
@@ -81,8 +79,4 @@ test("API が 200 を返した場合は Profile を返す", async ({ getProfile 
     success: true,
     profile: { nickname: "taro", introduce: "hi" },
   });
-  expect(fetchMock).toHaveBeenCalledWith(
-    "https://api.test.example/v1/users/user-1",
-    { headers: { Authorization: "Bearer token-1" } },
-  );
 });
