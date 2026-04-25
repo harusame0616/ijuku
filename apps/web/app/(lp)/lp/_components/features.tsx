@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Divider } from "@/components/divider";
 
 const features = [
@@ -31,7 +32,7 @@ const features = [
   },
 ];
 
-export function Features() {
+export function Features(): JSX.Element {
   return (
     <section
       id="機能"

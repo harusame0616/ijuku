@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+import type { JSX } from "react";
+import { cn } from "@/lib/utilities";
 import type { Metadata } from "next";
 import { Orbitron } from "next/font/google";
 import "./globals.css";
@@ -18,10 +19,10 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="ja" className={cn("h-full", "font-sans", orbitron.variable)}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

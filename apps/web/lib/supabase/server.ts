@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { getSupabaseConfig } from './config'
 
-export async function createClient() {
+export async function createClient(): Promise<ReturnType<typeof createServerClient>> {
   const cookieStore = await cookies()
   const supabsePublicConfig = getSupabaseConfig()
 
@@ -16,9 +16,9 @@ export async function createClient() {
         },
         setAll(cookiesToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            )
+            for (const { name, value, options } of cookiesToSet) {
+              cookieStore.set(name, value, options)
+            }
           } catch {
             // Server Component からの呼び出し時は無視
           }

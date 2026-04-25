@@ -1,4 +1,5 @@
 import { expect, test as base, vi } from "vitest";
+import type { getProfile as GetProfileFunction } from "./profile.data";
 
 const getSessionMock = vi.fn<() => Promise<{ data: { session: unknown } }>>();
 
@@ -8,7 +9,7 @@ vi.mock("@/lib/supabase/server", () => ({
   }),
 }));
 
-const test = base.extend<{ getProfile: typeof import("./profile.data").getProfile }>({
+const test = base.extend<{ getProfile: typeof GetProfileFunction }>({
   getProfile: async ({}, provide) => {
     getSessionMock.mockReset();
     vi.unstubAllGlobals();
@@ -67,7 +68,7 @@ test("API が 200 を返した場合は Profile を返す", async ({ getProfile 
   });
   const fetchMock = vi.fn(
     async () =>
-      new Response(JSON.stringify({ nickname: "taro", introduce: "hi" }), {
+      Response.json({ nickname: "taro", introduce: "hi" }, {
         status: 200,
         headers: { "Content-Type": "application/json" },
       }),

@@ -1,9 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 
-export type User = {
+export interface User {
   id: string;
   nickname: string;
-};
+}
 
 export async function getUser(): Promise<User | null> {
   const supabase = await createClient();

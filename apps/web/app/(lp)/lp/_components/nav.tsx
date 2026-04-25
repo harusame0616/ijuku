@@ -1,8 +1,9 @@
+import type { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { JukuBoxLogo } from "@/components/jukubox-logo";
 
-export function Nav() {
+export function Nav(): JSX.Element {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-background/20 backdrop-blur-xl border-b border-primary/10">
       {/* ロゴ */}

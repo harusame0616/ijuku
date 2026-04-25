@@ -1,11 +1,11 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { JSX, ComponentPropsWithoutRef } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utilities";
 
 export function GridSection({
   className,
   ...props
-}: ComponentPropsWithoutRef<"section">) {
+}: ComponentPropsWithoutRef<"section">): JSX.Element {
   return (
     <section
       className={cn(

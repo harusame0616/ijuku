@@ -1,9 +1,10 @@
+import type { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/user";
 import Link from "next/link";
 import { UserMenuPresenter } from "./user-menu.presenter.client";
 
-export async function UserMenuContainer() {
+export async function UserMenuContainer(): Promise<JSX.Element> {
   const user = await getUser();
 
   if (user) {

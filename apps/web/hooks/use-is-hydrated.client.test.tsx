@@ -1,9 +1,10 @@
+import type { JSX } from "react";
 import { expect, test } from "vitest";
 import { renderToString } from "react-dom/server";
 import { renderHook } from "vitest-browser-react";
 import { useIsHydrated } from "./use-is-hydrated";
 
-function HydrationProbe() {
+function HydrationProbe(): JSX.Element {
   const hydrated = useIsHydrated();
   return <span>{hydrated ? "yes" : "no"}</span>;
 }

@@ -1,10 +1,11 @@
+import type { JSX } from "react";
 import { JukuBoxLogo } from "@/components/jukubox-logo";
 import { GridSection } from "@/components/grid-section";
 import { Divider } from "@/components/divider";
 import Link from "next/link";
 import { OAuthLoginButton } from "./oauth-login-button";
 
-export default function Page() {
+export default function Page(): JSX.Element {
   return (
     <GridSection className="relative min-h-screen flex items-center justify-center px-4">
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,oklch(0.75_0.12_77/0.06)_0%,transparent_65%)]" />

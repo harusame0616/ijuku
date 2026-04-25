@@ -1,13 +1,17 @@
-.PHONY: dev test-all test-coverage test-coverage-show
+.PHONY: dev test-all test-coverage test-coverage-show lint
 
 help:
 	@echo "make dev: 開発サーバー起動"
 	@echo "make test-all: 全テスト実行（カバレッジ付き）"
 	@echo "make test-coverage: カバレッジが 80% 以上かチェック"
 	@echo "make test-coverage-show: カバレッジをブラウザで表示"
+	@echo "make lint: ESLint の実行"
 
 dev:
 	pnpm dev
+
+lint:
+	pnpm lint
 
 test-all:
 	pnpm vitest run --coverage

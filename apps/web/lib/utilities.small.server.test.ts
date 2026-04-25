@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { cn } from "./utils";
+import { cn } from "./utilities";
 
 test("cn: 複数のクラス名を結合する", () => {
   expect(cn("a", "b")).toBe("a b");

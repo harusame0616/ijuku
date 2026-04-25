@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Divider } from "@/components/divider";
 import { JukuBoxLogo } from "@/components/jukubox-logo";
 import Link from "next/link";
@@ -12,7 +13,7 @@ const links = [
   { label: "利用規約", href: "/" },
 ] as const satisfies { label: string; href: Route }[];
 
-export function Footer() {
+export function Footer(): JSX.Element {
   return (
     <footer className="py-16 px-8 border-t border-primary/10">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">

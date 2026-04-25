@@ -1,9 +1,10 @@
+import type { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@/components/divider";
 import { GridSection } from "@/components/grid-section";
 import Link from "next/link";
 
-export function CtaSection() {
+export function CtaSection(): JSX.Element {
   return (
     <GridSection className="relative py-32 px-8 overflow-hidden">
       {/* ラジアルグロウ（控えめ） */}

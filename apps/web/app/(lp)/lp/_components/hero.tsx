@@ -1,10 +1,11 @@
+import type { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { GridSection } from "@/components/grid-section";
-import { JukuBoxLogo } from "../../../../components/jukubox-logo";
+import { JukuBoxLogo } from "@/components/jukubox-logo";
 import Link from "next/link";
 
-function VinylRecord() {
-  const grooves = Array.from({ length: 26 }, (_, i) => i);
+function VinylRecord(): JSX.Element {
+  const grooves = Array.from({ length: 26 }, (_, index) => index);
   return (
     <svg
       viewBox="0 0 400 400"
@@ -24,19 +25,19 @@ function VinylRecord() {
         strokeWidth="1"
       />
       {/* 溝 */}
-      {grooves.map((i) => (
+      {grooves.map((index) => (
         <circle
-          key={i}
+          key={index}
           cx="200"
           cy="200"
-          r={180 - i * 5}
+          r={180 - index * 5}
           fill="none"
           stroke={
-            i % 4 === 0
+            index % 4 === 0
               ? "oklch(0.75 0.12 77 / 0.22)"
               : "oklch(0.75 0.12 77 / 0.08)"
           }
-          strokeWidth={i % 4 === 0 ? "0.8" : "0.4"}
+          strokeWidth={index % 4 === 0 ? "0.8" : "0.4"}
         />
       ))}
       {/* センターラベルエリア */}
@@ -89,7 +90,7 @@ function VinylRecord() {
   );
 }
 
-export function Hero() {
+export function Hero(): JSX.Element {
   return (
     <GridSection className="relative min-h-screen flex items-center overflow-hidden">
       {/* 背景ラジアルグロウ（控えめ） */}

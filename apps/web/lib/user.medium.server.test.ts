@@ -1,4 +1,5 @@
 import { expect, test as base, vi } from "vitest";
+import type { getUser as GetUserFunction } from "./user";
 
 vi.mock("next/headers", () => ({
   cookies: async () => ({
@@ -7,7 +8,7 @@ vi.mock("next/headers", () => ({
   }),
 }));
 
-const test = base.extend<{ getUser: typeof import("./user").getUser }>({
+const test = base.extend<{ getUser: typeof GetUserFunction }>({
   getUser: async ({}, provide) => {
     process.env.NEXT_PUBLIC_SUPABASE_URL ??= "http://127.0.0.1:54321";
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??=
