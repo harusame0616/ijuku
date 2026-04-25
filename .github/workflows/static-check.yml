@@ -1,0 +1,40 @@
+# cspell はプロジェクト全体を対象とするため、任意のファイル変更がスペルエラーになりうる。
+# そのため、ファイルフィルターによるスキップは行わない。
+
+name: 静的チェック
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cspell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: pnpm のセットアップ
+        uses: pnpm/action-setup@v4
+
+      - name: Node.js のセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: 依存パッケージのインストール
+        run: pnpm install --frozen-lockfile
+
+      - name: スペルチェックの実行
+        run: make spell-check

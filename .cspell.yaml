@@ -1,0 +1,88 @@
+version: "0.2"
+globRoot: .
+files:
+  - "**"
+ignorePaths:
+  - node_modules
+  - .next
+  - dist
+  - coverage
+  - .claude
+  - plans
+  - "**/*.tsbuildinfo"
+  - "**/pnpm-lock.yaml"
+  - "**/*.sum"
+  - "**/go.mod"
+  - skills-lock.json
+  - apps/api/internal/db
+  - apps/api/tmp
+  - "**/*.out"
+  - supabase
+language: en
+ignoreRegExpList:
+  - /[　-鿿-￯]+/g
+words:
+  # project names
+  - harusame
+  - ijuku
+  - juku
+  - Juku
+  - jukubox
+  - Jukubox
+  # product / library names
+  - supabase
+  - Supabase
+  - SUPABASE
+  - shadcn
+  - hugeicons
+  - Hugeicons
+  - vitest
+  - unrs
+  # go packages / authors
+  - jackc
+  - stretchr
+  - errgroup
+  # go tooling / linting directives
+  - gosec
+  - nolint
+  - GOCACHE
+  - GOTMPDIR
+  - coverpkg
+  - coverprofile
+  - gsub
+  # go / project package names
+  - txrunner
+  - uuidutils
+  - libauth
+  - userscommands
+  - usersqueries
+  # sqlc / repository pattern
+  - sqlc
+  - sqls
+  - sqrc
+  - Sqrc
+  # postgresql types / terms
+  - pgconn
+  - pgtype
+  - pgxpool
+  - Timestamptz
+  - plpgsql
+  - sslmode
+  - ltree
+  - xact
+  # domain / db model names
+  - apikey
+  - Apikey
+  - APIKEY
+  - Courseid
+  - Coursesectiontopicid
+  - Enrollable
+  - usecase
+  - Usecase
+  # variable abbreviations
+  - gctx
+  # route / ui
+  - lp
+  - exlg
+  # test utilities
+  - unstub
