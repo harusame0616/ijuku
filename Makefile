@@ -1,4 +1,4 @@
-.PHONY: dev-api migrate-up api-test-all api-test-coverage api-test-coverage-show web-dev web-test-all web-test-coverage web-test-coverage-show
+.PHONY: dev-api migrate-up api-test-all api-test-coverage api-test-coverage-show web-dev web-test-all web-test-coverage web-test-coverage-show spell-check
 
 help:
 	@echo "make dev-api: API 開発サーバー起動（ホットリロード付き）"
@@ -10,6 +10,7 @@ help:
 	@echo "make web-test-all: web の全テスト実行（カバレッジ付き）"
 	@echo "make web-test-coverage: web のカバレッジが80%以上かチェック"
 	@echo "make web-test-coverage-show: web のカバレッジをブラウザで表示"
+	@echo "make spell-check: スペルチェックの実行"
 
 dev-api:
 	$(MAKE) -C apps/api dev
@@ -43,3 +44,6 @@ web-test-coverage:
 
 web-test-coverage-show:
 	$(MAKE) -C apps/web test-coverage-show
+
+spell-check:
+	pnpm cspell "**"

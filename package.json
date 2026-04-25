@@ -1,0 +1,8 @@
+{
+  "name": "ijuku",
+  "private": true,
+  "packageManager": "pnpm@10.26.1",
+  "devDependencies": {
+    "cspell": "^9.8.0"
+  }
+}
