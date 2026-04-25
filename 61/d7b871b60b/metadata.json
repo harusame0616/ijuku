@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "61d7b871b60b",
+  "strategy": "manual-commit",
+  "branch": "CU-86excr0fr_import_nemoto-masaharu",
+  "checkpoints_count": 8,
+  "files_touched": [
+    "apps/web/app/(main)/settings/profile.data.small.server.test.ts",
+    "apps/web/lib/user.medium.server.test.ts",
+    "apps/web/vitest.server.config.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/61/d7b871b60b/0/metadata.json",
+      "transcript": "/61/d7b871b60b/0/full.jsonl",
+      "content_hash": "/61/d7b871b60b/0/content_hash.txt",
+      "prompt": "/61/d7b871b60b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 82,
+    "cache_creation_tokens": 108672,
+    "cache_read_tokens": 1518491,
+    "output_tokens": 16741,
+    "api_call_count": 32
+  }
+}
