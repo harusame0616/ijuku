@@ -93,6 +93,10 @@ jobs:
       - name: API サーバーの起動
         if: steps.should-run.outputs.result == 'true'
         working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+          SUPABASE_URL: http://127.0.0.1:54321
+          SUPABASE_JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters-long
         run: |
           go build -o /tmp/api ./
           nohup /tmp/api > /tmp/api.log 2>&1 &
