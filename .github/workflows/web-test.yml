@@ -1,0 +1,123 @@
+name: Web テスト
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/web
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 変更ファイルのチェック
+        uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          predicate-quantifier: every
+          filters: |
+            web:
+              - apps/web/**
+              - '!apps/web/**/*.md'
+              - '!apps/web/.claude/**'
+            supabase:
+              - supabase/**
+            api:
+              - apps/api/**
+              - '!apps/api/**/*.md'
+
+      - name: 実行要否の判定
+        id: should-run
+        run: echo "result=${{ steps.filter.outputs.web == 'true' || steps.filter.outputs.supabase == 'true' || steps.filter.outputs.api == 'true' }}" >> $GITHUB_OUTPUT
+
+      - name: pnpm のセットアップ
+        if: steps.should-run.outputs.result == 'true'
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: apps/web/package.json
+
+      - name: Node.js のセットアップ
+        if: steps.should-run.outputs.result == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: apps/web/.node-version
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+
+      - name: 依存パッケージのインストール
+        if: steps.should-run.outputs.result == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Playwright ブラウザのインストール
+        if: steps.should-run.outputs.result == 'true'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Supabase CLI のセットアップ
+        if: steps.should-run.outputs.result == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.92.1
+
+      - name: Supabase の起動
+        if: steps.should-run.outputs.result == 'true'
+        working-directory: ${{ github.workspace }}
+        run: supabase start
+
+      - name: Go のセットアップ
+        if: steps.should-run.outputs.result == 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/api/go.mod
+          cache: true
+
+      - name: マイグレーションの実行
+        if: steps.should-run.outputs.result == 'true'
+        working-directory: ${{ github.workspace }}
+        run: |
+          go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+          make migrate-up
+
+      - name: API サーバーの起動
+        if: steps.should-run.outputs.result == 'true'
+        working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+          SUPABASE_URL: http://127.0.0.1:54321
+          SUPABASE_JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters-long
+        run: |
+          go build -o /tmp/api ./
+          nohup /tmp/api > /tmp/api.log 2>&1 &
+          for i in {1..30}; do
+            if nc -z 127.0.0.1 8080; then
+              echo "API サーバー起動完了"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "API サーバー起動失敗"
+          cat /tmp/api.log
+          exit 1
+
+      - name: テストの実行（カバレッジ付き）
+        if: steps.should-run.outputs.result == 'true'
+        working-directory: ${{ github.workspace }}
+        run: make web-test-all
+
+      - name: カバレッジのチェック
+        if: steps.should-run.outputs.result == 'true'
+        # make web-test-coverage は内部でテストを再実行してしまうため、前ステップの coverage-summary.json を直接参照する
+        run: |
+          node -e "const s=require('./coverage/coverage-summary.json').total.lines.pct; if(s<80){console.log('NG: '+s+'% < 80%');process.exit(1)}else{console.log('OK: '+s+'%')}"

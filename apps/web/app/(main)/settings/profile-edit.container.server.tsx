@@ -1,10 +1,9 @@
-import { notFound } from "next/navigation";
+import { handleGetProfileResult } from "./handle-get-profile-result.server";
 import { getProfile } from "./profile.data";
 import { ProfileEditPresenter } from "./profile-edit.presenter.form.client";
 
 export async function ProfileEditContainer() {
-  const profile = await getProfile();
-  if (!profile) notFound();
+  const profile = handleGetProfileResult(await getProfile());
 
   return (
     <ProfileEditPresenter

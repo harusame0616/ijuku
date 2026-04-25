@@ -14,7 +14,12 @@ import { useIsHydrated } from "@/hooks/use-is-hydrated";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import * as v from "valibot";
-import { editProfile } from "./profile-edit.action";
+import { editProfile, type EditProfileErrorCode } from "./profile-edit.action";
+
+const errorMessages: Record<EditProfileErrorCode, string> = {
+  UNAUTHORIZED: "ログインが必要です",
+  UPDATE_FAILED: "プロフィールの更新に失敗しました",
+};
 
 const nicknameSchema = v.pipe(
   v.string(),
@@ -59,11 +64,15 @@ export function ProfileEditPresenter({
     onSubmit: async ({ value }) => {
       setSuccessMessage(null);
       setSubmitError(null);
-      const res = await editProfile(value.nickname, value.introduce);
-      if (res.success) {
-        setSuccessMessage("プロフィールを保存しました");
-      } else {
-        setSubmitError(res.message);
+      try {
+        const res = await editProfile(value.nickname, value.introduce);
+        if (res.success) {
+          setSuccessMessage("プロフィールを保存しました");
+        } else {
+          setSubmitError(errorMessages[res.code]);
+        }
+      } catch {
+        setSubmitError(errorMessages.UPDATE_FAILED);
       }
     },
   });
