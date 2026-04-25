@@ -1,5 +1,6 @@
 "use client";
 
+import type { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -37,19 +38,19 @@ const schema = v.object({
   introduce: introduceSchema,
 });
 
-type Props = {
+interface Props {
   defaultNickname?: string;
   defaultIntroduce?: string;
   disabled?: boolean;
-};
+}
 
 export function ProfileEditPresenter({
   defaultNickname = "",
   defaultIntroduce = "",
-  disabled: disabledProp = false,
-}: Props) {
+  disabled: disabledProperty = false,
+}: Props): JSX.Element {
   const isHydrated = useIsHydrated();
-  const disabled = disabledProp || !isHydrated;
+  const disabled = disabledProperty || !isHydrated;
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -65,11 +66,11 @@ export function ProfileEditPresenter({
       setSuccessMessage(null);
       setSubmitError(null);
       try {
-        const res = await editProfile(value.nickname, value.introduce);
-        if (res.success) {
+        const response = await editProfile(value.nickname, value.introduce);
+        if (response.success) {
           setSuccessMessage("プロフィールを保存しました");
         } else {
-          setSubmitError(errorMessages[res.code]);
+          setSubmitError(errorMessages[response.code]);
         }
       } catch {
         setSubmitError(errorMessages.UPDATE_FAILED);
@@ -79,9 +80,9 @@ export function ProfileEditPresenter({
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
         form.handleSubmit();
       }}
       className="grid gap-6"
@@ -100,7 +101,7 @@ export function ProfileEditPresenter({
                 name={field.name}
                 aria-invalid={isInvalid}
                 value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(event) => field.handleChange(event.target.value)}
                 onBlur={field.handleBlur}
                 disabled={disabled}
               />
@@ -125,7 +126,7 @@ export function ProfileEditPresenter({
                 name={field.name}
                 aria-invalid={isInvalid}
                 value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(event) => field.handleChange(event.target.value)}
                 onBlur={field.handleBlur}
                 className="h-40"
                 disabled={disabled}

@@ -38,3 +38,43 @@ jobs:
 
       - name: スペルチェックの実行
         run: make spell-check
+
+  web-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 変更ファイルの判定
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            web:
+              - 'apps/web/**'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - '.github/workflows/static-check.yml'
+
+      - name: pnpm のセットアップ
+        if: steps.filter.outputs.web == 'true'
+        uses: pnpm/action-setup@v4
+
+      - name: Node.js のセットアップ
+        if: steps.filter.outputs.web == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: 依存パッケージのインストール
+        if: steps.filter.outputs.web == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: web の Lint 実行
+        if: steps.filter.outputs.web == 'true'
+        run: make web-lint

@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 
-type Props = {
+interface Props {
   required: boolean;
-};
+}
 
 export function RequiredOptionalBadge({ required }: Props) {
   return required ? (

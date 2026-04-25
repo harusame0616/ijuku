@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Divider } from "@/components/divider";
 
 const steps = [
@@ -27,7 +28,7 @@ const steps = [
   },
 ];
 
-export function HowItWorks() {
+export function HowItWorks(): JSX.Element {
   return (
     <section id="使い方" className="relative py-28 px-8 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -48,7 +49,7 @@ export function HowItWorks() {
 
         {/* ステップ */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-0 relative">
-          {steps.map((step, idx) => (
+          {steps.map((step, index) => (
             <div
               key={step.number}
               className="relative flex flex-col items-center text-center px-6 py-8 gap-5"
@@ -71,7 +72,7 @@ export function HowItWorks() {
               </p>
 
               {/* モバイル矢印 */}
-              {idx < steps.length - 1 && (
+              {index < steps.length - 1 && (
                 <div className="lg:hidden text-lg mt-1 text-primary-dim">↓</div>
               )}
             </div>

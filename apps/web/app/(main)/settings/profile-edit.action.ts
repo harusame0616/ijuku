@@ -21,7 +21,7 @@ export async function editProfile(
     return { success: false, code: "UNAUTHORIZED" };
   }
 
-  const res = await fetch(
+  const response = await fetch(
     `${process.env.API_URL}/v1/users/${session.user.id}`,
     {
       method: "PATCH",
@@ -33,7 +33,7 @@ export async function editProfile(
     },
   );
 
-  if (!res.ok) {
+  if (!response.ok) {
     return { success: false, code: "UPDATE_FAILED" };
   }
 

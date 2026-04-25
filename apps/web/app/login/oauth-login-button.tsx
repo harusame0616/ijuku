@@ -1,18 +1,19 @@
 "use client";
 
+import type { JSX } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-export function OAuthLoginButton() {
-  const handleGoogleLogin = async () => {
-    const supabase = createClient();
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-  };
+async function handleGoogleLogin(): Promise<void> {
+  const supabase = createClient();
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${location.origin}/auth/callback`,
+    },
+  });
+}
 
+export function OAuthLoginButton(): JSX.Element {
   return (
     <button
       type="button"
@@ -25,7 +26,7 @@ export function OAuthLoginButton() {
   );
 }
 
-function GoogleLogo() {
+function GoogleLogo(): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

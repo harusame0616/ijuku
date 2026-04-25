@@ -1,4 +1,6 @@
 "use client";
+
+import type { JSX } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -11,9 +13,9 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { Route } from "next";
 import Link from "next/link";
 
-type Props = { nickname: string };
+interface Props { nickname: string }
 
-export function UserMenuPresenter({ nickname }: Props) {
+export function UserMenuPresenter({ nickname }: Props): JSX.Element {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

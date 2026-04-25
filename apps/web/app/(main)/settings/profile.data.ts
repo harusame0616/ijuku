@@ -1,9 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 
-export type Profile = {
+export interface Profile {
   nickname: string;
   introduce: string;
-};
+}
 
 export type GetProfileErrorCode =
   | "UNAUTHORIZED"
@@ -22,14 +22,14 @@ export async function getProfile(): Promise<GetProfileResult> {
 
   if (!session) return { success: false, code: "UNAUTHORIZED" };
 
-  const res = await fetch(
+  const response = await fetch(
     `${process.env.API_URL}/v1/users/${session.user.id}`,
     { headers: { Authorization: `Bearer ${session.access_token}` } },
   );
 
-  if (res.status === 404) return { success: false, code: "NOT_FOUND" };
-  if (!res.ok) return { success: false, code: "INTERNAL_ERROR" };
+  if (response.status === 404) return { success: false, code: "NOT_FOUND" };
+  if (!response.ok) return { success: false, code: "INTERNAL_ERROR" };
 
-  const profile = (await res.json()) as Profile;
+  const profile = (await response.json()) as Profile;
   return { success: true, profile };
 }
