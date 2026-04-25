@@ -1,5 +1,5 @@
-import { expect, test as base, vi } from "vitest";
-import type { getUser as GetUserFunction } from "./user";
+import { expect, test, vi } from "vitest";
+import { getUser } from "./user";
 
 vi.mock("next/headers", () => ({
   cookies: async () => ({
@@ -8,17 +8,7 @@ vi.mock("next/headers", () => ({
   }),
 }));
 
-const test = base.extend<{ getUser: typeof GetUserFunction }>({
-  getUser: async ({}, provide) => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL ??= "http://127.0.0.1:54321";
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??=
-      "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH";
-    const { getUser } = await import("./user");
-    await provide(getUser);
-  },
-});
-
-test("getUser: 未ログイン状態では null を返す（実 DB 疎通）", async ({ getUser }) => {
+test("getUser: 未ログイン状態では null を返す（実 DB 疎通）", async () => {
   const user = await getUser();
   expect(user).toBeNull();
 });
