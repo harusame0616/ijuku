@@ -9,8 +9,8 @@ import (
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
-	"github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
+	enrollmentscommands "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	usersqueries "github.com/harusame0616/ijuku/apps/api/routes/users/queries"
@@ -28,7 +28,7 @@ func main() {
 	q := db.New(pool)
 
 	coursesHandler := queries.NewCoursesHandlers(q)
-	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
+	enrollHandler := enrollmentscommands.NewHandler(enrollmentscommands.NewEnrollCourseUsecase(enrollmentscommands.NewSqrcCourseRepository(q), enrollmentscommands.NewSqrcUserTopicProgressRepository(q)))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
