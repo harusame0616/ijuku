@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "cbacadccd482",
+  "session_id": "a3480704-7622-4f30-81b9-9d17c76a2227",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-26T15:48:04.641263Z",
+  "branch": "CU-86excxhry_API-enroll-usersenrollments_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".cspell.yaml",
+    "apps/api/main.go",
+    "apps/api/routes/courses/commands/course.entity.go",
+    "apps/api/routes/courses/commands/course.sqrc-repository.go",
+    "apps/api/routes/courses/commands/enroll.command.handler.go",
+    "apps/api/routes/courses/commands/enroll.command.handler.medium.server_test.go",
+    "apps/api/routes/courses/commands/enroll.command.handler.small.server_test.go",
+    "apps/api/routes/courses/commands/enroll.usecase.go",
+    "apps/api/routes/courses/commands/progress.entity.go",
+    "apps/api/routes/courses/commands/user_topic_progress.sqrc-repository.go",
+    "apps/api/routes/users/enrollments/commands/course.entity.go",
+    "apps/api/routes/users/enrollments/commands/course.sqrc-repository.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.medium.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enroll.usecase.go",
+    "apps/api/routes/users/enrollments/commands/progress.entity.go",
+    "apps/api/routes/users/enrollments/commands/user_topic_progress.sqrc-repository.go"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "662864f1f9f3",
+  "token_usage": {
+    "input_tokens": 60,
+    "cache_creation_tokens": 98525,
+    "cache_read_tokens": 2131913,
+    "output_tokens": 21371,
+    "api_call_count": 40
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-26T15:48:04.543487Z",
+    "agent_lines": 1215,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1215,
+    "agent_percentage": 100
+  }
+}
