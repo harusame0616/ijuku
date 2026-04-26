@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "77426eb8c40b",
+  "strategy": "manual-commit",
+  "branch": "CU-86exbk2cw_API_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/(main)/settings/handle-get-profile-result.server.ts",
+    "apps/web/app/(main)/settings/handle-get-profile-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/app/(main)/settings/profile-edit.action.ts",
+    "apps/web/app/(main)/settings/profile-edit.container.server.tsx",
+    "apps/web/app/(main)/settings/profile-edit.presenter.form.client.test.tsx",
+    "apps/web/app/(main)/settings/profile-edit.presenter.form.client.tsx",
+    "apps/web/app/(main)/settings/profile-edit.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/profile.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile.data.ts",
+    "apps/web/app/(main)/settings/profile/handle-get-profile-result.server.ts",
+    "apps/web/app/(main)/settings/profile/handle-get-profile-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile/page.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.action.ts",
+    "apps/web/app/(main)/settings/profile/profile-edit.container.server.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.presenter.form.client.test.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.presenter.form.client.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/profile/profile.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile/profile.data.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/77/426eb8c40b/0/metadata.json",
+      "transcript": "/77/426eb8c40b/0/full.jsonl",
+      "content_hash": "/77/426eb8c40b/0/content_hash.txt",
+      "prompt": "/77/426eb8c40b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 99,
+    "cache_creation_tokens": 317194,
+    "cache_read_tokens": 10765812,
+    "output_tokens": 84061,
+    "api_call_count": 74
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "77426eb8c40b",
+  "session_id": "a95415f0-dc21-4422-a63b-4427b5e94c5c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-26T16:05:55.79743Z",
+  "branch": "CU-86exbk2cw_API_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/(main)/settings/handle-get-profile-result.server.ts",
+    "apps/web/app/(main)/settings/handle-get-profile-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/app/(main)/settings/profile-edit.action.ts",
+    "apps/web/app/(main)/settings/profile-edit.container.server.tsx",
+    "apps/web/app/(main)/settings/profile-edit.presenter.form.client.test.tsx",
+    "apps/web/app/(main)/settings/profile-edit.presenter.form.client.tsx",
+    "apps/web/app/(main)/settings/profile-edit.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/profile.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile.data.ts",
+    "apps/web/app/(main)/settings/profile/handle-get-profile-result.server.ts",
+    "apps/web/app/(main)/settings/profile/handle-get-profile-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile/page.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.action.ts",
+    "apps/web/app/(main)/settings/profile/profile-edit.container.server.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.presenter.form.client.test.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.presenter.form.client.tsx",
+    "apps/web/app/(main)/settings/profile/profile-edit.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/profile/profile.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/profile/profile.data.ts"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "0c53a56b248a",
+  "token_usage": {
+    "input_tokens": 99,
+    "cache_creation_tokens": 317194,
+    "cache_read_tokens": 10765812,
+    "output_tokens": 84061,
+    "api_call_count": 74
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-26T16:05:55.452665Z",
+    "agent_lines": 605,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 5,
+    "total_committed": 605,
+    "agent_percentage": 100
+  }
+}
