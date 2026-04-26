@@ -1,0 +1,58 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "5e16694d2f94",
+  "session_id": "a95415f0-dc21-4422-a63b-4427b5e94c5c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-26T17:20:49.216391Z",
+  "branch": "CU-86exbk2cw_API_nemoto-masaharu",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "apps/api/internal/db/apikeys.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/apikeys.sql",
+    "apps/api/routes/CLAUDE.md",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.go",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.medium.server_test.go",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.small.server_test.go",
+    "apps/web/app/(main)/settings/_components/settings-nav.client.test.tsx",
+    "apps/web/app/(main)/settings/_components/settings-nav.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.container.server.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.presenter.client.test.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.presenter.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/api-keys/api-keys.data.ts",
+    "apps/web/app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
+    "apps/web/app/(main)/settings/api-keys/handle-list-api-keys-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/api-keys/page.tsx",
+    "apps/web/app/(main)/settings/layout.tsx",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/components/ui/table.tsx",
+    "apps/web/vitest.client.config.ts",
+    "apps/web/vitest.config.ts",
+    "docs/api/apiキー一覧.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "e9ae980d1e5a",
+  "token_usage": {
+    "input_tokens": 220,
+    "cache_creation_tokens": 380038,
+    "cache_read_tokens": 22869230,
+    "output_tokens": 125118,
+    "api_call_count": 125
+  },
+  "session_metrics": {
+    "turn_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-26T17:20:48.762298Z",
+    "agent_lines": 1019,
+    "human_added": 166,
+    "human_modified": 22,
+    "human_removed": 0,
+    "total_committed": 1204,
+    "agent_percentage": 84.63455149501661
+  }
+}

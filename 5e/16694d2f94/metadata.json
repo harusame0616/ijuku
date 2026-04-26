@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "5e16694d2f94",
+  "strategy": "manual-commit",
+  "branch": "CU-86exbk2cw_API_nemoto-masaharu",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "apps/api/internal/db/apikeys.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/apikeys.sql",
+    "apps/api/routes/CLAUDE.md",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.go",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.medium.server_test.go",
+    "apps/api/routes/users/settings/apikeys/list-api-keys.query.handler.small.server_test.go",
+    "apps/web/app/(main)/settings/_components/settings-nav.client.test.tsx",
+    "apps/web/app/(main)/settings/_components/settings-nav.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.container.server.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.presenter.client.test.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.presenter.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys-list.skeleton.client.tsx",
+    "apps/web/app/(main)/settings/api-keys/api-keys.data.small.server.test.ts",
+    "apps/web/app/(main)/settings/api-keys/api-keys.data.ts",
+    "apps/web/app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
+    "apps/web/app/(main)/settings/api-keys/handle-list-api-keys-result.small.server.test.ts",
+    "apps/web/app/(main)/settings/api-keys/page.tsx",
+    "apps/web/app/(main)/settings/layout.tsx",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/components/ui/table.tsx",
+    "apps/web/vitest.client.config.ts",
+    "apps/web/vitest.config.ts",
+    "docs/api/apiキー一覧.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/5e/16694d2f94/0/metadata.json",
+      "transcript": "/5e/16694d2f94/0/full.jsonl",
+      "content_hash": "/5e/16694d2f94/0/content_hash.txt",
+      "prompt": "/5e/16694d2f94/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 220,
+    "cache_creation_tokens": 380038,
+    "cache_read_tokens": 22869230,
+    "output_tokens": 125118,
+    "api_call_count": 125
+  }
+}
