@@ -54,6 +54,7 @@ words:
   - txrunner
   - uuidutils
   - libauth
+  - enrollmentscommands
   - userscommands
   - usersqueries
   # sqlc / repository pattern
