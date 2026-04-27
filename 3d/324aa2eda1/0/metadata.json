@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3d324aa2eda1",
+  "session_id": "0a955521-172c-49eb-a45a-2a47b2f60e23",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-27T14:21:54.742997Z",
+  "branch": "CU-86excxhtk_API-GET-v1usersuserIdenrollments_nemoto-masaharu",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".cspell.yaml",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/routes/CLAUDE.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "c9b751d38808",
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 32420,
+    "cache_read_tokens": 170040,
+    "output_tokens": 2720,
+    "api_call_count": 7
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-27T14:21:54.698486Z",
+    "agent_lines": 0,
+    "human_added": 492,
+    "human_modified": 7,
+    "human_removed": 0,
+    "total_committed": 497,
+    "agent_percentage": 0
+  }
+}

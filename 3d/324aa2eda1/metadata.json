@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3d324aa2eda1",
+  "strategy": "manual-commit",
+  "branch": "CU-86excxhtk_API-GET-v1usersuserIdenrollments_nemoto-masaharu",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".cspell.yaml",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/routes/CLAUDE.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3d/324aa2eda1/0/metadata.json",
+      "transcript": "/3d/324aa2eda1/0/full.jsonl",
+      "content_hash": "/3d/324aa2eda1/0/content_hash.txt",
+      "prompt": "/3d/324aa2eda1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 32420,
+    "cache_read_tokens": 170040,
+    "output_tokens": 2720,
+    "api_call_count": 7
+  }
+}
