@@ -33,6 +33,7 @@ func main() {
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
+	listApiKeysHandler := apikeys.NewListApiKeysHandler(q, verifier)
 
 	getUserHandler := usersqueries.NewGetUserHandler(q)
 	updateUserHandler := userscommands.NewUpdateUserHandler(
@@ -45,6 +46,7 @@ func main() {
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
 	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
+	http.HandleFunc("GET /v1/users/{userID}/settings/apikeys", listApiKeysHandler.ListApiKeysHandler)
 	http.HandleFunc("GET /v1/users/{userID}", getUserHandler.GetUserHandler)
 	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
 	http.HandleFunc("GET /v1/users/{userID}/enrollments", getEnrollmentsHandler.GetEnrollmentsHandler)

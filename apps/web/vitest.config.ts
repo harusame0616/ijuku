@@ -14,9 +14,13 @@ export default defineConfig({
       include: [
         "lib/utils.ts",
         "hooks/use-is-hydrated.ts",
-        "app/(main)/settings/profile-edit.presenter.form.client.tsx",
-        "app/(main)/settings/profile.data.ts",
-        "app/(main)/settings/handle-get-profile-result.server.ts",
+        "app/(main)/settings/_components/settings-nav.client.tsx",
+        "app/(main)/settings/profile/profile-edit.presenter.form.client.tsx",
+        "app/(main)/settings/profile/profile.data.ts",
+        "app/(main)/settings/profile/handle-get-profile-result.server.ts",
+        "app/(main)/settings/api-keys/api-keys-list.presenter.client.tsx",
+        "app/(main)/settings/api-keys/api-keys.data.ts",
+        "app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
       ],
       thresholds: {
         lines: 80,

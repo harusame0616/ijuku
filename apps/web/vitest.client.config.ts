@@ -19,6 +19,8 @@ export default defineConfig({
       "class-variance-authority",
       "clsx",
       "next/headers",
+      "next/link",
+      "next/navigation",
       "tailwind-merge",
       "valibot",
     ],

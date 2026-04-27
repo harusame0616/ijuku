@@ -23,3 +23,14 @@ VALUES
         @key_plain_suffix,
         @expired_at
     );
+
+-- name: ListApiKeysByUserID :many
+SELECT
+    apikey_id,
+    plain_suffix,
+    _created_at,
+    expired_at
+FROM
+    apikeys
+WHERE
+    apikeys.user_id = @UserID :: uuid;

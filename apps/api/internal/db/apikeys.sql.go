@@ -64,3 +64,47 @@ func (q *Queries) InsertApiKey(ctx context.Context, arg InsertApiKeyParams) erro
 	)
 	return err
 }
+
+const listApiKeysByUserID = `-- name: ListApiKeysByUserID :many
+SELECT
+    apikey_id,
+    plain_suffix,
+    _created_at,
+    expired_at
+FROM
+    apikeys
+WHERE
+    apikeys.user_id = $1 :: uuid
+`
+
+type ListApiKeysByUserIDRow struct {
+	ApikeyID    pgtype.UUID        `json:"apikey_id"`
+	PlainSuffix string             `json:"plain_suffix"`
+	CreatedAt   pgtype.Timestamptz `json:"_created_at"`
+	ExpiredAt   pgtype.Timestamptz `json:"expired_at"`
+}
+
+func (q *Queries) ListApiKeysByUserID(ctx context.Context, userid pgtype.UUID) ([]ListApiKeysByUserIDRow, error) {
+	rows, err := q.db.Query(ctx, listApiKeysByUserID, userid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListApiKeysByUserIDRow{}
+	for rows.Next() {
+		var i ListApiKeysByUserIDRow
+		if err := rows.Scan(
+			&i.ApikeyID,
+			&i.PlainSuffix,
+			&i.CreatedAt,
+			&i.ExpiredAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
