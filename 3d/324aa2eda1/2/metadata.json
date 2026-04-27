@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3d324aa2eda1",
+  "session_id": "a3480704-7622-4f30-81b9-9d17c76a2227",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-27T14:21:55.102691Z",
+  "branch": "CU-86excxhtk_API-GET-v1usersuserIdenrollments_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/routes/CLAUDE.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "662864f1f9f3",
+  "checkpoint_transcript_start": 217,
+  "transcript_lines_at_start": 217,
+  "token_usage": {
+    "input_tokens": 3,
+    "cache_creation_tokens": 2316,
+    "cache_read_tokens": 225883,
+    "output_tokens": 1241,
+    "api_call_count": 3
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-27T14:21:55.021662Z",
+    "agent_lines": 0,
+    "human_added": 504,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 504,
+    "agent_percentage": 0
+  }
+}
