@@ -41,6 +41,7 @@ func main() {
 		verifier,
 	)
 	getEnrollmentsHandler := enrollmentsqueries.NewGetEnrollmentsHandler(q)
+	getEnrollmentHandler := enrollmentsqueries.NewGetEnrollmentHandler(q)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
@@ -50,6 +51,7 @@ func main() {
 	http.HandleFunc("GET /v1/users/{userID}", getUserHandler.GetUserHandler)
 	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
 	http.HandleFunc("GET /v1/users/{userID}/enrollments", getEnrollmentsHandler.GetEnrollmentsHandler)
+	http.HandleFunc("GET /v1/users/{userID}/enrollments/{courseId}", getEnrollmentHandler.GetEnrollmentHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

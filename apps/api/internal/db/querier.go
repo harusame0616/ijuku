@@ -12,7 +12,9 @@ import (
 
 type Querier interface {
 	CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (int64, error)
+	GetCourseAuthorityById(ctx context.Context, courseid pgtype.UUID) (GetCourseAuthorityByIdRow, error)
 	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
+	GetCourseStructureWithProgress(ctx context.Context, arg GetCourseStructureWithProgressParams) (GetCourseStructureWithProgressRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
 	GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID) ([]GetEnrollmentsByUserIDRow, error)
 	GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error)
