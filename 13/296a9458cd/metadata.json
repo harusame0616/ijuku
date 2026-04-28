@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "13296a9458cd",
+  "strategy": "manual-commit",
+  "branch": "CU-86exbk2cw_API_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/13/296a9458cd/0/metadata.json",
+      "transcript": "/13/296a9458cd/0/full.jsonl",
+      "content_hash": "/13/296a9458cd/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 798,
+    "cache_creation_tokens": 861007,
+    "cache_read_tokens": 33837448,
+    "output_tokens": 147800,
+    "api_call_count": 176
+  }
+}
