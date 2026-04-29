@@ -10,10 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Route } from "next";
 import Link from "next/link";
 
-interface Props { nickname: string }
+interface Props {
+  nickname: string;
+}
 
 export function UserMenuPresenter({ nickname }: Props): JSX.Element {
   return (
@@ -28,7 +29,10 @@ export function UserMenuPresenter({ nickname }: Props): JSX.Element {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem render={<Link href={"/settings" as Route} />}>
+        <DropdownMenuItem render={<Link href={"/learning"} />}>
+          学習中
+        </DropdownMenuItem>
+        <DropdownMenuItem render={<Link href={"/settings"} />}>
           設定
         </DropdownMenuItem>
         <DropdownMenuItem>ログアウト</DropdownMenuItem>

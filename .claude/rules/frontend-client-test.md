@@ -1,6 +1,5 @@
 ---
 paths:
-  - *client.test.ts
   - *client.test.tsx
 ---
 

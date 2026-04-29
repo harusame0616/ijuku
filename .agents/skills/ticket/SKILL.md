@@ -1,8 +1,6 @@
 ---
 name: ticket
-description: ClickUp チケットの取得・作成・更新を行う。チケット操作（表示・作成・更新）が要求された時に使用する。引数としてチケット ID を受け取る。省略時は現在のブランチ名から自動抽出する。
-context: fork
-model: haiku
+description: ClickUp チケットの取得・作成・更新を行う。チケット操作（表示・作成・更新）が要求された時に必ず使用する。引数としてチケット ID を受け取る。省略時は現在のブランチ名から自動抽出する。
 allowed-tools: Bash(curl:*), Bash(git:*)
 argument-hint: "[ticket-id]"
 ---
@@ -13,9 +11,11 @@ argument-hint: "[ticket-id]"
 
 1. 引数でチケット ID が指定された場合はそれを使用する
 2. 引数がない場合は以下で現在のブランチ名からチケット ID を抽出する:
+
    ```bash
    git branch --show-current
    ```
+
    - 抽出ルール: ブランチ名から `CU-` などのプレフィックスを除いた後、`__` または `-` より前の部分をチケット ID とする
      - 例: `CU-86excqgpj__nemoto-masaharu` → `86excqgpj`
      - 例: `86excqgpj-fix-bug` → `86excqgpj`

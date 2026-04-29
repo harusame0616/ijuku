@@ -95,6 +95,7 @@
       "Skill(playwright-cli)",
       "Skill(pr)",
       "Skill(sentry-cli)",
+      "Skill(ticket)",
       "Bash(gh issue create *)",
       "Bash(gh issue list *)",
       "Bash(gh issue view *)",
