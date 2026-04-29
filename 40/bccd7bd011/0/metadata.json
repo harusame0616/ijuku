@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "40bccd7bd011",
+  "session_id": "a97285bd-837c-4a31-82f2-065e12e0434f",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-29T05:15:46.310595Z",
+  "branch": "CU-86excxrbc_Web-learning_nemoto-masaharu",
+  "checkpoints_count": 18,
+  "files_touched": [
+    ".agents/skills/ticket/SKILL.md",
+    ".claude/rules/frontend-client-test.md",
+    ".claude/rules/test.md",
+    ".claude/settings.json",
+    ".gitignore",
+    "apps/web/app/(main)/_components/user-menu.presenter.client.tsx",
+    "apps/web/app/(main)/learning/[courseId]/page.tsx",
+    "apps/web/app/(main)/learning/enrollments-list.container.server.tsx",
+    "apps/web/app/(main)/learning/enrollments-list.presenter.client.test.tsx",
+    "apps/web/app/(main)/learning/enrollments-list.presenter.client.tsx",
+    "apps/web/app/(main)/learning/enrollments-list.skeleton.client.tsx",
+    "apps/web/app/(main)/learning/enrollments.data.small.server.test.ts",
+    "apps/web/app/(main)/learning/enrollments.data.ts",
+    "apps/web/app/(main)/learning/handle-get-enrollments-result.server.ts",
+    "apps/web/app/(main)/learning/handle-get-enrollments-result.small.server.test.ts",
+    "apps/web/app/(main)/learning/page.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "75ae6ac17c7b",
+  "token_usage": {
+    "input_tokens": 2182,
+    "cache_creation_tokens": 481395,
+    "cache_read_tokens": 17111043,
+    "output_tokens": 90107,
+    "api_call_count": 130
+  },
+  "session_metrics": {
+    "turn_count": 19
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-29T05:15:46.0141Z",
+    "agent_lines": 216,
+    "human_added": 0,
+    "human_modified": 28,
+    "human_removed": 112,
+    "total_committed": 244,
+    "agent_percentage": 88.52459016393442
+  }
+}
