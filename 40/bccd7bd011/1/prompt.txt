@@ -1,0 +1,21 @@
+https://app.clickup.com/t/86exe0ve2 のチケットを整備します。 Auth Interface を作成します。 signInWithOAuth メソッドのみ持ちます。実装として Supabase Auth と Mock Auth を作成します。  Supabase SAuth は supabase.auth を薄くラップする実装です。 mock auth は signInWithOAuth のメソッドで通常のメールログインをして OAuth でログインしたとみなす様にします。ログインするメールアドレスとパスワードは .env で指定し、 seed としてユーザーを登録しておきます。 内容を整理して、チケットを整備してください。考慮不足、不明点、コンテキスト不足な点があれば確認してください
+
+---
+
+mock ようパスワードは next_public_ をつける。テストデータ投入経路は seed.ts で SUpabase Service Role を使って登録。メール認証済みで登録する。
+
+---
+
+現在 seed スクリプトってすでに用意されている？
+
+---
+
+seed.ts で。別途 tsx を導入したくないので node の ts strip で対応しましょう
+
+---
+
+experimental ってまだいるんだっけ？一応調べて。 migrate-up へは組み込まない。 db-seed で対応。fixture とは分離（テスト時にテストに必要なユーザーは作るため）
+
+---
+
+node もバージョンアップしましょう
