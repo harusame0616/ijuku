@@ -1,0 +1,65 @@
+5s
+Run make web-test-all
+make -C apps/web test-all
+make[1]: Entering directory '/home/runner/work/jukubox/jukubox/apps/web'
+pnpm vitest run --coverage
+
+ RUN  v4.1.5 /home/runner/work/jukubox/jukubox/apps/web
+      Coverage enabled with v8
+
+ ✓  server  app/(main)/settings/api-keys/api-keys.data.small.server.test.ts (5 tests) 41ms
+ ✓  server  app/(main)/settings/api-keys/generate-api-key.action.small.server.test.ts (7 tests) 34ms
+ ✓  server  app/(main)/learning/enrollments.data.small.server.test.ts (4 tests) 88ms
+ ✓  server  app/(main)/settings/profile/handle-get-profile-result.small.server.test.ts (4 tests) 11ms
+ ✓  server  lib/auth/config.small.server.test.ts (5 tests) 13ms
+ ✓  server  app/(main)/settings/profile/profile.data.small.server.test.ts (4 tests) 40ms
+ ✓  server  app/(main)/settings/api-keys/handle-list-api-keys-result.small.server.test.ts (3 tests) 9ms
+ ✓  server  app/(main)/learning/handle-get-enrollments-result.small.server.test.ts (3 tests) 8ms
+ ✓  server  lib/auth/factory.small.server.test.ts (2 tests) 17ms
+ ✓  server  lib/utilities.small.server.test.ts (3 tests) 22ms
+ ❯  server  lib/user.medium.server.test.ts (0 test)
+ ✓  client (chromium)  app/(main)/settings/api-keys/api-keys-list.presenter.client.test.tsx (4 tests) 65ms
+ ✓  client (chromium)  app/(main)/settings/_components/settings-nav.client.test.tsx (3 tests) 20ms
+ ✓  client (chromium)  app/(main)/learning/enrollments-list.presenter.client.test.tsx (2 tests) 14ms
+ ✓  client (chromium)  app/(main)/settings/api-keys/generate-api-key.presenter.client.test.tsx (6 tests) 676ms
+ ✓  client (chromium)  hooks/use-is-hydrated.client.test.tsx (2 tests) 23ms
+ ✓  client (chromium)  app/(main)/settings/profile/profile-edit.presenter.form.client.test.tsx (12 tests) 1016ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   server  lib/user.medium.server.test.ts [ lib/user.medium.server.test.ts ]
+ValiError: Invalid type: Expected string but received undefined
+ ❯ Module.parse ../../node_modules/.pnpm/valibot@1.3.1_typescript@5.9.3/node_modules/valibot/dist/index.mjs:7142:28
+ ❯ lib/supabase/config.ts:10:32
+      8| type SupabasePublicConfig = v.InferOutput<typeof supabasePublicConfigS…
+      9|
+     10| const supabasePublicConfig = v.parse(supabasePublicConfigSchema, {
+       |                                ^
+     11|     url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+     12|     anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+ ❯ lib/supabase/server.ts:3:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 16 passed (17)
+      Tests  69 passed (69)
+   Start at  14:06:54
+   Duration  4.21s (transform 1.92s, setup 0ms, import 4.62s, tests 2.10s, environment 3ms)
+
+
+Error: ValiError: Invalid type: Expected string but received undefined
+ ❯ Module.parse ../../node_modules/.pnpm/valibot@1.3.1_typescript@5.9.3/node_modules/valibot/dist/index.mjs:7142:28
+ ❯ lib/supabase/config.ts:10:32
+ ❯ lib/supabase/server.ts:3:1
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { issues: [ { kind: 'schema', type: 'string', input: undefined, expected: 'string', received: 'undefined', message: 'Invalid type: Expected string but received undefined', requirement: undefined, path: [ { type: 'object', origin: 'value', input: { url: undefined, anonKey: undefined }, key: 'url', value: undefined } ], issues: undefined, lang: undefined, abortEarly: undefined, abortPipeEarly: undefined }, { kind: 'schema', type: 'string', input: undefined, expected: 'string', received: 'undefined', message: 'Invalid type: Expected string but received undefined', requirement: undefined, path: [ { type: 'object', origin: 'value', input: { url: undefined, anonKey: undefined }, key: 'anonKey', value: undefined } ], issues: undefined, lang: undefined, abortEarly: undefined, abortPipeEarly: undefined } ] }
+
+---
+
+いや固定値で env で設定してしまって
+
+---
+
+SERVICE_ROLE_KEY なども必要なのでは？

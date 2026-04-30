@@ -3,7 +3,7 @@
   "checkpoint_id": "f949331e79ea",
   "strategy": "manual-commit",
   "branch": "CU-86exe0ve2_Web-Auth-Interface-medium_nemoto-masaharu",
-  "checkpoints_count": 1,
+  "checkpoints_count": 4,
   "files_touched": [
     ".github/workflows/web-test.yml"
   ],
@@ -19,13 +19,19 @@
       "transcript": "/f9/49331e79ea/1/full.jsonl",
       "content_hash": "/f9/49331e79ea/1/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/f9/49331e79ea/2/metadata.json",
+      "transcript": "/f9/49331e79ea/2/full.jsonl",
+      "content_hash": "/f9/49331e79ea/2/content_hash.txt",
+      "prompt": "/f9/49331e79ea/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2758,
-    "cache_creation_tokens": 2187967,
-    "cache_read_tokens": 124939904,
-    "output_tokens": 288494,
-    "api_call_count": 471
+    "input_tokens": 2787,
+    "cache_creation_tokens": 2211718,
+    "cache_read_tokens": 125486325,
+    "output_tokens": 303269,
+    "api_call_count": 485
   }
 }
