@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f949331e79ea",
+  "session_id": "f78ba6b7-fa87-4a4a-ad28-f296ebce67f5",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T14:29:07.381088Z",
+  "branch": "CU-86exe0ve2_Web-Auth-Interface-medium_nemoto-masaharu",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".github/workflows/web-test.yml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "266fd6986322",
+  "checkpoint_transcript_start": 50,
+  "transcript_lines_at_start": 50,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-30T14:29:07.355264Z",
+    "agent_lines": 2,
+    "human_added": 0,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 4,
+    "agent_percentage": 50
+  }
+}
