@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "388045673cf5",
+  "session_id": "a97285bd-837c-4a31-82f2-065e12e0434f",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T13:38:25.07654Z",
+  "branch": "CU-86exe0ve2_Web-Auth-Interface-medium_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/rules/frontend-test.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "75ae6ac17c7b",
+  "token_usage": {
+    "input_tokens": 2186,
+    "cache_creation_tokens": 483994,
+    "cache_read_tokens": 17945097,
+    "output_tokens": 91253,
+    "api_call_count": 134
+  },
+  "session_metrics": {
+    "turn_count": 20
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-30T13:38:24.790579Z",
+    "agent_lines": 0,
+    "human_added": 983,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 983,
+    "agent_percentage": 0
+  }
+}
