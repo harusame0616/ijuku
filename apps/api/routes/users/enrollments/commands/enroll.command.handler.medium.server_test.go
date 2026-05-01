@@ -56,8 +56,8 @@ func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{enrollMedCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ('46000000-0000-0000-0000-000000000000', $1, '45000000-0000-0000-0000-000000000000', 0, 'topic', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ('46000000-0000-0000-0000-000000000000', $1, '45000000-0000-0000-0000-000000000000', 0, 'topic', '', '')`,
 			[]any{enrollMedCourseID},
 		},
 		{
@@ -70,8 +70,8 @@ func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{enrollMedDraftCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ('46000000-0000-0000-0000-000000000010', $1, '45000000-0000-0000-0000-000000000010', 0, 'topic', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ('46000000-0000-0000-0000-000000000010', $1, '45000000-0000-0000-0000-000000000010', 0, 'topic', '', '')`,
 			[]any{enrollMedDraftCourseID},
 		},
 	}

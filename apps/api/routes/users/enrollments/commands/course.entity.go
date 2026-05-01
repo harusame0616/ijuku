@@ -7,15 +7,11 @@ import (
 )
 
 type Topic struct {
-	topicId            string
-	title              string
-	description        string
-	prerequisites      string
-	knowledge          string
-	flow               string
-	quiz               string
-	completionCriteria string
-	number             int
+	topicId     string
+	title       string
+	description string
+	content     string
+	number      int
 }
 
 type Section struct {

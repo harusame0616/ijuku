@@ -70,11 +70,7 @@ type CourseSectionTopic struct {
 	UpdatedAt            pgtype.Timestamptz `json:"_updated_at"`
 	Title                string             `json:"title"`
 	Description          string             `json:"description"`
-	Prerequisites        string             `json:"prerequisites"`
-	Knowledge            string             `json:"knowledge"`
-	Flow                 string             `json:"flow"`
-	Quiz                 string             `json:"quiz"`
-	CompletionCriteria   string             `json:"completion_criteria"`
+	Content              string             `json:"content"`
 }
 
 type Enrollment struct {

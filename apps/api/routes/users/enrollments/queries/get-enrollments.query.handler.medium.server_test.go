@@ -87,23 +87,23 @@ func setupMediumTestData(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{mediumTestSectionCID, mediumTestCourseCID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'A0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'A0', '', '')`,
 			[]any{mediumTestTopicA0ID, mediumTestCourseAID, mediumTestSectionAID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 1, 'A1', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 1, 'A1', '', '')`,
 			[]any{mediumTestTopicA1ID, mediumTestCourseAID, mediumTestSectionAID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'B0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'B0', '', '')`,
 			[]any{mediumTestTopicB0ID, mediumTestCourseBID, mediumTestSectionBID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'C0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'C0', '', '')`,
 			[]any{mediumTestTopicC0ID, mediumTestCourseCID, mediumTestSectionCID},
 		},
 	}

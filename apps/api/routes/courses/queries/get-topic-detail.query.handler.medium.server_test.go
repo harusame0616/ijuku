@@ -17,18 +17,14 @@ import (
 )
 
 type topicFixture struct {
-	AuthorId           string
-	CategoryId         string
-	CourseId           string
-	SectionId          string
-	TopicId            string
-	Title              string
-	Description        string
-	Prerequisites      string
-	Knowledge          string
-	Flow               string
-	Quiz               string
-	CompletionCriteria string
+	AuthorId    string
+	CategoryId  string
+	CourseId    string
+	SectionId   string
+	TopicId     string
+	Title       string
+	Description string
+	Content     string
 }
 
 func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, authorId string) topicFixture {
@@ -70,13 +66,9 @@ func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, 
 	topicId := uuid.NewString()
 	title := "トピック1"
 	description := "トピック1の説明"
-	prerequisites := "前提条件"
-	knowledge := "習得知識"
-	flow := "学習の流れ"
-	quiz := "クイズ"
-	completionCriteria := "修了条件"
-	if _, err := pool.Exec(ctx, "INSERT INTO course_section_topics (course_id, course_section_id, course_section_topic_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-		courseId, sectionId, topicId, 1, title, description, prerequisites, knowledge, flow, quiz, completionCriteria,
+	content := "## 目標\n- トピックを完了する\n\n## 知識\nテスト用のコンテンツです。"
+	if _, err := pool.Exec(ctx, "INSERT INTO course_section_topics (course_id, course_section_id, course_section_topic_id, index, title, description, content) VALUES ($1,$2,$3,$4,$5,$6,$7)",
+		courseId, sectionId, topicId, 1, title, description, content,
 	); err != nil {
 		t.Fatalf("course_section_topics の insert に失敗 : %v", err)
 	}
@@ -85,18 +77,14 @@ func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, 
 	})
 
 	return topicFixture{
-		AuthorId:           authorId,
-		CategoryId:         categoryId,
-		CourseId:           courseId,
-		SectionId:          sectionId,
-		TopicId:            topicId,
-		Title:              title,
-		Description:        description,
-		Prerequisites:      prerequisites,
-		Knowledge:          knowledge,
-		Flow:               flow,
-		Quiz:               quiz,
-		CompletionCriteria: completionCriteria,
+		AuthorId:    authorId,
+		CategoryId:  categoryId,
+		CourseId:    courseId,
+		SectionId:   sectionId,
+		TopicId:     topicId,
+		Title:       title,
+		Description: description,
+		Content:     content,
 	}
 }
 
@@ -131,11 +119,7 @@ func TestGetTopicDetailHandlerMedium(t *testing.T) {
 		assert.Equal(t, f.TopicId, body["topicId"])
 		assert.Equal(t, f.Title, body["title"])
 		assert.Equal(t, f.Description, body["description"])
-		assert.Equal(t, f.Prerequisites, body["prerequisites"])
-		assert.Equal(t, f.Knowledge, body["knowledge"])
-		assert.Equal(t, f.Flow, body["flow"])
-		assert.Equal(t, f.Quiz, body["quiz"])
-		assert.Equal(t, f.CompletionCriteria, body["completionCriteria"])
+		assert.Equal(t, f.Content, body["content"])
 	})
 
 	t.Run("自分が作成した draft な講座のトピック詳細が取得できる", func(t *testing.T) {
@@ -158,11 +142,7 @@ func TestGetTopicDetailHandlerMedium(t *testing.T) {
 		assert.Equal(t, f.TopicId, body["topicId"])
 		assert.Equal(t, f.Title, body["title"])
 		assert.Equal(t, f.Description, body["description"])
-		assert.Equal(t, f.Prerequisites, body["prerequisites"])
-		assert.Equal(t, f.Knowledge, body["knowledge"])
-		assert.Equal(t, f.Flow, body["flow"])
-		assert.Equal(t, f.Quiz, body["quiz"])
-		assert.Equal(t, f.CompletionCriteria, body["completionCriteria"])
+		assert.Equal(t, f.Content, body["content"])
 	})
 
 	t.Run("他人が作成した draft な講座のトピック詳細が取得できない", func(t *testing.T) {

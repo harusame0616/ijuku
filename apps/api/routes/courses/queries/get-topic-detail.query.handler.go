@@ -21,16 +21,12 @@ type GetTopicDetailQuery interface {
 }
 
 type GetTopicDetailHandlerResponse struct {
-	CourseId           string `json:"courseId"`
-	SectionId          string `json:"sectionId"`
-	TopicId            string `json:"topicId"`
-	Title              string `json:"title"`
-	Description        string `json:"description"`
-	Prerequisites      string `json:"prerequisites"`
-	Knowledge          string `json:"knowledge"`
-	Flow               string `json:"flow"`
-	Quiz               string `json:"quiz"`
-	CompletionCriteria string `json:"completionCriteria"`
+	CourseId    string `json:"courseId"`
+	SectionId   string `json:"sectionId"`
+	TopicId     string `json:"topicId"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
 }
 
 func NewTopicDetailHandler(q GetTopicDetailQuery) *TopicDetailHandler {
@@ -87,15 +83,11 @@ func (handler *TopicDetailHandler) GetTopicDetailHandler(w http.ResponseWriter, 
 
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(GetTopicDetailHandlerResponse{
-		CourseId:           response.CourseId.String(),
-		SectionId:          response.SectionId.String(),
-		TopicId:            response.TopicId.String(),
-		Title:              response.Title,
-		Description:        response.Description,
-		Prerequisites:      response.Prerequisites,
-		Knowledge:          response.Knowledge,
-		Flow:               response.Flow,
-		Quiz:               response.Quiz,
-		CompletionCriteria: response.CompletionCriteria,
+		CourseId:    response.CourseId.String(),
+		SectionId:   response.SectionId.String(),
+		TopicId:     response.TopicId.String(),
+		Title:       response.Title,
+		Description: response.Description,
+		Content:     response.Content,
 	})
 }

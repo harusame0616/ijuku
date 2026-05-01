@@ -41,11 +41,7 @@ func toCourse(raw db.GetCourseByIdRow) Course {
 		CourseSectionTopicId string `json:"course_section_topic_id"`
 		Title                string `json:"title"`
 		Description          string `json:"description"`
-		Prerequisites        string `json:"prerequisites"`
-		Knowledge            string `json:"knowledge"`
-		Flow                 string `json:"flow"`
-		Quiz                 string `json:"quiz"`
-		CompletionCriteria   string `json:"completion_criteria"`
+		Content              string `json:"content"`
 	}
 	type sectionRaw struct {
 		CourseSectionId string     `json:"course_section_id"`
@@ -62,15 +58,11 @@ func toCourse(raw db.GetCourseByIdRow) Course {
 		topics := make([]Topic, len(s.Topics))
 		for j, t := range s.Topics {
 			topics[j] = Topic{
-				topicId:            t.CourseSectionTopicId,
-				title:              t.Title,
-				description:        t.Description,
-				prerequisites:      t.Prerequisites,
-				knowledge:          t.Knowledge,
-				flow:               t.Flow,
-				quiz:               t.Quiz,
-				completionCriteria: t.CompletionCriteria,
-				number:             j,
+				topicId:     t.CourseSectionTopicId,
+				title:       t.Title,
+				description: t.Description,
+				content:     t.Content,
+				number:      j,
 			}
 		}
 		sections[i] = Section{

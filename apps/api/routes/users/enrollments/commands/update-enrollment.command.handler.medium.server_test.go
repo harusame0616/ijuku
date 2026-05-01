@@ -66,13 +66,13 @@ func setupUpdateEnrollmentTestData(ctx context.Context, pool *pgxpool.Pool) erro
 			[]any{updTestSection0ID, updTestCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'トピック0-0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'トピック0-0', '', '')`,
 			[]any{updTestTopic00ID, updTestCourseID, updTestSection0ID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 1, 'トピック0-1', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 1, 'トピック0-1', '', '')`,
 			[]any{updTestTopic01ID, updTestCourseID, updTestSection0ID},
 		},
 		// 別コース（topic帰属違い検証用）
@@ -86,8 +86,8 @@ func setupUpdateEnrollmentTestData(ctx context.Context, pool *pgxpool.Pool) erro
 			[]any{updTestOtherSection, updTestOtherCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, '別トピック0-0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, '別トピック0-0', '', '')`,
 			[]any{updTestOtherTopic, updTestOtherCourseID, updTestOtherSection},
 		},
 		// ドラフトコース
@@ -101,8 +101,8 @@ func setupUpdateEnrollmentTestData(ctx context.Context, pool *pgxpool.Pool) erro
 			[]any{updTestDraftSection0, updTestDraftCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'ドラフトトピック0-0', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'ドラフトトピック0-0', '', '')`,
 			[]any{updTestDraftTopic00, updTestDraftCourseID, updTestDraftSection0},
 		},
 	}

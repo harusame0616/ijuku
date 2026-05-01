@@ -70,16 +70,8 @@ FROM
                     course_section_topics.title,
                     'description',
                     course_section_topics.description,
-                    'prerequisites',
-                    course_section_topics.prerequisites,
-                    'knowledge',
-                    course_section_topics.knowledge,
-                    'flow',
-                    course_section_topics.flow,
-                    'quiz',
-                    course_section_topics.quiz,
-                    'completion_criteria',
-                    course_section_topics.completion_criteria
+                    'content',
+                    course_section_topics.content
                 )
                 ORDER BY
                     course_section_topics."index" ASC
@@ -129,11 +121,7 @@ SELECT
     course_section_topics.course_section_topic_id as "topicId",
     course_section_topics.title,
     course_section_topics.description,
-    course_section_topics.prerequisites,
-    course_section_topics.knowledge,
-    course_section_topics.flow,
-    course_section_topics.quiz,
-    course_section_topics.completion_criteria AS "completionCriteria"
+    course_section_topics.content
 FROM
     course_section_topics
     JOIN course_sections USING (course_section_id)

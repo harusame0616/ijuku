@@ -58,16 +58,8 @@ FROM
                     course_section_topics.title,
                     'description',
                     course_section_topics.description,
-                    'prerequisites',
-                    course_section_topics.prerequisites,
-                    'knowledge',
-                    course_section_topics.knowledge,
-                    'flow',
-                    course_section_topics.flow,
-                    'quiz',
-                    course_section_topics.quiz,
-                    'completion_criteria',
-                    course_section_topics.completion_criteria
+                    'content',
+                    course_section_topics.content
                 )
                 ORDER BY
                     course_section_topics."index" ASC
@@ -252,11 +244,7 @@ SELECT
     course_section_topics.course_section_topic_id as "topicId",
     course_section_topics.title,
     course_section_topics.description,
-    course_section_topics.prerequisites,
-    course_section_topics.knowledge,
-    course_section_topics.flow,
-    course_section_topics.quiz,
-    course_section_topics.completion_criteria AS "completionCriteria"
+    course_section_topics.content
 FROM
     course_section_topics
     JOIN course_sections USING (course_section_id)
@@ -282,16 +270,12 @@ type GetTopicDetailParams struct {
 }
 
 type GetTopicDetailRow struct {
-	CourseId           pgtype.UUID `json:"courseId"`
-	SectionId          pgtype.UUID `json:"sectionId"`
-	TopicId            pgtype.UUID `json:"topicId"`
-	Title              string      `json:"title"`
-	Description        string      `json:"description"`
-	Prerequisites      string      `json:"prerequisites"`
-	Knowledge          string      `json:"knowledge"`
-	Flow               string      `json:"flow"`
-	Quiz               string      `json:"quiz"`
-	CompletionCriteria string      `json:"completionCriteria"`
+	CourseId    pgtype.UUID `json:"courseId"`
+	SectionId   pgtype.UUID `json:"sectionId"`
+	TopicId     pgtype.UUID `json:"topicId"`
+	Title       string      `json:"title"`
+	Description string      `json:"description"`
+	Content     string      `json:"content"`
 }
 
 func (q *Queries) GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error) {
@@ -308,11 +292,7 @@ func (q *Queries) GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) 
 		&i.TopicId,
 		&i.Title,
 		&i.Description,
-		&i.Prerequisites,
-		&i.Knowledge,
-		&i.Flow,
-		&i.Quiz,
-		&i.CompletionCriteria,
+		&i.Content,
 	)
 	return i, err
 }

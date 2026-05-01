@@ -59,8 +59,8 @@ func insertDraftCourse(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{enrollmentDetailDraftSection, enrollmentDetailDraftCourseID},
 		},
 		{
-			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, prerequisites, knowledge, flow, quiz, completion_criteria)
-			 VALUES ($1, $2, $3, 0, 'draft topic', '', '', '', '', '', '')`,
+			`INSERT INTO course_section_topics (course_section_topic_id, course_id, course_section_id, index, title, description, content)
+			 VALUES ($1, $2, $3, 0, 'draft topic', '', '')`,
 			[]any{enrollmentDetailDraftTopic, enrollmentDetailDraftCourseID, enrollmentDetailDraftSection},
 		},
 	}
