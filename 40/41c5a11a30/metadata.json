@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "4041c5a11a30",
+  "strategy": "manual-commit",
+  "branch": "CU-86excxht5_API-PATCH-v1usersuserIdenrollmentscourseId_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/go.mod",
+    "apps/api/main.go",
+    "apps/api/routes/users/enrollments/commands/course.entity.go",
+    "apps/api/routes/users/enrollments/commands/course.entity.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.medium.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enroll.command.handler.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enroll.usecase.go",
+    "apps/api/routes/users/enrollments/commands/progress.entity.go",
+    "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.go",
+    "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.medium.server_test.go",
+    "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/update-enrollment.usecase.go",
+    "apps/api/routes/users/enrollments/commands/user_topic_progress.sqrc-repository.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/40/41c5a11a30/0/metadata.json",
+      "transcript": "/40/41c5a11a30/0/full.jsonl",
+      "content_hash": "/40/41c5a11a30/0/content_hash.txt",
+      "prompt": "/40/41c5a11a30/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 138,
+    "cache_creation_tokens": 217893,
+    "cache_read_tokens": 12567948,
+    "output_tokens": 50707,
+    "api_call_count": 113
+  }
+}
