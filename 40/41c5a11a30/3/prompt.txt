@@ -1,0 +1,25 @@
+ちゃんと Entity として EnrollmentProgress を作成して。start と finish メソッドを用意
+
+---
+
+userId と topicId は google のUUIDを使って
+
+---
+
+topicId UserId は google の uuid で持ち回る handler で バリデーションも兼ねて uuid で scan して uuid 化する
+
+---
+
+courseId も
+
+---
+
+checkEnrollable と findTopicById って他でも使われている？使われていなければ引数を uuid で受け取る様にしたい
+
+---
+
+findTopicById でやる用がいい？ checkEnrollable で そのトピックがあるかチェックした方がいい？それとも今の実装の方がいい？
+
+---
+
+checkEnrollable と isEnrollable どっちがいいかな？
