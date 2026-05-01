@@ -5,20 +5,38 @@
   "branch": "CU-86excxht5_API-PATCH-v1usersuserIdenrollmentscourseId_nemoto-masaharu",
   "checkpoints_count": 2,
   "files_touched": [
+    ".cspell.yaml",
+    "apps/api/Makefile",
     "apps/api/go.mod",
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/enrollments.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
     "apps/api/main.go",
+    "apps/api/migrations/000006_add_enrollments.down.sql",
+    "apps/api/migrations/000006_add_enrollments.up.sql",
+    "apps/api/queries/courses.sql",
+    "apps/api/queries/enrollments.sql",
     "apps/api/routes/users/enrollments/commands/course.entity.go",
     "apps/api/routes/users/enrollments/commands/course.entity.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/course.sqrc-repository.go",
     "apps/api/routes/users/enrollments/commands/enroll.command.handler.go",
     "apps/api/routes/users/enrollments/commands/enroll.command.handler.medium.server_test.go",
     "apps/api/routes/users/enrollments/commands/enroll.command.handler.small.server_test.go",
     "apps/api/routes/users/enrollments/commands/enroll.usecase.go",
+    "apps/api/routes/users/enrollments/commands/enrollment.entity.go",
+    "apps/api/routes/users/enrollments/commands/enrollment.entity.small.server_test.go",
+    "apps/api/routes/users/enrollments/commands/enrollment.sqrc-repository.go",
+    "apps/api/routes/users/enrollments/commands/progress-status.value-object.go",
     "apps/api/routes/users/enrollments/commands/progress.entity.go",
     "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.go",
     "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.medium.server_test.go",
     "apps/api/routes/users/enrollments/commands/update-enrollment.command.handler.small.server_test.go",
     "apps/api/routes/users/enrollments/commands/update-enrollment.usecase.go",
-    "apps/api/routes/users/enrollments/commands/user_topic_progress.sqrc-repository.go"
+    "apps/api/routes/users/enrollments/commands/user_topic_progress.sqrc-repository.go",
+    "apps/api/routes/users/enrollments/queries/get-enrollment.query.handler.medium.server_test.go",
+    "apps/api/routes/users/enrollments/queries/get-enrollments.query.handler.medium.server_test.go",
+    "docs/api/受講開始.md"
   ],
   "sessions": [
     {
@@ -32,6 +50,12 @@
       "transcript": "/40/41c5a11a30/1/full.jsonl",
       "content_hash": "/40/41c5a11a30/1/content_hash.txt",
       "prompt": "/40/41c5a11a30/1/prompt.txt"
+    },
+    {
+      "metadata": "/40/41c5a11a30/2/metadata.json",
+      "transcript": "/40/41c5a11a30/2/full.jsonl",
+      "content_hash": "/40/41c5a11a30/2/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
