@@ -2,95 +2,90 @@ package commands
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/google/uuid"
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
-	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
+	"github.com/jackc/pgx/v5"
 )
 
-type Handler struct {
-	usecase EnrollCourseUsecaseInterface
+const (
+	errorCodeAlreadyEnrolled = "ALREADY_ENROLLED"
+)
+
+type EnrollHandler struct {
+	usecase EnrollUsecaseInterface
 }
 
-func NewHandler(usecase EnrollCourseUsecaseInterface) *Handler {
-	return &Handler{usecase: usecase}
+func NewEnrollHandler(usecase EnrollUsecaseInterface) *EnrollHandler {
+	return &EnrollHandler{usecase: usecase}
 }
 
-func (h *Handler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) {
+type postEnrollmentRequestBody struct {
+	CourseId string `json:"courseId"`
+}
+
+type postEnrollmentResponse struct {
+	CourseId   string `json:"courseId"`
+	EnrolledAt string `json:"enrolledAt"`
+}
+
+func (h *EnrollHandler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	courseId := r.PathValue("courseId")
 
-	if courseId == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be required"})
+	userIdStr := r.PathValue("userID")
+	if userIdStr == "" {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be required")
 		return
 	}
-
-	if !uuidutils.IsValidUuid(courseId) {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "courseId must be UUID format"})
-		return
-	}
-
-	// TODO: 本来は API キーから userId を解決するべきだが、認証機能未実装のため暫定的に body から取得している
-	var enrollmentBodyParams struct {
-		UserId        string `json:"userId"`
-		SectionNumber *int   `json:"sectionNumber"`
-		TopicNumber   *int   `json:"topicNumber"`
-	}
-
-	defer r.Body.Close()
-	if err := json.NewDecoder(r.Body).Decode(&enrollmentBodyParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "body parameter is invalid json format"})
-		return
-	}
-
-	if enrollmentBodyParams.UserId == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be required"})
-		return
-	}
-
-	if !uuidutils.IsValidUuid(enrollmentBodyParams.UserId) {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "userId must be UUID format"})
-		return
-	}
-
-	topicId, err := h.usecase.execute(r.Context(), EnrollCourseUsecaseParams{
-		userId:        enrollmentBodyParams.UserId,
-		courseId:      courseId,
-		sectionNumber: enrollmentBodyParams.SectionNumber,
-		topicNumber:   enrollmentBodyParams.TopicNumber,
-	})
-
-	if err == ErrTopicNumberRequireSectionNumber {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "topic number require section number"})
-		return
-	}
-
-	if err == ErrEnrollmentNumberIsNotFound {
-		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": response.InputValidationError, "message": "enrollment number is not found"})
-		return
-	}
-
-	if err == ErrEnrollmentNotAllowed {
-		w.WriteHeader(http.StatusForbidden)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": "FORBIDDEN", "message": "enrollment not allowed"})
-		return
-	}
-
+	userId, err := uuid.Parse(userIdStr)
 	if err != nil {
-		log.Printf("PostEnrollmentHandler error: %v", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": "INTERNAL_SERVER_ERROR", "message": "internal server error"})
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be UUID format")
+		return
+	}
+
+	var body postEnrollmentRequestBody
+	defer r.Body.Close()
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "body parameter is invalid json format")
+		return
+	}
+
+	if body.CourseId == "" {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "courseId must be required")
+		return
+	}
+	courseId, err := uuid.Parse(body.CourseId)
+	if err != nil {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "courseId must be UUID format")
+		return
+	}
+
+	result, err := h.usecase.execute(r.Context(), EnrollParams{
+		userId:   userId,
+		courseId: courseId,
+	})
+	if err != nil {
+		switch {
+		case errors.Is(err, pgx.ErrNoRows):
+			response.WriteErrorResponse(w, http.StatusNotFound, errorCodeCourseNotFound, "course not found")
+		case errors.Is(err, ErrEnrollmentNotAllowed):
+			response.WriteErrorResponse(w, http.StatusForbidden, errorCodeEnrollmentForbidden, "this course is not enrollable")
+		case errors.Is(err, ErrAlreadyEnrolled):
+			response.WriteErrorResponse(w, http.StatusConflict, errorCodeAlreadyEnrolled, "already enrolled in this course")
+		default:
+			log.Printf("PostEnrollmentHandler error: %v", err)
+			response.WriteInternalServerErrorResponse(w)
+		}
 		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(map[string]string{"topicId": topicId})
+	_ = json.NewEncoder(w).Encode(postEnrollmentResponse{
+		CourseId:   result.CourseId,
+		EnrolledAt: result.EnrolledAt.Format(time.RFC3339),
+	})
 }

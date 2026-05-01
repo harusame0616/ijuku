@@ -63,8 +63,9 @@ WITH section_agg AS (
     FROM
         course_sections AS sections
         LEFT JOIN course_section_topics AS topics ON sections.course_section_id = topics.course_section_id
-        LEFT JOIN user_topic_progresses AS progresses ON progresses.course_section_topic_id = topics.course_section_topic_id
-        AND progresses.user_id = $2
+        LEFT JOIN topic_progresses AS progresses ON progresses.user_id = $2
+            AND progresses.course_id = sections.course_id
+            AND progresses.course_section_topic_id = topics.course_section_topic_id
     WHERE
         sections.course_id = $1
     GROUP BY
@@ -123,22 +124,53 @@ func (q *Queries) GetCourseStructureWithProgress(ctx context.Context, arg GetCou
 	return i, err
 }
 
+const getEnrollmentByUserIdAndCourseId = `-- name: GetEnrollmentByUserIdAndCourseId :one
+SELECT
+    user_id,
+    course_id,
+    enrolled_at
+FROM
+    enrollments
+WHERE
+    user_id = $1 :: uuid
+    AND course_id = $2 :: uuid
+`
+
+type GetEnrollmentByUserIdAndCourseIdParams struct {
+	Userid   pgtype.UUID `json:"userid"`
+	Courseid pgtype.UUID `json:"courseid"`
+}
+
+type GetEnrollmentByUserIdAndCourseIdRow struct {
+	UserID     pgtype.UUID        `json:"user_id"`
+	CourseID   pgtype.UUID        `json:"course_id"`
+	EnrolledAt pgtype.Timestamptz `json:"enrolled_at"`
+}
+
+func (q *Queries) GetEnrollmentByUserIdAndCourseId(ctx context.Context, arg GetEnrollmentByUserIdAndCourseIdParams) (GetEnrollmentByUserIdAndCourseIdRow, error) {
+	row := q.db.QueryRow(ctx, getEnrollmentByUserIdAndCourseId, arg.Userid, arg.Courseid)
+	var i GetEnrollmentByUserIdAndCourseIdRow
+	err := row.Scan(&i.UserID, &i.CourseID, &i.EnrolledAt)
+	return i, err
+}
+
 const getEnrollmentsByUserID = `-- name: GetEnrollmentsByUserID :many
 SELECT
     courses.course_id AS "courseId",
     courses.title
 FROM
-    user_topic_progresses
-    JOIN course_section_topics ON user_topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
-    JOIN course_sections ON course_section_topics.course_section_id = course_sections.course_section_id
-    JOIN courses ON course_sections.course_id = courses.course_id
+    enrollments
+    JOIN courses ON enrollments.course_id = courses.course_id
+    LEFT JOIN topic_progresses ON topic_progresses.user_id = enrollments.user_id
+        AND topic_progresses.course_id = enrollments.course_id
 WHERE
-    user_topic_progresses.user_id = $1 :: uuid
+    enrollments.user_id = $1 :: uuid
 GROUP BY
     courses.course_id,
-    courses.title
+    courses.title,
+    enrollments.enrolled_at
 ORDER BY
-    MAX(user_topic_progresses._updated_at) DESC
+    COALESCE(MAX(topic_progresses._updated_at), enrollments.enrolled_at) DESC
 `
 
 type GetEnrollmentsByUserIDRow struct {
@@ -164,4 +196,108 @@ func (q *Queries) GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID
 		return nil, err
 	}
 	return items, nil
+}
+
+const getTopicProgressesByUserIdAndCourseId = `-- name: GetTopicProgressesByUserIdAndCourseId :many
+SELECT
+    course_section_topic_id,
+    status
+FROM
+    topic_progresses
+WHERE
+    user_id = $1 :: uuid
+    AND course_id = $2 :: uuid
+`
+
+type GetTopicProgressesByUserIdAndCourseIdParams struct {
+	Userid   pgtype.UUID `json:"userid"`
+	Courseid pgtype.UUID `json:"courseid"`
+}
+
+type GetTopicProgressesByUserIdAndCourseIdRow struct {
+	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
+	Status               string      `json:"status"`
+}
+
+func (q *Queries) GetTopicProgressesByUserIdAndCourseId(ctx context.Context, arg GetTopicProgressesByUserIdAndCourseIdParams) ([]GetTopicProgressesByUserIdAndCourseIdRow, error) {
+	rows, err := q.db.Query(ctx, getTopicProgressesByUserIdAndCourseId, arg.Userid, arg.Courseid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetTopicProgressesByUserIdAndCourseIdRow{}
+	for rows.Next() {
+		var i GetTopicProgressesByUserIdAndCourseIdRow
+		if err := rows.Scan(&i.CourseSectionTopicID, &i.Status); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const insertEnrollment = `-- name: InsertEnrollment :exec
+INSERT INTO
+    enrollments (
+        user_id,
+        course_id,
+        enrolled_at
+    )
+VALUES
+    (
+        $1 :: uuid,
+        $2 :: uuid,
+        $3
+    )
+`
+
+type InsertEnrollmentParams struct {
+	Userid     pgtype.UUID        `json:"userid"`
+	Courseid   pgtype.UUID        `json:"courseid"`
+	Enrolledat pgtype.Timestamptz `json:"enrolledat"`
+}
+
+func (q *Queries) InsertEnrollment(ctx context.Context, arg InsertEnrollmentParams) error {
+	_, err := q.db.Exec(ctx, insertEnrollment, arg.Userid, arg.Courseid, arg.Enrolledat)
+	return err
+}
+
+const upsertTopicProgress = `-- name: UpsertTopicProgress :exec
+INSERT INTO
+    topic_progresses (
+        user_id,
+        course_id,
+        course_section_topic_id,
+        status
+    )
+VALUES
+    (
+        $1 :: uuid,
+        $2 :: uuid,
+        $3 :: uuid,
+        $4
+    ) ON CONFLICT (user_id, course_id, course_section_topic_id) DO
+UPDATE
+SET
+    status = EXCLUDED.status
+`
+
+type UpsertTopicProgressParams struct {
+	Userid               pgtype.UUID `json:"userid"`
+	Courseid             pgtype.UUID `json:"courseid"`
+	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
+	Status               string      `json:"status"`
+}
+
+func (q *Queries) UpsertTopicProgress(ctx context.Context, arg UpsertTopicProgressParams) error {
+	_, err := q.db.Exec(ctx, upsertTopicProgress,
+		arg.Userid,
+		arg.Courseid,
+		arg.Coursesectiontopicid,
+		arg.Status,
+	)
+	return err
 }

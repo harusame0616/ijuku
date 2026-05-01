@@ -77,19 +77,28 @@ type CourseSectionTopic struct {
 	CompletionCriteria   string             `json:"completion_criteria"`
 }
 
+type Enrollment struct {
+	UserID     pgtype.UUID        `json:"user_id"`
+	CourseID   pgtype.UUID        `json:"course_id"`
+	EnrolledAt pgtype.Timestamptz `json:"enrolled_at"`
+	CreatedAt  pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt  pgtype.Timestamptz `json:"_updated_at"`
+}
+
+type TopicProgress struct {
+	UserID               pgtype.UUID `json:"user_id"`
+	CourseID             pgtype.UUID `json:"course_id"`
+	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
+	// IN_PROGRESS = 開始済み, COMPLETED = 完了済み, 開始していない場合はレコード自体がないので値として持たない
+	Status    string             `json:"status"`
+	CreatedAt pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+}
+
 type User struct {
 	UserID    pgtype.UUID        `json:"user_id"`
 	Nickname  string             `json:"nickname"`
 	CreatedAt pgtype.Timestamptz `json:"_created_at"`
 	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
 	Introduce string             `json:"introduce"`
-}
-
-type UserTopicProgress struct {
-	CourseSectionTopicID pgtype.UUID `json:"course_section_topic_id"`
-	UserID               pgtype.UUID `json:"user_id"`
-	// IN_PROGRESS = 開始済み, COMPLETED = 完了済み, 開始していない場合はレコード自体がないので値として持たない
-	Status    string             `json:"status"`
-	CreatedAt pgtype.Timestamptz `json:"_created_at"`
-	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
 }

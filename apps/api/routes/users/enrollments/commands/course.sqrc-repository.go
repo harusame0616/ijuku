@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -17,10 +18,10 @@ func NewSqrcCourseRepository(q db.Querier) *SqrcCourseRepository {
 	return &SqrcCourseRepository{sqrc: q}
 }
 
-func (repository *SqrcCourseRepository) getCourseByCourseId(ctx context.Context, courseId string) (Course, error) {
+func (repository *SqrcCourseRepository) getCourseByCourseId(ctx context.Context, courseId uuid.UUID) (Course, error) {
 	var courseIdUuid pgtype.UUID
 
-	if err := courseIdUuid.Scan(courseId); err != nil {
+	if err := courseIdUuid.Scan(courseId.String()); err != nil {
 		return Course{}, err
 	}
 

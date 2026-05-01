@@ -29,7 +29,10 @@ func main() {
 	q := db.New(pool)
 
 	coursesHandler := queries.NewCoursesHandlers(q)
-	enrollHandler := enrollmentscommands.NewHandler(enrollmentscommands.NewEnrollCourseUsecase(enrollmentscommands.NewSqrcCourseRepository(q), enrollmentscommands.NewSqrcUserTopicProgressRepository(q)))
+	courseRepo := enrollmentscommands.NewSqrcCourseRepository(q)
+	enrollmentRepo := enrollmentscommands.NewSqrcEnrollmentRepository(q)
+	updateEnrollmentHandler := enrollmentscommands.NewUpdateEnrollmentHandler(enrollmentscommands.NewUpdateEnrollmentUsecase(courseRepo, enrollmentRepo))
+	enrollHandler := enrollmentscommands.NewEnrollHandler(enrollmentscommands.NewEnrollUsecase(courseRepo, enrollmentRepo))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
 	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)), verifier)
@@ -44,7 +47,6 @@ func main() {
 	getEnrollmentHandler := enrollmentsqueries.NewGetEnrollmentHandler(q)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
-	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
 	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
 	http.HandleFunc("GET /v1/users/{userID}/settings/apikeys", listApiKeysHandler.ListApiKeysHandler)
@@ -52,6 +54,8 @@ func main() {
 	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
 	http.HandleFunc("GET /v1/users/{userID}/enrollments", getEnrollmentsHandler.GetEnrollmentsHandler)
 	http.HandleFunc("GET /v1/users/{userID}/enrollments/{courseId}", getEnrollmentHandler.GetEnrollmentHandler)
+	http.HandleFunc("POST /v1/users/{userID}/enrollments", enrollHandler.PostEnrollmentHandler)
+	http.HandleFunc("PATCH /v1/users/{userID}/enrollments/{courseId}", updateEnrollmentHandler.PatchEnrollmentHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

@@ -42,5 +42,5 @@ test-coverage-show: test-all
 	go tool cover -html=coverage.out
 
 test-coverage:
-	@go test -coverpkg=./... -coverprofile=coverage.out ./... > /dev/null 2>&1 || (echo "NG: テスト失敗"; exit 1)
+	@go test -count=1 -coverpkg=./... -coverprofile=coverage.out ./... > /dev/null 2>&1 || (echo "NG: テスト失敗"; exit 1)
 	@go tool cover -func=coverage.out | tail -1 | awk '{gsub(/%/,"",$$3); if ($$3+0 < 80) {print "NG: " $$3 "% < 80%"; exit 1} else {print "OK: " $$3 "%"}}'

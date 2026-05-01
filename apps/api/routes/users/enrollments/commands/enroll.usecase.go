@@ -2,72 +2,68 @@ package commands
 
 import (
 	"context"
+	"time"
 
-	"golang.org/x/sync/errgroup"
+	"github.com/google/uuid"
 )
 
-type EnrollCourseUsecaseParams struct {
-	userId        string
-	courseId      string
-	sectionNumber *int
-	topicNumber   *int
+type EnrollParams struct {
+	userId   uuid.UUID
+	courseId uuid.UUID
 }
 
-type EnrollCourseUsecase struct {
-	courseRepository   CourseRepository
-	progressRepository ProgressRepository
+type EnrollResult struct {
+	CourseId   string
+	EnrolledAt time.Time
 }
 
-func NewEnrollCourseUsecase(courseRepo CourseRepository, progressRepo ProgressRepository) EnrollCourseUsecase {
-	return EnrollCourseUsecase{
-		courseRepository:   courseRepo,
-		progressRepository: progressRepo,
+type EnrollmentCreator interface {
+	findByUserAndCourse(ctx context.Context, userId, courseId uuid.UUID) (Enrollment, error)
+	create(ctx context.Context, enrollment Enrollment) error
+}
+
+type EnrollUsecaseInterface interface {
+	execute(ctx context.Context, params EnrollParams) (EnrollResult, error)
+}
+
+type EnrollUsecase struct {
+	courseRepository     CourseRepository
+	enrollmentRepository EnrollmentCreator
+	now                  func() time.Time
+}
+
+func NewEnrollUsecase(courseRepo CourseRepository, enrollmentRepo EnrollmentCreator) EnrollUsecase {
+	return EnrollUsecase{
+		courseRepository:     courseRepo,
+		enrollmentRepository: enrollmentRepo,
+		now:                  time.Now,
 	}
 }
 
-type CourseRepository interface {
-	getCourseByCourseId(ctx context.Context, courseId string) (Course, error)
-}
-
-type ProgressRepository interface {
-	getProgress(ctx context.Context, userId string, courseId string) (Progress, error)
-	save(ctx context.Context, progress *Progress) error
-}
-
-type EnrollCourseUsecaseInterface interface {
-	execute(ctx context.Context, params EnrollCourseUsecaseParams) (string, error)
-}
-
-func (usecase EnrollCourseUsecase) execute(ctx context.Context, params EnrollCourseUsecaseParams) (string, error) {
-	var course Course
-	var progress Progress
-
-	g, gctx := errgroup.WithContext(ctx)
-	g.Go(func() error {
-		var err error
-		course, err = usecase.courseRepository.getCourseByCourseId(gctx, params.courseId)
-		return err
-	})
-	g.Go(func() error {
-		var err error
-		progress, err = usecase.progressRepository.getProgress(gctx, params.userId, params.courseId)
-		return err
-	})
-
-	if err := g.Wait(); err != nil {
-		return "", err
+func (u EnrollUsecase) execute(ctx context.Context, params EnrollParams) (EnrollResult, error) {
+	course, err := u.courseRepository.getCourseByCourseId(ctx, params.courseId)
+	if err != nil {
+		return EnrollResult{}, err
 	}
 
 	if err := course.checkEnrollable(params.userId); err != nil {
-		return "", err
+		return EnrollResult{}, err
 	}
 
-	section, topic, err := course.findTopicToStart(params.sectionNumber, params.topicNumber, progress.lastTopicPosition())
-	if err != nil {
-		return "", err
+	if _, err := u.enrollmentRepository.findByUserAndCourse(ctx, params.userId, params.courseId); err == nil {
+		return EnrollResult{}, ErrAlreadyEnrolled
+	} else if err != ErrNotEnrolled {
+		return EnrollResult{}, err
 	}
 
-	topicId := progress.start(section, topic)
+	enrollment := NewEnrollment(params.userId, params.courseId, u.now())
 
-	return topicId, usecase.progressRepository.save(ctx, &progress)
+	if err := u.enrollmentRepository.create(ctx, enrollment); err != nil {
+		return EnrollResult{}, err
+	}
+
+	return EnrollResult{
+		CourseId:   enrollment.CourseId().String(),
+		EnrolledAt: enrollment.EnrolledAt(),
+	}, nil
 }

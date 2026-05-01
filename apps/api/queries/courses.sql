@@ -109,35 +109,18 @@ GROUP BY
 
 -- name: GetProgressByUserIdAndCourseId :many
 SELECT
-    utp.course_section_topic_id,
-    utp.user_id,
-    utp.status,
+    tp.course_section_topic_id,
+    tp.user_id,
+    tp.status,
     cs."index" AS section_index,
     cst."index" AS topic_index
 FROM
-    user_topic_progresses utp
-    JOIN course_section_topics cst ON utp.course_section_topic_id = cst.course_section_topic_id
+    topic_progresses tp
+    JOIN course_section_topics cst ON tp.course_section_topic_id = cst.course_section_topic_id
     JOIN course_sections cs ON cst.course_section_id = cs.course_section_id
 WHERE
-    utp.user_id = @UserId :: uuid
-    AND cst.course_id = @CourseId :: uuid;
-
--- name: UpsertProgress :exec
-INSERT INTO
-    user_topic_progresses (
-        course_section_topic_id,
-        user_id,
-        status
-    )
-VALUES
-    (
-        @CourseSectionTopicId :: uuid,
-        @UserId :: uuid,
-        @Status
-    ) ON CONFLICT (course_section_topic_id, user_id) DO
-UPDATE
-SET
-    status = EXCLUDED.status;
+    tp.user_id = @UserId :: uuid
+    AND tp.course_id = @CourseId :: uuid;
 
 -- name: GetTopicDetail :one
 SELECT

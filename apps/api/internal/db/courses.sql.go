@@ -192,18 +192,18 @@ func (q *Queries) GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCo
 
 const getProgressByUserIdAndCourseId = `-- name: GetProgressByUserIdAndCourseId :many
 SELECT
-    utp.course_section_topic_id,
-    utp.user_id,
-    utp.status,
+    tp.course_section_topic_id,
+    tp.user_id,
+    tp.status,
     cs."index" AS section_index,
     cst."index" AS topic_index
 FROM
-    user_topic_progresses utp
-    JOIN course_section_topics cst ON utp.course_section_topic_id = cst.course_section_topic_id
+    topic_progresses tp
+    JOIN course_section_topics cst ON tp.course_section_topic_id = cst.course_section_topic_id
     JOIN course_sections cs ON cst.course_section_id = cs.course_section_id
 WHERE
-    utp.user_id = $1 :: uuid
-    AND cst.course_id = $2 :: uuid
+    tp.user_id = $1 :: uuid
+    AND tp.course_id = $2 :: uuid
 `
 
 type GetProgressByUserIdAndCourseIdParams struct {
@@ -315,33 +315,4 @@ func (q *Queries) GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) 
 		&i.CompletionCriteria,
 	)
 	return i, err
-}
-
-const upsertProgress = `-- name: UpsertProgress :exec
-INSERT INTO
-    user_topic_progresses (
-        course_section_topic_id,
-        user_id,
-        status
-    )
-VALUES
-    (
-        $1 :: uuid,
-        $2 :: uuid,
-        $3
-    ) ON CONFLICT (course_section_topic_id, user_id) DO
-UPDATE
-SET
-    status = EXCLUDED.status
-`
-
-type UpsertProgressParams struct {
-	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
-	Userid               pgtype.UUID `json:"userid"`
-	Status               string      `json:"status"`
-}
-
-func (q *Queries) UpsertProgress(ctx context.Context, arg UpsertProgressParams) error {
-	_, err := q.db.Exec(ctx, upsertProgress, arg.Coursesectiontopicid, arg.Userid, arg.Status)
-	return err
 }

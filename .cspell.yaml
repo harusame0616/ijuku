@@ -81,6 +81,7 @@ words:
   - Courseid
   - Coursesectiontopicid
   - Enrollable
+  - Enrolledat
   - usecase
   - Usecase
   # variable abbreviations

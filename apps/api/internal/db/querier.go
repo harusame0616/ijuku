@@ -16,14 +16,17 @@ type Querier interface {
 	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
 	GetCourseStructureWithProgress(ctx context.Context, arg GetCourseStructureWithProgressParams) (GetCourseStructureWithProgressRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
+	GetEnrollmentByUserIdAndCourseId(ctx context.Context, arg GetEnrollmentByUserIdAndCourseIdParams) (GetEnrollmentByUserIdAndCourseIdRow, error)
 	GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID) ([]GetEnrollmentsByUserIDRow, error)
 	GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error)
 	GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error)
+	GetTopicProgressesByUserIdAndCourseId(ctx context.Context, arg GetTopicProgressesByUserIdAndCourseIdParams) ([]GetTopicProgressesByUserIdAndCourseIdRow, error)
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)
 	InsertApiKey(ctx context.Context, arg InsertApiKeyParams) error
+	InsertEnrollment(ctx context.Context, arg InsertEnrollmentParams) error
 	ListApiKeysByUserID(ctx context.Context, userid pgtype.UUID) ([]ListApiKeysByUserIDRow, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
-	UpsertProgress(ctx context.Context, arg UpsertProgressParams) error
+	UpsertTopicProgress(ctx context.Context, arg UpsertTopicProgressParams) error
 }
 
 var _ Querier = (*Queries)(nil)

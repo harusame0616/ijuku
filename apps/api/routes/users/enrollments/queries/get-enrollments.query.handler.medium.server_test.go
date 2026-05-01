@@ -120,7 +120,8 @@ func cleanupMediumTestData(ctx context.Context, pool *pgxpool.Pool) {
 	users := []string{mediumTestUserID, mediumTestOtherUser, mediumTestAuthorID}
 	courses := []string{mediumTestCourseAID, mediumTestCourseBID, mediumTestCourseCID}
 
-	_, _ = pool.Exec(ctx, `DELETE FROM user_topic_progresses WHERE user_id = ANY($1)`, users)
+	_, _ = pool.Exec(ctx, `DELETE FROM topic_progresses WHERE user_id = ANY($1)`, users)
+	_, _ = pool.Exec(ctx, `DELETE FROM enrollments WHERE user_id = ANY($1)`, users)
 	_, _ = pool.Exec(ctx, `DELETE FROM course_section_topics WHERE course_id = ANY($1)`, courses)
 	_, _ = pool.Exec(ctx, `DELETE FROM course_sections WHERE course_id = ANY($1)`, courses)
 	_, _ = pool.Exec(ctx, `DELETE FROM courses WHERE course_id = ANY($1)`, courses)
@@ -130,16 +131,46 @@ func cleanupMediumTestData(ctx context.Context, pool *pgxpool.Pool) {
 }
 
 func cleanupMediumProgresses(ctx context.Context, pool *pgxpool.Pool) {
-	_, _ = pool.Exec(ctx, `DELETE FROM user_topic_progresses WHERE user_id = ANY($1)`,
-		[]string{mediumTestUserID, mediumTestOtherUser})
+	users := []string{mediumTestUserID, mediumTestOtherUser}
+	_, _ = pool.Exec(ctx, `DELETE FROM topic_progresses WHERE user_id = ANY($1)`, users)
+	_, _ = pool.Exec(ctx, `DELETE FROM enrollments WHERE user_id = ANY($1)`, users)
 }
 
-func insertProgress(ctx context.Context, pool *pgxpool.Pool, userID, topicID string, updatedAt time.Time) error {
+// ensureEnrollment は (userID, courseID) の enrollment を取得 or 新規作成する。
+func ensureEnrollment(ctx context.Context, pool *pgxpool.Pool, userID, courseID string, enrolledAt time.Time) error {
 	_, err := pool.Exec(ctx,
-		`INSERT INTO user_topic_progresses (course_section_topic_id, user_id, status, _updated_at) VALUES ($1, $2, 'IN_PROGRESS', $3)`,
-		topicID, userID, updatedAt,
+		`INSERT INTO enrollments (user_id, course_id, enrolled_at) VALUES ($1, $2, $3)
+		 ON CONFLICT (user_id, course_id) DO NOTHING`,
+		userID, courseID, enrolledAt,
 	)
 	return err
+}
+
+// insertProgress は topic に対する IN_PROGRESS 進捗を記録する。
+// 既に enrollment が無ければ自動作成。
+func insertProgress(ctx context.Context, pool *pgxpool.Pool, userID, topicID string, updatedAt time.Time) error {
+	courseID, err := courseIDOfTopic(ctx, pool, topicID)
+	if err != nil {
+		return err
+	}
+	if err := ensureEnrollment(ctx, pool, userID, courseID, updatedAt); err != nil {
+		return err
+	}
+	_, err = pool.Exec(ctx,
+		`INSERT INTO topic_progresses (user_id, course_id, course_section_topic_id, status, _updated_at) VALUES ($1, $2, $3, 'IN_PROGRESS', $4)
+		 ON CONFLICT (user_id, course_id, course_section_topic_id) DO UPDATE SET status = EXCLUDED.status, _updated_at = EXCLUDED._updated_at`,
+		userID, courseID, topicID, updatedAt,
+	)
+	return err
+}
+
+func courseIDOfTopic(ctx context.Context, pool *pgxpool.Pool, topicID string) (string, error) {
+	var courseID string
+	err := pool.QueryRow(ctx,
+		`SELECT course_id FROM course_section_topics WHERE course_section_topic_id = $1`,
+		topicID,
+	).Scan(&courseID)
+	return courseID, err
 }
 
 func TestGetEnrollmentsHandlerMedium(t *testing.T) {

@@ -3,17 +3,18 @@ SELECT
     courses.course_id AS "courseId",
     courses.title
 FROM
-    user_topic_progresses
-    JOIN course_section_topics ON user_topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
-    JOIN course_sections ON course_section_topics.course_section_id = course_sections.course_section_id
-    JOIN courses ON course_sections.course_id = courses.course_id
+    enrollments
+    JOIN courses ON enrollments.course_id = courses.course_id
+    LEFT JOIN topic_progresses ON topic_progresses.user_id = enrollments.user_id
+        AND topic_progresses.course_id = enrollments.course_id
 WHERE
-    user_topic_progresses.user_id = @UserID :: uuid
+    enrollments.user_id = @UserID :: uuid
 GROUP BY
     courses.course_id,
-    courses.title
+    courses.title,
+    enrollments.enrolled_at
 ORDER BY
-    MAX(user_topic_progresses._updated_at) DESC;
+    COALESCE(MAX(topic_progresses._updated_at), enrollments.enrolled_at) DESC;
 
 -- name: GetCourseAuthorityById :one
 SELECT
@@ -54,8 +55,9 @@ WITH section_agg AS (
     FROM
         course_sections AS sections
         LEFT JOIN course_section_topics AS topics ON sections.course_section_id = topics.course_section_id
-        LEFT JOIN user_topic_progresses AS progresses ON progresses.course_section_topic_id = topics.course_section_topic_id
-        AND progresses.user_id = @UserID
+        LEFT JOIN topic_progresses AS progresses ON progresses.user_id = @UserID
+            AND progresses.course_id = sections.course_id
+            AND progresses.course_section_topic_id = topics.course_section_topic_id
     WHERE
         sections.course_id = @CourseID
     GROUP BY
@@ -94,3 +96,57 @@ WHERE
     courses.course_id = @CourseID
 GROUP BY
     courses.course_id;
+
+-- name: GetEnrollmentByUserIdAndCourseId :one
+SELECT
+    user_id,
+    course_id,
+    enrolled_at
+FROM
+    enrollments
+WHERE
+    user_id = @UserID :: uuid
+    AND course_id = @CourseID :: uuid;
+
+-- name: GetTopicProgressesByUserIdAndCourseId :many
+SELECT
+    course_section_topic_id,
+    status
+FROM
+    topic_progresses
+WHERE
+    user_id = @UserID :: uuid
+    AND course_id = @CourseID :: uuid;
+
+-- name: InsertEnrollment :exec
+INSERT INTO
+    enrollments (
+        user_id,
+        course_id,
+        enrolled_at
+    )
+VALUES
+    (
+        @UserID :: uuid,
+        @CourseID :: uuid,
+        @EnrolledAt
+    );
+
+-- name: UpsertTopicProgress :exec
+INSERT INTO
+    topic_progresses (
+        user_id,
+        course_id,
+        course_section_topic_id,
+        status
+    )
+VALUES
+    (
+        @UserID :: uuid,
+        @CourseID :: uuid,
+        @CourseSectionTopicID :: uuid,
+        @Status
+    ) ON CONFLICT (user_id, course_id, course_section_topic_id) DO
+UPDATE
+SET
+    status = EXCLUDED.status;
