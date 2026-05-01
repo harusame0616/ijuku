@@ -3,7 +3,7 @@
   "checkpoint_id": "4041c5a11a30",
   "strategy": "manual-commit",
   "branch": "CU-86excxht5_API-PATCH-v1usersuserIdenrollmentscourseId_nemoto-masaharu",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "apps/api/go.mod",
     "apps/api/main.go",
@@ -26,13 +26,19 @@
       "transcript": "/40/41c5a11a30/0/full.jsonl",
       "content_hash": "/40/41c5a11a30/0/content_hash.txt",
       "prompt": "/40/41c5a11a30/0/prompt.txt"
+    },
+    {
+      "metadata": "/40/41c5a11a30/1/metadata.json",
+      "transcript": "/40/41c5a11a30/1/full.jsonl",
+      "content_hash": "/40/41c5a11a30/1/content_hash.txt",
+      "prompt": "/40/41c5a11a30/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 138,
-    "cache_creation_tokens": 217893,
-    "cache_read_tokens": 12567948,
-    "output_tokens": 50707,
-    "api_call_count": 113
+    "input_tokens": 2896,
+    "cache_creation_tokens": 2405860,
+    "cache_read_tokens": 137507852,
+    "output_tokens": 339201,
+    "api_call_count": 584
   }
 }
