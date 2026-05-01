@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "adf344f02785",
+  "session_id": "098f9dac-1bd1-4344-8b55-4782944960eb",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-01T23:02:46.047632Z",
+  "branch": "CU-86exf8q8w__nemoto-masaharu",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "Makefile",
+    "apps/api/Makefile"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "71c2f230ff6e",
+  "token_usage": {
+    "input_tokens": 47,
+    "cache_creation_tokens": 16432,
+    "cache_read_tokens": 361877,
+    "output_tokens": 4744,
+    "api_call_count": 12
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-01T23:02:46.007269Z",
+    "agent_lines": 5,
+    "human_added": 21,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 26,
+    "agent_percentage": 19.230769230769234
+  }
+}
