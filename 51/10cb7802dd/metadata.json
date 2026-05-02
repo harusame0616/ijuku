@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "5110cb7802dd",
+  "strategy": "manual-commit",
+  "branch": "sample-course",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".claude/.gitignore",
+    "Makefile",
+    "packages/supabase/courses/nextjs-app-router/course.yaml",
+    "packages/supabase/courses/nextjs-app-router/topics/01-01-installation.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-02-project-structure.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-03-enable-cache-components.md",
+    "packages/supabase/courses/nextjs-app-router/topics/06-03-metadata.md",
+    "packages/supabase/package.json",
+    "packages/supabase/seed-course.ts",
+    "packages/supabase/seed.ts",
+    "pnpm-lock.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/51/10cb7802dd/0/metadata.json",
+      "transcript": "/51/10cb7802dd/0/full.jsonl",
+      "content_hash": "/51/10cb7802dd/0/content_hash.txt",
+      "prompt": "/51/10cb7802dd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 156,
+    "cache_creation_tokens": 576686,
+    "cache_read_tokens": 10758968,
+    "output_tokens": 94480,
+    "api_call_count": 82
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "5110cb7802dd",
+  "session_id": "58b5b124-4350-4251-a9c0-ae60ac0f2382",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-02T12:37:19.156948Z",
+  "branch": "sample-course",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".claude/.gitignore",
+    "Makefile",
+    "packages/supabase/courses/nextjs-app-router/course.yaml",
+    "packages/supabase/courses/nextjs-app-router/topics/01-01-installation.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-02-project-structure.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-03-enable-cache-components.md",
+    "packages/supabase/courses/nextjs-app-router/topics/06-03-metadata.md",
+    "packages/supabase/package.json",
+    "packages/supabase/seed-course.ts",
+    "packages/supabase/seed.ts",
+    "pnpm-lock.yaml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0251cf40dd36",
+  "token_usage": {
+    "input_tokens": 156,
+    "cache_creation_tokens": 576686,
+    "cache_read_tokens": 10758968,
+    "output_tokens": 94480,
+    "api_call_count": 82
+  },
+  "session_metrics": {
+    "turn_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-02T12:37:18.913074Z",
+    "agent_lines": 533,
+    "human_added": 3126,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 3659,
+    "agent_percentage": 14.566821535938782
+  }
+}
