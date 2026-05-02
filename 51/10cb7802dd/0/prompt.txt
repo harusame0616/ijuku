@@ -139,3 +139,51 @@ go で書くと auth のユーザー追加が微妙なので一旦 supabase の 
 ---
 
 <<autonomous-loop-dynamic>
+
+---
+
+<task-notification>
+<task-id>a0055326ba8774576</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haru-ghq-github-com-harusame0616-ijuku/ff95df8b-47b3-40ae-8688-c258878f6a1c/tasks/a0055326ba8774576.output</output-file>
+<status>completed</status>
+<summary>Agent "Write 15 Next.js course topics" completed</summary>
+<result>All 14 files created successfully. Here is the completion report.
+
+## 作成完了報告
+
+`/Users/haru/ghq/github.com/harusame0616/ijuku/packages/supabase/courses/nextjs-app-router/topics/` 配下に 14 ファイルを作成しました。
+
+| ファイル | 行数 |
+|---|---|
+| 01-01-installation.md | 68 |
+| 01-02-project-structure.md | 73 |
+| 01-03-enable-cache-components.md | 64 |
+| 02-01-layouts-and-pages.md | 130 |
+| 02-02-linking-and-navigating.md | 93 |
+| 03-01-server-and-client-components.md | 92 |
+| 04-01-fetching-data.md | 135 |
+| 04-02-mutating-data.md | 99 |
+| 05-01-use-cache.md | 95 |
+| 05-02-revalidating.md | 75 |
+| 06-01-error-handling.md | 111 |
+| 06-02-loading-and-streaming.md | 107 |
+| 06-03-metadata.md | 112 |
+| 07-01-deploying.md | 74 |
+| **合計** | **1328** |
+
+### 主な構成判断
+
+- **ストーリー一貫性**: `mini-blog` プロジェクトを軸に、`app/posts/_data.ts` の in-memory ストアを毎章拡張する流れに統一。`_components` / `_actions` / `_data` というプライベートフォルダ規約も活用
+- **Cache Components 重視**: `'use cache'` / `cacheLife('hours')` / `cacheTag('posts')` / `updateTag('posts')` の組み合わせを 05 章で実装し、04 章の `revalidatePath` を 05-02 で `updateTag` に置換するという「学習者がコードを書き換えていく」展開
+- **Next.js 16 仕様の反映**: `params` が `Promise` で渡される点、`error.tsx` の `unstable_retry`、Server Action と form の連携、`cookies()` の async 化（補足で言及）など、訓練データの古い記憶ではなくバンドル docs に従った
+- **「タスク」と「理解度チェック」の分離**: ルール通り、タスクには理解度チェックや次トピック移行を入れず、理解度チェックは「知識」セクションに書いた内容のみから出題
+
+### 妥協・注意点
+
+- **in-memory ストア**: 学習用に `let posts = [...]` で運用しているため、開発サーバー再起動や Vercel の複数インスタンスで状態が消える点は 04-02 と 07-01 の補足で明記
+- **bun / yarn コマンド**: docs にはあるが、CLAUDE.md が pnpm 系で統一されていそうだったので主に pnpm を提示（07-01 のみ git/`pnpm build`）
+- **frontmatter description**: 各ファイル 1 行・100 字程度に揃えた
+- **追加 import 注意点**: 04-01 で `'use server'` と `'use cache'` が混在しないよう、Server Action は別ファイル `_actions.ts` に切り出す構成に統一</result>
+<usage><total_tokens>136494</total_tokens><tool_uses>35</tool_uses><duration_ms>461103</duration_ms></usage>
+</task-notification>
