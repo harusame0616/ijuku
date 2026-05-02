@@ -29,7 +29,7 @@ argument-hint: "[enroll <courseId>]"
 
 ## API ベース URL
 
-- 既定: `https://api.jukubox.example.com`
+- 既定: `https://jukubox.io/`
 - 環境変数 `JUKUBOX_API_BASE_URL` が設定されていればその値を優先する
 
 API パスはすべて新パス（`/v1/me/*`）前提。ユーザー ID をユーザーが意識する必要はなく、API キーから特定される認証済みユーザーに対してリクエストする。
