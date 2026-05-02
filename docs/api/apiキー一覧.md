@@ -2,13 +2,13 @@
 
 ## 1. 概要・エンドポイント定義
 
-ログイン中ユーザーが発行済みの API キー一覧を取得します。鍵の平文は返さず、識別用に末尾 4 文字 (`suffix`) と作成日・有効期限のみを返します。
+ログイン中ユーザーが発行済みの API キー一覧を取得します。鍵の平文は返さず、識別用に末尾 4 文字（plain_suffix）と作成日・有効期限のみを返します。
 
 | 項目       | 内容                                          |
 | :--------- | :-------------------------------------------- |
 | **Method** | `GET`                                         |
 | **Path**   | `/v1/me/settings/apikeys`                     |
-| **認証**   | 要 (Supabase JWT / Bearer Token)              |
+| **認証**   | 要 (Supabase JWT / API キー Bearer)           |
 
 ---
 
@@ -16,13 +16,13 @@
 
 ### 2.1. パスパラメータ
 
-なし。対象ユーザーは Authorization ヘッダーの JWT から解決します。
+なし。ユーザーは Authorization トークンから解決します。
 
 ### 2.2. ヘッダー
 
 | ヘッダー名        | 値の形式            | 必須 | 説明                                       |
 | :---------------- | :------------------ | :--- | :----------------------------------------- |
-| **Authorization** | `Bearer {JWT}`      | Yes  | Supabase 発行の JWT (アクセストークン)。   |
+| **Authorization** | `Bearer {Token}`    | Yes  | Supabase JWT または API キー (jukubox_…)。 |
 
 リクエストボディはありません。
 
@@ -62,16 +62,16 @@ API キーが 0 件の場合は `apiKeys` が空配列で返ります。
 
 ### 3.2. エラー時
 
-| HTTP Status                   | エラーコード (code)      | 発生条件 / 理由                              |
-| :---------------------------- | :----------------------- | :------------------------------------------- |
-| **401 Unauthorized**          | `UNAUTHORIZED`           | Authorization ヘッダー欠落、または JWT が無効な場合。 |
-| **500 Internal Server Error** | `SERVER_INTERNAL_ERROR`  | DB エラーなど予期しないサーバーエラー。      |
+| HTTP Status                   | エラーコード (errorCode)  | 発生条件 / 理由                                          |
+| :---------------------------- | :------------------------ | :------------------------------------------------------- |
+| **401 Unauthorized**          | `UNAUTHORIZED`            | Authorization ヘッダー欠落、または認証情報が無効な場合。 |
+| **500 Internal Server Error** | `SERVER_INTERNAL_ERROR`   | DB エラーなど予期しないサーバーエラー。                  |
 
 エラーレスポンス例:
 
 ```json
 {
-  "code":    "UNAUTHORIZED",
+  "errorCode": "UNAUTHORIZED",
   "message": "unauthorized"
 }
 ```
@@ -80,15 +80,16 @@ API キーが 0 件の場合は `apiKeys` が空配列で返ります。
 
 ## 4. 認証 (Authentication)
 
-本エンドポイントは Supabase の JWT を用いた認証で保護されており、 [認証.md](./認証.md) で説明している API キー (Bearer) 認証とは別系統です。 JWT の `sub` クレームから対象ユーザーを解決します。
+本エンドポイントは Supabase JWT または API キー (Bearer) のいずれでも認証できます。詳細は [認証.md](./認証.md) を参照してください。
 
 ---
 
 ## 5. リクエスト例 (cURL)
 
 ```bash
-curl -X GET "https://api.example.com/v1/me/settings/apikeys" \
-     -H "Authorization: Bearer eyJhbGciOi..."
+curl -X GET \
+  "https://api.example.com/v1/me/settings/apikeys" \
+  -H "Authorization: Bearer eyJhbGciOi..."
 ```
 
 ---
