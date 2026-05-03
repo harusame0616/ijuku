@@ -13,4 +13,4 @@ supabase-reset:
 	pnpm dlx supabase start
 
 supabase-seed:
-	node seed.ts
+	node --experimental-strip-types --no-warnings=ExperimentalWarning seed.ts

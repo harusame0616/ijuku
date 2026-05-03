@@ -34,9 +34,9 @@ export function LikeButton() {
 
 `'use client'` は **境界宣言** です。一度宣言したファイルから import したコンポーネントは、すべてクライアントバンドルに含まれるようになります。だからこそ、`'use client'` はできるだけ末端の小さいコンポーネントに付け、上位はできる限り Server Component のままにするのが定石です。
 
-Server Component から Client Component には **props を経由してデータを渡せます**。ただし React によってシリアライズされるため、関数や Date オブジェクトなど直接シリアライズできない値は渡せない点に注意してください（プリミティブ値や JSON 表現可能なものは OK）。
+Server Component から Client Component には **props を経由してデータを渡せます**。ただし React によってシリアライズされるため、関数（Server Action として渡す場合を除く）やクラスインスタンスなどシリアライズできない値は渡せない点に注意してください（プリミティブ値、配列、プレーンオブジェクト、Date など React がシリアライズ可能な型は OK）。
 
-## タスク
+## ステップ
 
 ### 1. LikeButton を作る
 
@@ -87,6 +87,5 @@ import { LikeButton } from "./_components/like-button";
 
 ## 理解度チェック
 
-- App Router で Client Component にするためにファイルの先頭に書くディレクティブは何ですか
-- Server Component と Client Component で「使えるもの」が分かれる代表的な例を 2 つ挙げてください
-- Server Component から Client Component に値を渡すときの制約は何ですか
+- Server Component と Client Component で「使えるもの」が分かれる代表的な例を 2 つ挙げ、なぜ分かれるのか説明してください
+- Server Component から Client Component に値を渡すときの制約は何ですか。その制約があるのはなぜですか

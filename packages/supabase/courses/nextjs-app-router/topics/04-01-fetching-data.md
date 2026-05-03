@@ -27,11 +27,13 @@ export default async function Page() {
 
 データ取得関数は **コンポーネントの中に直接書かず、`lib/` などに切り出す** のが基本です。これは複数のコンポーネントから共有しやすく、テストも書きやすくなるためです。本コースでは外部 DB を使わず、サーバープロセスのメモリ上で動く簡易ストアを使います。
 
-## タスク
+ただし開発サーバーで動く Next.js は **HMR（Hot Module Replacement）** によりファイルを編集するたびに該当モジュールが再評価されます。素朴に `let posts = [...]` とモジュールスコープに置くだけだと、`data.ts` 自身を保存し直したときに配列が初期値で再初期化されて投稿が消えるので、**`globalThis` にハングオフしてモジュール再評価を超えて状態を保持する**パターンを採ります。これは Prisma の公式チュートリアル等でも採用されている dev 用の常套手段です（本番ではプロセスごとに状態が分離するので、この簡易ストアはあくまで学習用途です）。
+
+## ステップ
 
 ### 1. in-memory ストアを作る
 
-`app/posts/_data.ts` を以下のように書き換え、ストアと取得関数を分離します。配列を `let` で保持し、後の章で書き込みもできるようにします。
+`app/posts/data.ts` を以下のように書き換え、ストアと取得関数を分離します。`globalThis` に配列を保持することで HMR でモジュールが再評価されてもデータが消えない設計にします。
 
 ```ts
 export type Post = {
@@ -40,10 +42,17 @@ export type Post = {
   body: string;
 };
 
-let posts: Post[] = [
-  { slug: "hello", title: "Hello, Mini Blog", body: "最初の記事です。" },
-  { slug: "next", title: "Next.js を学ぶ", body: "App Router の入門中。" },
-];
+declare global {
+  // eslint-disable-next-line no-var
+  var __miniBlogPosts: Post[] | undefined;
+}
+
+const posts: Post[] =
+  globalThis.__miniBlogPosts ??
+  (globalThis.__miniBlogPosts = [
+    { slug: "hello", title: "Hello, Mini Blog", body: "最初の記事です。" },
+    { slug: "next", title: "Next.js を学ぶ", body: "App Router の入門中。" },
+  ]);
 
 export async function getPosts(): Promise<Post[]> {
   return posts;
@@ -54,9 +63,14 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 }
 
 export async function addPost(input: Post): Promise<void> {
-  posts = [input, ...posts];
+  posts.unshift(input);
 }
 ```
+
+ポイント:
+- `globalThis.__miniBlogPosts` に配列を一度だけ生成して保持。以降のモジュール再評価では `??` の左辺で既存配列を再利用するので、編集 → HMR 再評価 → 配列リセット、を防げる
+- 配列そのものは `const` のまま破壊的に変更（`unshift`）。`posts = [...]` のような再代入を避けるのは、`globalThis.__miniBlogPosts` と `posts` の参照を一致させ続けるため
+- グローバルへの注入は dev 用の妥協で、本番は DB 等の外部ストアに置き換える前提
 
 ### 2. 一覧ページを async に書き換える
 
@@ -65,7 +79,7 @@ export async function addPost(input: Post): Promise<void> {
 ```tsx
 import Link from "next/link";
 import { Suspense } from "react";
-import { getPosts } from "./_data";
+import { getPosts } from "./data";
 import { LikeButton } from "./_components/like-button";
 
 async function PostList() {
@@ -96,12 +110,13 @@ export default function PostsPage() {
 
 ### 3. 詳細ページも async に書き換える
 
-`app/posts/[slug]/page.tsx` で `getPost(slug)` を使うように修正します。
+`app/posts/[slug]/page.tsx` で `getPost(slug)` を使うように修正します。02-01 と同様、`params` は **リクエスト時にしか確定しない runtime data** なので、`cacheComponents: true` のもとでは `<Suspense>` 配下で消費する必要があります。Page 関数は `<Suspense>` を返す同期コンポーネントとして書き、`params` を `await` して `getPost` を呼ぶ処理は内側の async コンポーネント `PostContent` に分離します。
 
 ```tsx
-import { getPost } from "../_data";
+import { Suspense } from "react";
+import { getPost } from "../data";
 
-export default async function PostPage({
+async function PostContent({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -116,11 +131,23 @@ export default async function PostPage({
     </article>
   );
 }
+
+export default function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  return (
+    <Suspense fallback={<p>読み込み中...</p>}>
+      <PostContent params={params} />
+    </Suspense>
+  );
+}
 ```
 
 ## 完了判定
 
-- `app/posts/_data.ts` に `getPosts` / `getPost` / `addPost` がエクスポートされている
+- `app/posts/data.ts` に `getPosts` / `getPost` / `addPost` がエクスポートされている
 - `/posts` で一覧が表示され、開発ツールの Network タブを見ても余計な API コールが起きていない（サーバー側で完結している）
 - `/posts/hello` の詳細ページが正しく表示される
 
@@ -130,6 +157,5 @@ export default async function PostPage({
 
 ## 理解度チェック
 
-- App Router の Server Component の中で `await` を使えるのはなぜですか
-- `cacheComponents: true` のとき、キャッシュしない `fetch` を使うコンポーネントはどう扱う必要がありますか
-- 並列に複数のデータを取得したいときに使う JavaScript の API は何ですか
+- Server Component の中で `await` でデータ取得できるのはなぜですか。Pages Router の `getServerSideProps` との違いも踏まえて説明してください
+- `cacheComponents: true` のとき、キャッシュしない `fetch` を含むコンポーネントを安全に表示するにはどうしますか

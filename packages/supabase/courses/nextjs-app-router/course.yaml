@@ -1,5 +1,11 @@
 title: "Next.js App Router 入門 — Cache Components で作るミニブログ"
-description: "Next.js 16 の App Router と Cache Components を使い、ミニブログを実装しながら主要機能を一通り学ぶ Get Started コース。"
+description: |
+  Next.js が初めての方向けの Get Started コース。実際にミニブログを作りながら、Next.js 16 の App Router と Cache Components を中心に主要機能を一通り学びます。
+
+  対象: Next.js 未経験。React の関数コンポーネントと hooks、TypeScript の型注釈が読める方を想定しています。HTML/CSS の基本知識とターミナル操作も前提とします。
+
+  扱う内容: ファイルベースルーティング、Server / Client Components、Server Actions、Cache Components（'use cache' / cacheLife / cacheTag / updateTag）、Error / Loading UI、Metadata、画像最適化（next/image）、Vercel デプロイ。
+
 slug: "nextjs-app-router-getting-started"
 tags:
   - nextjs
@@ -45,11 +51,12 @@ sections:
       - file: "05-02-revalidating.md"
 
   - title: "補助機能"
-    description: "Error UI / Loading UI / Metadata の実装"
+    description: "Error UI / Loading UI / Metadata / 画像最適化の実装"
     topics:
       - file: "06-01-error-handling.md"
       - file: "06-02-loading-and-streaming.md"
       - file: "06-03-metadata.md"
+      - file: "06-04-image-optimization.md"
 
   - title: "仕上げ"
     description: "Vercel にデプロイして公開する"

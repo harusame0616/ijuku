@@ -39,7 +39,9 @@ export async function generateMetadata({
 }
 ```
 
-`generateMetadata` の中でも `params` は **Promise** で渡されます。動的にレンダリングされるページでは、Next.js が **メタデータをストリーミング** で送信し、本文より遅くても UI 描画をブロックしないように工夫されています（一部のクローラ向けには無効化されます）。
+`generateMetadata` の中でも `params` は **Promise** で渡されます。動的にレンダリングされるページでは、Next.js が **メタデータをストリーミング** で送信し、本文より遅くても UI 描画をブロックしないように工夫されています（HTML だけを読むタイプのクローラ向けには User Agent を見て自動的にブロッキング送信に切り替わります）。
+
+本コースのように Cache Components が有効な場合、`generateMetadata` も他の Server Component と同じルールに従います。`params` / `searchParams` / `cookies()` / `headers()` などのランタイムデータや非キャッシュ fetch にアクセスすると、`generateMetadata` はリクエスト時に解決される扱いになります。ページや子コンポーネントもランタイムデータに依存している場合はそのままストリーミングされますが、ページが完全にプリレンダリング可能なときは「メタデータだけリクエスト時」という構成は意図的かどうか分からないため、ビルド時にエラーで誘導されます。記事タイトルのように外部データ依存ではあるがランタイムデータには依存しない場合は、`generateMetadata` 内で `'use cache'` を付けることでメタデータをキャッシュして整合させられます。
 
 データ取得が「ページ本体」と「メタデータ」で重複するのが気になる場合は、React の `cache()` を使って同じリクエスト内のメモ化を効かせます。
 
@@ -55,7 +57,7 @@ export const getPost = cache(async (slug: string) => {
 
 `metadata` と `generateMetadata` のエクスポートは Server Component でのみサポートされる点も覚えておいてください。
 
-## タスク
+## ステップ
 
 ### 1. ルートレイアウトに静的 metadata を追加する
 
@@ -76,7 +78,7 @@ export const metadata: Metadata = {
 
 ```tsx
 import type { Metadata } from "next";
-import { getPost } from "../_data";
+import { getPost } from "../data";
 
 export async function generateMetadata({
   params,
@@ -104,9 +106,3 @@ export async function generateMetadata({
 ## 補足
 
 `generateMetadata` と本文の両方から同じデータを取りたい場合は、データ取得関数を `React.cache()` で包むと、同じリクエスト内では一度だけ実行されるようになります。`opengraph-image.tsx` のような特殊ファイルを使うと OG 画像をルート単位で動的生成でき、SNS シェアの体験を強化できます。`metadataBase` を `layout.tsx` で設定しておくと、相対 URL のメタデータを絶対 URL に解決でき、本番デプロイ時に OG 画像のパスが崩れません。
-
-## 理解度チェック
-
-- 静的なタイトルを設定するために `page.tsx` から export するものは何ですか
-- 動的にメタデータを生成する関数の名前は何ですか
-- メタデータ取得とページ表示でデータ取得を重複させない React の関数は何ですか

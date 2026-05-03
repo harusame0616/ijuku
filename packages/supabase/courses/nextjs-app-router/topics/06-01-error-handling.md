@@ -53,7 +53,7 @@ export default function Error({
 
 注意点として、Error Boundary は **イベントハンドラ内のエラー** や **非同期コードのエラー** は捕捉しません。これらは `try` / `catch` で取って `useState` に積む、もしくは `useTransition` の `startTransition` 内で投げて Error Boundary に持ち上げる、といったハンドリングが必要です。
 
-## タスク
+## ステップ
 
 ### 1. /posts 用の error.tsx を作る
 
@@ -106,6 +106,4 @@ export default function PostsError({
 
 ## 理解度チェック
 
-- `error.tsx` をファイル先頭で必ず宣言する必要があるディレクティブは何ですか
-- `error.tsx` が捕捉できないエラーの種類を 1 つ挙げてください
-- `unstable_retry()` を呼ぶと何が起きますか
+- `error.tsx` が捕捉できるエラーと捕捉できないエラーをそれぞれ説明してください

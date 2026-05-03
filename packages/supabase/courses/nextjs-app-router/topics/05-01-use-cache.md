@@ -37,7 +37,7 @@ async function PostList() {
 
 キャッシュ対象に出来ない代表例として、`Math.random()` や `Date.now()`、`crypto.randomUUID()` のような **非決定的** な値、`cookies()` / `headers()` / `searchParams` / `params` のような **リクエスト時 API** があります。これらをキャッシュ内で使うとビルド時にエラーになります。それらを扱うコンポーネントは `<Suspense>` で囲い、キャッシュ外に追い出してください。
 
-## タスク
+## ステップ
 
 ### 1. PostList をキャッシュ対象にする
 
@@ -47,9 +47,9 @@ async function PostList() {
 import { Suspense } from "react";
 import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
-import { getPosts } from "./_data";
+import { getPosts } from "./data";
 import { LikeButton } from "./_components/like-button";
-import { createPost } from "./_actions";
+import { PostForm } from "./_components/post-form";
 
 async function PostList() {
   "use cache";
@@ -72,7 +72,7 @@ async function PostList() {
 
 ### 2. フォームはキャッシュの外に置く
 
-`createPost` を呼ぶ `<form>` はそのままページ直下に置き、`PostList` のキャッシュとは独立させます。これにより「投稿フォームと一覧」が同じページにあっても、一覧だけがキャッシュ済みのまま再利用されます。
+投稿フォームの Client Component（`PostForm`）はページ直下にそのまま置き、`PostList` のキャッシュとは独立させます。これにより「投稿フォームと一覧」が同じページにあっても、一覧だけがキャッシュ済みのまま再利用されます。
 
 ### 3. ビルドして静的シェルを確認する
 
@@ -86,10 +86,9 @@ async function PostList() {
 
 ## 補足
 
-`'use cache'` はファイル先頭にも書けます。その場合、ファイル内の全エクスポート関数がキャッシュ対象になります。`cacheLife` で `seconds` プロファイルや `revalidate: 0` を指定すると **短命キャッシュ** と判定され、自動的にプリレンダリングから除外されて動的レンダリングになります。意図せず短命にならないよう注意してください。キャッシュキーは引数とクロージャ値から自動生成されるため、関数の引数を変えると別のキャッシュエントリになります。
+`'use cache'` はファイル先頭にも書けます。その場合、ファイル内のエクスポート関数はすべて async 関数である必要があり、それらがキャッシュ対象になります。`cacheLife` で `seconds` プロファイル、`revalidate: 0`、または `expire` が 5 分未満の値を指定すると **短命キャッシュ** と判定され、自動的にプリレンダリングから除外されて動的レンダリングになります。意図せず短命にならないよう注意してください。キャッシュキーは引数とクロージャ値から自動生成されるため、関数の引数を変えると別のキャッシュエントリになります。
 
 ## 理解度チェック
 
-- 関数の戻り値をキャッシュするためにつけるディレクティブは何ですか
-- `cacheLife('hours')` はどんな寿命プロファイルを意味しますか（`stale` / `revalidate` / `expire` の概念で説明）
-- `'use cache'` の中で使ってはいけないリクエスト時 API を 1 つ挙げてください
+- `cacheLife` における `stale` / `revalidate` / `expire` の 3 つはそれぞれ何を表しますか
+- `'use cache'` の関数の中でリクエスト時 API（`cookies` / `headers` 等）を直接使えないのはなぜですか。その制約を回避してリクエスト固有のデータを使う典型的なパターンも説明してください
