@@ -1,0 +1,64 @@
+title: "Next.js App Router 入門 — Cache Components で作るミニブログ"
+description: |
+  Next.js が初めての方向けの Get Started コース。実際にミニブログを作りながら、Next.js 16 の App Router と Cache Components を中心に主要機能を一通り学びます。
+
+  対象: Next.js 未経験。React の関数コンポーネントと hooks、TypeScript の型注釈が読める方を想定しています。HTML/CSS の基本知識とターミナル操作も前提とします。
+
+  扱う内容: ファイルベースルーティング、Server / Client Components、Server Actions、Cache Components（'use cache' / cacheLife / cacheTag / updateTag）、Error / Loading UI、Metadata、画像最適化（next/image）、Vercel デプロイ。
+
+slug: "nextjs-app-router-getting-started"
+tags:
+  - nextjs
+  - react
+  - frontend
+  - tutorial
+publishStatus: "published"
+visibility: "public"
+authorName: "JukuBox 講師"
+authorProfile: "JukuBox オフィシャル教材担当"
+categoryName: "Frontend"
+categoryPath: "frontend.javascript.nextjs"
+
+sections:
+  - title: "はじめに"
+    description: "プロジェクトを作成し、Cache Components を有効化する"
+    topics:
+      - file: "01-01-installation.md"
+      - file: "01-02-project-structure.md"
+      - file: "01-03-enable-cache-components.md"
+
+  - title: "ルーティングと UI"
+    description: "ファイルベースルーティング、Layout、リンクと遷移を学ぶ"
+    topics:
+      - file: "02-01-layouts-and-pages.md"
+      - file: "02-02-linking-and-navigating.md"
+
+  - title: "コンポーネントモデル"
+    description: "Server Components と Client Components の使い分けを学ぶ"
+    topics:
+      - file: "03-01-server-and-client-components.md"
+
+  - title: "データの読み書き"
+    description: "Server Components で fetch し、Server Actions で書き込む"
+    topics:
+      - file: "04-01-fetching-data.md"
+      - file: "04-02-mutating-data.md"
+
+  - title: "Cache Components"
+    description: "use cache / cacheLife / cacheTag による静的・動的の最適化"
+    topics:
+      - file: "05-01-use-cache.md"
+      - file: "05-02-revalidating.md"
+
+  - title: "補助機能"
+    description: "Error UI / Loading UI / Metadata / 画像最適化の実装"
+    topics:
+      - file: "06-01-error-handling.md"
+      - file: "06-02-loading-and-streaming.md"
+      - file: "06-03-metadata.md"
+      - file: "06-04-image-optimization.md"
+
+  - title: "仕上げ"
+    description: "Vercel にデプロイして公開する"
+    topics:
+      - file: "07-01-deploying.md"

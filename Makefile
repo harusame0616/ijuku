@@ -25,7 +25,7 @@ db-reset: ## DB をリセットしてマイグレーションを再適用
 	$(MAKE) -C packages/supabase migrate-up
 	$(MAKE) -C apps/api migrate-up
 
-db-seed: ## Mock 認証用テストユーザーを投入（Service Role キー必須）
+db-seed: ## Mock 認証用テストユーザーとサンプルコースを投入（Service Role キー必須）
 	$(MAKE) -C packages/supabase supabase-seed
 
 query-generate: ## sqlc クエリコードを生成
