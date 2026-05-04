@@ -1,0 +1,5 @@
+Side B · CREATE は CREATE じゃなくて TEACH にして
+
+---
+
+@apps/web/app/(main)/_top-page/side-b-hero.universal.tsx
