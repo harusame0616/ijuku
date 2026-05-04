@@ -12,7 +12,7 @@ const orbitron = Orbitron({
 
 export const metadata: Metadata = {
   title: "Jukubox.ai",
-  description: "AI を活用したインターネット塾サービス",
+  description: "あなたの AI で学ぶ AI 学習プラットフォーム",
 };
 
 export default function RootLayout({

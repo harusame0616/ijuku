@@ -7,8 +7,7 @@ import type { Route } from "next";
 const links = [
   // TODO: ページ作成後に URL を変更する
   { label: "ドキュメント", href: "/" },
-  // TODO: ページ作成後に URL を変更する
-  { label: "プライバシー", href: "/" },
+  { label: "プライバシー", href: "/privacy-policies" },
   // TODO: ページ作成後に URL を変更する
   { label: "利用規約", href: "/" },
 ] as const satisfies { label: string; href: Route }[];
