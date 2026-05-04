@@ -12,6 +12,8 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
+      "@hugeicons/core-free-icons",
+      "@hugeicons/react",
       "@base-ui/react/button",
       "@base-ui/react/input",
       "@base-ui/react/merge-props",
