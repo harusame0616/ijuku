@@ -24,6 +24,7 @@ type Querier interface {
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)
 	GetUserIDByApiKeyHash(ctx context.Context, keyHash string) (pgtype.UUID, error)
 	InsertApiKey(ctx context.Context, arg InsertApiKeyParams) error
+	InsertContact(ctx context.Context, arg InsertContactParams) error
 	InsertEnrollment(ctx context.Context, arg InsertEnrollmentParams) error
 	ListApiKeysByUserID(ctx context.Context, userid pgtype.UUID) ([]ListApiKeysByUserIDRow, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error

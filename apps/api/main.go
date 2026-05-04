@@ -9,6 +9,7 @@ import (
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
+	"github.com/harusame0616/ijuku/apps/api/routes/contacts"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	enrollmentscommands "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/commands"
@@ -46,8 +47,12 @@ func main() {
 	getEnrollmentsHandler := enrollmentsqueries.NewGetEnrollmentsHandler(q)
 	getEnrollmentHandler := enrollmentsqueries.NewGetEnrollmentHandler(q)
 
+	postContactHandler := contacts.NewPostContactHandler(q)
+
 	authMiddleware := libauth.Middleware(verifier, q)
 	optionalAuthMiddleware := libauth.OptionalMiddleware(verifier, q)
+
+	http.HandleFunc("POST /v1/contacts", postContactHandler.PostContactHandler)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)

@@ -35,6 +35,18 @@ type Category struct {
 	UpdatedAt  pgtype.Timestamptz `json:"_updated_at"`
 }
 
+type Contact struct {
+	ContactID pgtype.UUID        `json:"contact_id"`
+	Name      string             `json:"name"`
+	Email     string             `json:"email"`
+	Phone     pgtype.Text        `json:"phone"`
+	Content   string             `json:"content"`
+	IpAddress string             `json:"ip_address"`
+	UserAgent string             `json:"user_agent"`
+	CreatedAt pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+}
+
 type Course struct {
 	CourseID    pgtype.UUID `json:"course_id"`
 	Title       string      `json:"title"`
