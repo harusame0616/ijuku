@@ -91,6 +91,7 @@ words:
   # route / ui
   - lp
   - exlg
+  - bside
   # test utilities
   - unstub
   # valibot

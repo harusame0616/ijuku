@@ -24,7 +24,7 @@ test("制作側のキャッチコピーが見出しとして表示される", as
   await expect
     .element(
       screen.getByRole("heading", {
-        name: /自分の知識を、\s*AI と一緒に教えよう。/,
+        name: /自分の知識を\s*AI と一緒に教えよう。/,
       }),
     )
     .toBeInTheDocument();

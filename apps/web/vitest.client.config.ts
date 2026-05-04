@@ -20,6 +20,7 @@ export default defineConfig({
       "clsx",
       "jotai",
       "next/cache",
+      "next/form",
       "next/headers",
       "next/link",
       "next/navigation",
