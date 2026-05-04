@@ -1,12 +1,13 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "25c77f491b9c",
+  "session_id": "a8d4fa55-9043-470f-8861-a178f283b3cc",
   "strategy": "manual-commit",
+  "created_at": "2026-05-04T13:02:49.683607Z",
   "branch": "CU-86exfq4jt__nemoto-masaharu",
-  "checkpoints_count": 29,
+  "checkpoints_count": 1,
   "files_touched": [
     ".claude/rules/migration-down.md",
-    ".claude/settings.json",
     "apps/api/internal/db/courses.sql.go",
     "apps/api/internal/db/enrollments.sql.go",
     "apps/api/internal/db/models.go",
@@ -40,61 +41,26 @@
     "apps/web/app/(main)/page.tsx",
     "apps/web/vitest.config.ts"
   ],
-  "sessions": [
-    {
-      "metadata": "/25/c77f491b9c/0/metadata.json",
-      "transcript": "/25/c77f491b9c/0/full.jsonl",
-      "content_hash": "/25/c77f491b9c/0/content_hash.txt",
-      "prompt": "/25/c77f491b9c/0/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/1/metadata.json",
-      "transcript": "/25/c77f491b9c/1/full.jsonl",
-      "content_hash": "/25/c77f491b9c/1/content_hash.txt",
-      "prompt": "/25/c77f491b9c/1/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/2/metadata.json",
-      "transcript": "/25/c77f491b9c/2/full.jsonl",
-      "content_hash": "/25/c77f491b9c/2/content_hash.txt",
-      "prompt": "/25/c77f491b9c/2/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/3/metadata.json",
-      "transcript": "/25/c77f491b9c/3/full.jsonl",
-      "content_hash": "/25/c77f491b9c/3/content_hash.txt",
-      "prompt": "/25/c77f491b9c/3/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/4/metadata.json",
-      "transcript": "/25/c77f491b9c/4/full.jsonl",
-      "content_hash": "/25/c77f491b9c/4/content_hash.txt",
-      "prompt": "/25/c77f491b9c/4/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/5/metadata.json",
-      "transcript": "/25/c77f491b9c/5/full.jsonl",
-      "content_hash": "/25/c77f491b9c/5/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/25/c77f491b9c/6/metadata.json",
-      "transcript": "/25/c77f491b9c/6/full.jsonl",
-      "content_hash": "/25/c77f491b9c/6/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/25/c77f491b9c/7/metadata.json",
-      "transcript": "/25/c77f491b9c/7/full.jsonl",
-      "content_hash": "/25/c77f491b9c/7/content_hash.txt",
-      "prompt": "/25/c77f491b9c/7/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "3e5cd348b95e",
   "token_usage": {
-    "input_tokens": 606,
-    "cache_creation_tokens": 2683219,
-    "cache_read_tokens": 72051290,
-    "output_tokens": 288713,
-    "api_call_count": 359
+    "input_tokens": 10,
+    "cache_creation_tokens": 38481,
+    "cache_read_tokens": 0,
+    "output_tokens": 360,
+    "api_call_count": 1
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T13:02:49.677259Z",
+    "agent_lines": 1001,
+    "human_added": 3,
+    "human_modified": 14,
+    "human_removed": 0,
+    "total_committed": 1018,
+    "agent_percentage": 98.33005893909626
   }
 }
