@@ -1,0 +1,38 @@
+ent (chromium)  app/(main)/[authorSlug]/[courseSlug]/course-detail.presenter.client.test.tsx (6 tests) 129ms
+ ✓  client (chromium)  app/(main)/settings/api-keys/api-keys-list.presenter.client.test.tsx (4 tests) 71ms
+ ✓  client (chromium)  app/(main)/_top-page/featured-course-card.universal.client.test.tsx (4 tests) 70ms
+ ✓  client (chromium)  app/(main)/settings/profile/profile-edit.presenter.form.client.test.tsx (12 tests) 1904ms
+   ✓ UNAUTHORIZED コードを返した場合はログイン要求メッセージが表示される  354ms
+ ✓  client (chromium)  app/(main)/settings/_components/settings-nav.client.test.tsx (3 tests) 24ms
+ ✓  client (chromium)  app/(main)/learning/enrollments-list.presenter.client.test.tsx (2 tests) 57ms
+ ✓  client (chromium)  app/(main)/_top-page/featured-courses-section.universal.client.test.tsx (3 tests) 76ms
+ ❯  client (chromium)  app/(main)/_components/header-search.universal.client.test.tsx (0 test)
+ ✓  client (chromium)  hooks/use-is-hydrated.client.test.tsx (2 tests) 21ms
+ ✓  client (chromium)  app/(main)/_top-page/side-b-hero.universal.client.test.tsx (2 tests) 60ms
+ ✓  client (chromium)  app/(main)/_top-page/lp-link-footer.universal.client.test.tsx (1 test) 7ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   client (chromium)  app/(main)/_components/header-search.universal.client.test.tsx [ app/(main)/_components/header-search.universal.client.test.tsx ]
+Error: Failed to import test file /home/runner/work/jukubox/jukubox/apps/web/app/(main)/_components/header-search.universal.client.test.tsx
+Caused by: ReferenceError: process is not defined
+ ❯ ../../node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/client/add-base-path.js:13:17
+ ❯ ../../node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/client/form.js:14:6
+
+ ❯ ../../node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/form.js:1:7
+ ❯ node_modules/.vite/vitest/d2a04d71301a8915217dd5faf81d12cffd6cd958/deps/next_form.js?v=5b90a652:169:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 24 passed (25)
+      Tests  91 passed (91)
+   Start at  13:15:44
+   Duration  8.71s (transform 684ms, setup 0ms, import 5.80s, tests
+
+---
+
+具体的にどこのエラー？
+
+---
+
+なるほど。進めて
