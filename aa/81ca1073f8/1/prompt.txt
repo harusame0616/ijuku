@@ -1,0 +1,348 @@
+/ticket 86exfhm2q の実装をして。マイグレーション SQLの作成、 SQL の修正は私がやるのでプレースフォルダファイルの作成と修正方針だけ教えてください。それ以外は実装をしてください
+
+---
+
+スキルの変更を元に戻してしまったのでスキルだけ直して
+
+---
+
+WITH
+    section_agg AS (
+        SELECT
+            sections.course_id,
+            sections.course_section_id,
+            sections.title,
+            sections.description,
+            sections.index,
+            jsonb_agg(
+                jsonb_build_object('topicId', topics.course_section_topic_id, 'title', topics.title, 'description', topics.description, 'content', topics."content")
+                ORDER BY
+                    topics.index
+            ) AS topics
+        FROM
+            course_sections AS sections
+            LEFT JOIN course_section_topics AS topics ON topics.course_section_id = sections.course_section_id
+        GROUP BY
+            sections.course_section_id,
+            sections.title
+    )
+SELECT
+    courses.course_id AS "courseId",
+    courses.title,
+    courses.description,
+    courses.slug,
+    jsonb_agg(
+        jsonb_build_object('sectionId', section_agg.course_section_id, 'title', section_agg.title, 'description', section_agg.description, 'topics', section_agg.topics)
+        ORDER BY
+            section_agg.index
+    ) AS sections,
+    jsonb_build_object('authorId', authors.author_id, 'name', authors.name, 'slug', authors.slug) AS author
+FROM
+    courses
+    LEFT JOIN section_agg ON courses.course_id = section_agg.course_id
+    LEFT JOIN authors ON courses.author_id = authors.author_id
+WHERE
+    courses.slug = 'nextjs-app-router-getting-started'
+    AND authors.slug = 'jukubox'
+GROUP BY
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    authors.author_id,
+    authors.name,
+    authors.slug; でどう？（idのところは sqlc の パラメーター指定に置き換える）
+
+---
+
+ちなみに WITH く側の  SELECT って where がなくても 全部取得するんじゃなくて外側の SELECT の where に一致するもののみ select される？
+
+---
+
+a / b それぞれメリットデメリット教えて
+
+---
+
+course を 2 回引く: PG オプティマイザが消し込めない場合、courses テーブルへのアクセスが 2 回発生（実コスト上は微小だが）　ってどういう意味？なぜ？
+
+---
+
+A で where ないの select の cte に切り出して
+
+---
+
+それで修正して進めて
+
+---
+
+page で await していてルールを守っていません
+
+---
+
+どこに記載してある何のルールを採用したの
+
+---
+
+ページでは await せず、子コンポーネントに promise の状態で値を渡すこと。その際 .then で必要なパラメータに変換することをページのルールに記載して page には next デフォルトの PageProps を使うこともルールに記載して
+
+---
+
+ここってなんで globalThis をツアkっているの？ window ではなぜダメなの？
+
+---
+
+直して
+
+---
+
+course-detail.presenter.client.tsx ってなんで .client になっているの？
+
+---
+
+それは use client がついているから .client なんでしょ 意味がわからん
+
+---
+
+コピーボタンは COPY アイコンと COPY CHECK アイコンを使うようにしてください
+
+---
+
+GET /settings/profile 200 in 47ms (next.js: 2ms, proxy.ts: 5ms, application-code: 40ms)
+ GET / 200 in 225ms (next.js: 28ms, proxy.ts: 7ms, application-code: 190ms)
+ GET /jukubox/nextjs-app-router-getting-started 200 in 2.1s (next.js: 564ms, proxy.ts: 6ms, generate-params: 536ms, application-code: 1528ms)
+ GET /jukubox/nextjs-app-router-getting-started 200 in 954ms (next.js: 113ms, proxy.ts: 201ms, generate-params: 4ms, application-code: 640ms)
+ GET /jukubox/nextjs-app-router-getting-started 200 in 291ms (next.js: 19ms, proxy.ts: 85ms, generate-params: 31µs, application-code: 186ms)
+RangeError: Map maximum size exceeded
+    at Map.set (<anonymous>)
+    at AsyncHook.init (/Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:53:268561)
+    at emitInitNative (node:internal/async_hooks:206:43)
+    at emitInitScript (node:internal/async_hooks:513:3)
+    at promiseInitHook (node:internal/async_hooks:332:3)
+    at promiseInitHookWithDestroyTracking (node:internal/async_hooks:336:3)
+    at createIterator.next (<anonymous>)
+    at /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/next@16.2.2_@babel+core@7.29.0_babel-plugin-react-compiler@1.0.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:127:30
+
+ ELIFECYCLE  Command failed with exit code 1.
+make[1]: *** [dev] Error 1
+
+---
+
+講座にタグってあったっけ？タグの表示も必要
+
+---
+
+2026/05/04 05:24:00 Server starting on :8080
+2026/05/04 05:25:41 unmarshal tags error: json: cannot unmarshal string into Go value of type []string
+2026/05/04 05:25:55 unmarshal tags error: json: cannot unmarshal string into Go value of type []string
+2026/05/04 05:26:08 unmarshal tags error: json: cannot unmarshal string into Go value of type []string
+
+---
+
+カラムが jsonb なのに単純文字列が入ることなんてあるの？
+
+---
+
+なるほど。とりあえずみたかぎり配列になっているけど
+
+---
+
+"[\"nextjs\",\"react\",\"frontend\",\"tutorial\"]" があった。これはシードデータがおかしいのかな
+
+---
+
+@packages/supabase/seed.ts
+
+---
+
+OK
+
+---
+
+/Library/Developer/CommandLineTools/usr/bin/make -C apps/api migrate-up
+migrate -path ./migrations -database "postgresql://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable" up
+1/u add_courses (72.473625ms)
+2/u enroll (98.942958ms)
+3/u course_complement (120.832875ms)
+4/u apikeys (138.493041ms)
+5/u add_introduce_to_users (154.643541ms)
+6/u add_enrollments (176.700208ms)
+7/u topic-fix (197.073042ms)
+8/u add_authors_slug (220.493041ms)
+/Library/Developer/CommandLineTools/usr/bin/make -C packages/supabase supabase-seed
+node --experimental-strip-types --no-warnings=ExperimentalWarning seed.ts
+Seeded user: test@example.com (0b947b5d-7ae7-41c2-a549-ffcb6dbcb9b9)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+PostgresError: null value in column "slug" of relation "authors" violates not-null constraint
+    at ErrorResponse (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/connection.js:815:30)
+    at handle (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/connection.js:489:6)
+    at Socket.data (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/connection.js:324:9)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)
+    at cachedError (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/query.js:170:23)
+    at new Query (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/query.js:36:24)
+    at sql (file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/node_modules/.pnpm/postgres@3.4.9/node_modules/postgres/src/index.js:112:11)
+    at file:///Users/haru/ghq/github.com/harusame0616/ijuku-ws1/packages/supabase/seed-course.ts:79:13 {
+  severity_local: 'ERROR',
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (88c640bb-8352-5988-977c-c79bbaf64c13, JukuBox 講師, JukuBox オフィシャル教材担当, 2026-05-03 20:37:54.279435+00, 2026-05-03 20:37:54.279435+00, null).',
+  schema_name: 'public',
+  table_name: 'authors',
+  column_name: 'slug',
+  file: 'execMain.c',
+  line: '1981',
+  routine: 'ExecConstraints'
+}
+
+Node.js v24.9.0
+make[1]: *** [supabase-seed] Error 1
+
+---
+
+enrolled-budge.client.tsx はなぜ client ? universal か server component じゃないの？
+
+---
+
+間違えが多いのでルールに判定基準を書きましょう。 state が未使用かつ use client がない同期コンポーネント→ universal。非同期コンポーネント。非同期コンポーネント → server component、 use client があるもしくは state を使用している→ client component 。抜け漏れ間違いある？
+
+---
+
+React の state / effect / ref / context フック　のところは hook を使っているでまとめられる？
+
+---
+
+use () ってサーバーコンポーネントで使う理由って何？ await じゃダメなの？
+
+---
+
+▎ use() は Client Component から Promise/Context を読む手段。Server Component では基本 await を使うは不要。ルールを更新して
+
+---
+
+今回新しく作成したファイルについてルールを準拠しているかチェックして
+
+---
+
+encroll-command-block はコピーボタンを client component に分離すれば universal にできない？
+
+---
+
+進めて
+
+---
+
+client component は最小になるようにルールに明記したいんだけど、極力シンプルで意図が伝わり、間違いが発生しないプロンプトはどうなるかな
+
+---
+
+Bで client component を作成した場合はそれ以上分解できないか再チェックすることをも記載した
+
+---
+
+client component は最小化する は web ファイル命名規則じゃなくて  coomponent-architecture.md の方が適切じゃない？
+
+---
+
+aria-label の代わりに sr-only のテキストを優先したい。 a11y.md を rules に追加して
+
+---
+
+お願い
+
+---
+
+テキストのだしわけは現状不要なので label / copiedlabel は不要
+
+---
+
+コマンドの高さとボタンの高さが一致していない[Image #1]
+
+---
+
+font は mono がいいな
+
+---
+
+フォントサイズ xs でいいかも あと emit されてしまうと手動でマウスで選択してコピーができないからscrollable にして
+
+---
+
+scrollbar が出ちゃって微妙だから input にして readonly にしましょう
+
+---
+
+セクションタイトル、トピックタイトルの前に連番を表示したい 1. はじめに 1-1. Next.js プロジェクトを作成する
+
+---
+
+セクションとトピックはコンポーネントに切り出して（ファイルは同一でOK
+
+---
+
+ちなみに readonly input って見た目的に入力ができてしまいそうだけど、 a11y ＆ ux 的にどのような工夫をするべき？
+
+---
+
+1,2,3, を実施 4 は不要
+
+---
+
+Input component 自体に readOnly の時はそうなるようにして
+
+---
+
+受講を開始するには〜 の部分は省略して Label で受講開始コマンドとして ヘルプボタンをおいて受講開始方法の説明ページへのリンクにして（説明ページ自体はチケットで対応したいのでチケット切って）
+
+---
+
+useId を使う方が良くない？
+
+---
+
+useId ってサーバーコンポーネントでも使えなかったっけ。そもそもサーバーコンポーネントとクライアントコンポーネントでのハイドレーションエラーを防ぐためのものだと思ってたけど
+
+---
+
+スケルトンをアップデートして。タグのエリア、コマンドコピーエリアがない。他にも差分がないかチェックし CLS が発生しないようにして
+
+---
+
+元々 enroll block って client componet にするのに分離してたと思うけど、コピーボタンを client component にした関係で別ファイルに分離しておく必要性が減ったと思うけどどう思う？
+
+---
+
+統合して
+
+---
+
+ここリポジトリーからエンティティーかする際に id が string になってしまっているからだと思うけど、基本的に uuid は string じゃなくて google の uuid で持ち回るようにしているのでリポジトリの修正を行って（今回作成した bySlug のみでいい
+
+---
+
+ここも uuid にして handler 側で 　stりんgにしたい
+
+---
+
+ここってなんで関数かしているの？
+
+---
+
+OK
+
+---
+
+マジックナンバーは使わないというベストプラクティスがありますがこの状況って改めて定義する必要ある？実際に使う箇所は section の map の length として使っていてコードで自明です。逆にそのコードを見た時に定義の場所までジャンプする必要があり、視認性が悪いと思うのですが。複数箇所で参照しているわけでもない
+
+---
+
+こういう書き方をするとマジックナンバーは避けましょうと行ってくる人がいる気がするんですが
+
+---
+
+不要な中間変数（説明変数）も作る傾向があるのでそれも避けたい。ルールの記載内容はシンプルにしたい

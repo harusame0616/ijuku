@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "aa81ca1073f8",
+  "session_id": "a010e84d-25b6-4ec0-a207-f919d0679a7e",
   "strategy": "manual-commit",
+  "created_at": "2026-05-04T00:12:53.268008Z",
   "branch": "CU-86exfhm2q__nemoto-masaharu",
-  "checkpoints_count": 58,
+  "checkpoints_count": 57,
   "files_touched": [
     ".claude/rules/a11y.md",
     ".claude/rules/avoid-extraction.md",
@@ -51,25 +53,25 @@
     "packages/supabase/seed-course.ts",
     "packages/supabase/seed.ts"
   ],
-  "sessions": [
-    {
-      "metadata": "/aa/81ca1073f8/0/metadata.json",
-      "transcript": "/aa/81ca1073f8/0/full.jsonl",
-      "content_hash": "/aa/81ca1073f8/0/content_hash.txt",
-      "prompt": "/aa/81ca1073f8/0/prompt.txt"
-    },
-    {
-      "metadata": "/aa/81ca1073f8/1/metadata.json",
-      "transcript": "/aa/81ca1073f8/1/full.jsonl",
-      "content_hash": "/aa/81ca1073f8/1/content_hash.txt",
-      "prompt": "/aa/81ca1073f8/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "3c432f655041",
   "token_usage": {
-    "input_tokens": 644,
-    "cache_creation_tokens": 1582377,
-    "cache_read_tokens": 71231670,
-    "output_tokens": 254373,
-    "api_call_count": 247
+    "input_tokens": 634,
+    "cache_creation_tokens": 1543669,
+    "cache_read_tokens": 71090730,
+    "output_tokens": 251963,
+    "api_call_count": 242
+  },
+  "session_metrics": {
+    "turn_count": 57
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T00:12:52.131301Z",
+    "agent_lines": 1869,
+    "human_added": 1945,
+    "human_modified": 27,
+    "human_removed": 0,
+    "total_committed": 3841,
+    "agent_percentage": 48.65920333246551
   }
 }
