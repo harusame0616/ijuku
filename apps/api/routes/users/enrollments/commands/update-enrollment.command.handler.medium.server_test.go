@@ -176,10 +176,10 @@ func getUpdateProgresses(t *testing.T, ctx context.Context, pool *pgxpool.Pool, 
 	return records
 }
 
-func insertUpdateProgress(ctx context.Context, pool *pgxpool.Pool, userID, courseID, topicID, status string) error {
+func insertUpdateProgress(ctx context.Context, pool *pgxpool.Pool, userID, topicID, status string) error {
 	_, err := pool.Exec(ctx,
-		`INSERT INTO topic_progresses (user_id, course_id, course_section_topic_id, status) VALUES ($1, $2, $3, $4)`,
-		userID, courseID, topicID, status,
+		`INSERT INTO topic_progresses (user_id, course_section_topic_id, status) VALUES ($1, $2, $3)`,
+		userID, topicID, status,
 	)
 	return err
 }
@@ -256,7 +256,7 @@ func TestPatchEnrollmentHandlerMedium(t *testing.T) {
 	t.Run("既存IN_PROGRESSをCOMPLETEDに遷移できる", func(t *testing.T) {
 		t.Cleanup(func() { cleanupUpdateProgresses(ctx, pool) })
 		insertEnrollment(t, ctx, pool, updTestUserID, updTestCourseID)
-		if err := insertUpdateProgress(ctx, pool, updTestUserID, updTestCourseID, updTestTopic00ID, "IN_PROGRESS"); err != nil {
+		if err := insertUpdateProgress(ctx, pool, updTestUserID, updTestTopic00ID, "IN_PROGRESS"); err != nil {
 			t.Fatalf("テストデータの挿入に失敗しました: %v", err)
 		}
 
@@ -276,7 +276,7 @@ func TestPatchEnrollmentHandlerMedium(t *testing.T) {
 	t.Run("COMPLETEDからIN_PROGRESSへの巻き戻しは400を返す", func(t *testing.T) {
 		t.Cleanup(func() { cleanupUpdateProgresses(ctx, pool) })
 		insertEnrollment(t, ctx, pool, updTestUserID, updTestCourseID)
-		if err := insertUpdateProgress(ctx, pool, updTestUserID, updTestCourseID, updTestTopic00ID, "COMPLETED"); err != nil {
+		if err := insertUpdateProgress(ctx, pool, updTestUserID, updTestTopic00ID, "COMPLETED"); err != nil {
 			t.Fatalf("テストデータの挿入に失敗しました: %v", err)
 		}
 

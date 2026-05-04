@@ -19,7 +19,6 @@ type Querier interface {
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
 	GetEnrollmentByUserIdAndCourseId(ctx context.Context, arg GetEnrollmentByUserIdAndCourseIdParams) (GetEnrollmentByUserIdAndCourseIdRow, error)
 	GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID) ([]GetEnrollmentsByUserIDRow, error)
-	GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error)
 	GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error)
 	GetTopicProgressesByUserIdAndCourseId(ctx context.Context, arg GetTopicProgressesByUserIdAndCourseIdParams) ([]GetTopicProgressesByUserIdAndCourseIdRow, error)
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)

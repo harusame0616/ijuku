@@ -5,8 +5,10 @@ SELECT
 FROM
     enrollments
     JOIN courses ON enrollments.course_id = courses.course_id
-    LEFT JOIN topic_progresses ON topic_progresses.user_id = enrollments.user_id
-        AND topic_progresses.course_id = enrollments.course_id
+    LEFT JOIN course_section_topics ON course_section_topics.course_id = enrollments.course_id
+    LEFT JOIN topic_progresses
+        ON topic_progresses.user_id = enrollments.user_id
+        AND topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
 WHERE
     enrollments.user_id = @UserID :: uuid
 GROUP BY
@@ -56,7 +58,6 @@ WITH section_agg AS (
         course_sections AS sections
         LEFT JOIN course_section_topics AS topics ON sections.course_section_id = topics.course_section_id
         LEFT JOIN topic_progresses AS progresses ON progresses.user_id = @UserID
-            AND progresses.course_id = sections.course_id
             AND progresses.course_section_topic_id = topics.course_section_topic_id
     WHERE
         sections.course_id = @CourseID
@@ -110,13 +111,14 @@ WHERE
 
 -- name: GetTopicProgressesByUserIdAndCourseId :many
 SELECT
-    course_section_topic_id,
-    status
+    topic_progresses.course_section_topic_id,
+    topic_progresses.status
 FROM
     topic_progresses
+    JOIN course_section_topics USING (course_section_topic_id)
 WHERE
-    user_id = @UserID :: uuid
-    AND course_id = @CourseID :: uuid;
+    topic_progresses.user_id = @UserID :: uuid
+    AND course_section_topics.course_id = @CourseID :: uuid;
 
 -- name: InsertEnrollment :exec
 INSERT INTO
@@ -136,17 +138,15 @@ VALUES
 INSERT INTO
     topic_progresses (
         user_id,
-        course_id,
         course_section_topic_id,
         status
     )
 VALUES
     (
         @UserID :: uuid,
-        @CourseID :: uuid,
         @CourseSectionTopicID :: uuid,
         @Status
-    ) ON CONFLICT (user_id, course_id, course_section_topic_id) DO
+    ) ON CONFLICT (user_id, course_section_topic_id) DO
 UPDATE
 SET
     status = EXCLUDED.status;

@@ -26,6 +26,13 @@ export default defineConfig({
         "app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
         "app/(main)/settings/api-keys/generate-api-key.action.ts",
         "app/(main)/settings/api-keys/generate-api-key.presenter.client.tsx",
+        "app/(main)/_components/header-search.universal.tsx",
+        "app/(main)/_top-page/featured-courses.data.ts",
+        "app/(main)/_top-page/featured-course-card.universal.tsx",
+        "app/(main)/_top-page/featured-courses-section.universal.tsx",
+        "app/(main)/_top-page/lp-link-footer.universal.tsx",
+        "app/(main)/_top-page/continue-learning.presenter.universal.tsx",
+        "app/(main)/_top-page/side-b-hero.universal.tsx",
       ],
       thresholds: {
         lines: 80,

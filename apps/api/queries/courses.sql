@@ -99,21 +99,6 @@ GROUP BY
     authors.name,
     courses.visibility;
 
--- name: GetProgressByUserIdAndCourseId :many
-SELECT
-    tp.course_section_topic_id,
-    tp.user_id,
-    tp.status,
-    cs."index" AS section_index,
-    cst."index" AS topic_index
-FROM
-    topic_progresses tp
-    JOIN course_section_topics cst ON tp.course_section_topic_id = cst.course_section_topic_id
-    JOIN course_sections cs ON cst.course_section_id = cs.course_section_id
-WHERE
-    tp.user_id = @UserId :: uuid
-    AND tp.course_id = @CourseId :: uuid;
-
 -- name: GetCourseBySlug :one
 WITH
     target_course AS (

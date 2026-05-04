@@ -24,7 +24,7 @@ type CourseRepository interface {
 
 type EnrollmentRepository interface {
 	findByUserAndCourse(ctx context.Context, userId, courseId uuid.UUID) (Enrollment, error)
-	upsertTopicProgress(ctx context.Context, userId, courseId uuid.UUID, progress TopicProgress) error
+	upsertTopicProgress(ctx context.Context, userId uuid.UUID, progress TopicProgress) error
 }
 
 type UpdateEnrollmentUsecaseInterface interface {
@@ -63,7 +63,7 @@ func (usecase UpdateEnrollmentUsecase) execute(ctx context.Context, params Updat
 		return UpdateEnrollmentResult{}, err
 	}
 
-	if err := usecase.enrollmentRepository.upsertTopicProgress(ctx, enrollment.UserId(), enrollment.CourseId(), progress); err != nil {
+	if err := usecase.enrollmentRepository.upsertTopicProgress(ctx, enrollment.UserId(), progress); err != nil {
 		return UpdateEnrollmentResult{}, err
 	}
 

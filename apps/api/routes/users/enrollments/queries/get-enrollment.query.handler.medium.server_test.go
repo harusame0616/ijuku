@@ -37,9 +37,9 @@ func insertProgressWithStatus(ctx context.Context, pool *pgxpool.Pool, userID, t
 		return err
 	}
 	_, err = pool.Exec(ctx,
-		`INSERT INTO topic_progresses (user_id, course_id, course_section_topic_id, status, _updated_at) VALUES ($1, $2, $3, $4, $5)
-		 ON CONFLICT (user_id, course_id, course_section_topic_id) DO UPDATE SET status = EXCLUDED.status, _updated_at = EXCLUDED._updated_at`,
-		userID, courseID, topicID, status, updatedAt,
+		`INSERT INTO topic_progresses (user_id, course_section_topic_id, status, _updated_at) VALUES ($1, $2, $3, $4)
+		 ON CONFLICT (user_id, course_section_topic_id) DO UPDATE SET status = EXCLUDED.status, _updated_at = EXCLUDED._updated_at`,
+		userID, topicID, status, updatedAt,
 	)
 	return err
 }
@@ -74,7 +74,12 @@ func insertDraftCourse(ctx context.Context, pool *pgxpool.Pool) error {
 }
 
 func cleanupDraftCourse(ctx context.Context, pool *pgxpool.Pool) {
-	_, _ = pool.Exec(ctx, `DELETE FROM topic_progresses WHERE course_id = $1`, enrollmentDetailDraftCourseID)
+	_, _ = pool.Exec(ctx,
+		`DELETE FROM topic_progresses
+		 WHERE course_section_topic_id IN (
+		   SELECT course_section_topic_id FROM course_section_topics WHERE course_id = $1
+		 )`,
+		enrollmentDetailDraftCourseID)
 	_, _ = pool.Exec(ctx, `DELETE FROM enrollments WHERE course_id = $1`, enrollmentDetailDraftCourseID)
 	_, _ = pool.Exec(ctx, `DELETE FROM course_section_topics WHERE course_id = $1`, enrollmentDetailDraftCourseID)
 	_, _ = pool.Exec(ctx, `DELETE FROM course_sections WHERE course_id = $1`, enrollmentDetailDraftCourseID)

@@ -81,12 +81,8 @@ func (r *SqrcEnrollmentRepository) create(ctx context.Context, enrollment Enroll
 	})
 }
 
-func (r *SqrcEnrollmentRepository) upsertTopicProgress(ctx context.Context, userId, courseId uuid.UUID, progress TopicProgress) error {
+func (r *SqrcEnrollmentRepository) upsertTopicProgress(ctx context.Context, userId uuid.UUID, progress TopicProgress) error {
 	userIdUuid, err := toPgUUID(userId)
-	if err != nil {
-		return err
-	}
-	courseIdUuid, err := toPgUUID(courseId)
 	if err != nil {
 		return err
 	}
@@ -97,7 +93,6 @@ func (r *SqrcEnrollmentRepository) upsertTopicProgress(ctx context.Context, user
 
 	return r.sqrc.UpsertTopicProgress(ctx, db.UpsertTopicProgressParams{
 		Userid:               userIdUuid,
-		Courseid:             courseIdUuid,
 		Coursesectiontopicid: topicIdUuid,
 		Status:               string(progress.Status()),
 	})

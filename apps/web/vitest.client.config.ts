@@ -4,11 +4,16 @@ import { playwright } from "@vitest/browser-playwright";
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    "process.env": "{}",
+  },
   resolve: {
     tsconfigPaths: true,
   },
   optimizeDeps: {
     include: [
+      "@hugeicons/core-free-icons",
+      "@hugeicons/react",
       "@base-ui/react/button",
       "@base-ui/react/input",
       "@base-ui/react/merge-props",
@@ -20,6 +25,7 @@ export default defineConfig({
       "clsx",
       "jotai",
       "next/cache",
+      "next/form",
       "next/headers",
       "next/link",
       "next/navigation",

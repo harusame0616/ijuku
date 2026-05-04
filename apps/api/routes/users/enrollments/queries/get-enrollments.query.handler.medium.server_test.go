@@ -157,9 +157,9 @@ func insertProgress(ctx context.Context, pool *pgxpool.Pool, userID, topicID str
 		return err
 	}
 	_, err = pool.Exec(ctx,
-		`INSERT INTO topic_progresses (user_id, course_id, course_section_topic_id, status, _updated_at) VALUES ($1, $2, $3, 'IN_PROGRESS', $4)
-		 ON CONFLICT (user_id, course_id, course_section_topic_id) DO UPDATE SET status = EXCLUDED.status, _updated_at = EXCLUDED._updated_at`,
-		userID, courseID, topicID, updatedAt,
+		`INSERT INTO topic_progresses (user_id, course_section_topic_id, status, _updated_at) VALUES ($1, $2, 'IN_PROGRESS', $3)
+		 ON CONFLICT (user_id, course_section_topic_id) DO UPDATE SET status = EXCLUDED.status, _updated_at = EXCLUDED._updated_at`,
+		userID, topicID, updatedAt,
 	)
 	return err
 }

@@ -64,7 +64,6 @@ WITH section_agg AS (
         course_sections AS sections
         LEFT JOIN course_section_topics AS topics ON sections.course_section_id = topics.course_section_id
         LEFT JOIN topic_progresses AS progresses ON progresses.user_id = $2
-            AND progresses.course_id = sections.course_id
             AND progresses.course_section_topic_id = topics.course_section_topic_id
     WHERE
         sections.course_id = $1
@@ -161,8 +160,10 @@ SELECT
 FROM
     enrollments
     JOIN courses ON enrollments.course_id = courses.course_id
-    LEFT JOIN topic_progresses ON topic_progresses.user_id = enrollments.user_id
-        AND topic_progresses.course_id = enrollments.course_id
+    LEFT JOIN course_section_topics ON course_section_topics.course_id = enrollments.course_id
+    LEFT JOIN topic_progresses
+        ON topic_progresses.user_id = enrollments.user_id
+        AND topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
 WHERE
     enrollments.user_id = $1 :: uuid
 GROUP BY
@@ -200,13 +201,14 @@ func (q *Queries) GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID
 
 const getTopicProgressesByUserIdAndCourseId = `-- name: GetTopicProgressesByUserIdAndCourseId :many
 SELECT
-    course_section_topic_id,
-    status
+    topic_progresses.course_section_topic_id,
+    topic_progresses.status
 FROM
     topic_progresses
+    JOIN course_section_topics USING (course_section_topic_id)
 WHERE
-    user_id = $1 :: uuid
-    AND course_id = $2 :: uuid
+    topic_progresses.user_id = $1 :: uuid
+    AND course_section_topics.course_id = $2 :: uuid
 `
 
 type GetTopicProgressesByUserIdAndCourseIdParams struct {
@@ -269,7 +271,6 @@ const upsertTopicProgress = `-- name: UpsertTopicProgress :exec
 INSERT INTO
     topic_progresses (
         user_id,
-        course_id,
         course_section_topic_id,
         status
     )
@@ -277,9 +278,8 @@ VALUES
     (
         $1 :: uuid,
         $2 :: uuid,
-        $3 :: uuid,
-        $4
-    ) ON CONFLICT (user_id, course_id, course_section_topic_id) DO
+        $3
+    ) ON CONFLICT (user_id, course_section_topic_id) DO
 UPDATE
 SET
     status = EXCLUDED.status
@@ -287,17 +287,11 @@ SET
 
 type UpsertTopicProgressParams struct {
 	Userid               pgtype.UUID `json:"userid"`
-	Courseid             pgtype.UUID `json:"courseid"`
 	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
 	Status               string      `json:"status"`
 }
 
 func (q *Queries) UpsertTopicProgress(ctx context.Context, arg UpsertTopicProgressParams) error {
-	_, err := q.db.Exec(ctx, upsertTopicProgress,
-		arg.Userid,
-		arg.Courseid,
-		arg.Coursesectiontopicid,
-		arg.Status,
-	)
+	_, err := q.db.Exec(ctx, upsertTopicProgress, arg.Userid, arg.Coursesectiontopicid, arg.Status)
 	return err
 }
