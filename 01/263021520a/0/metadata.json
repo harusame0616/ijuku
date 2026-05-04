@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "01263021520a",
+  "session_id": "24288106-2c43-4bf2-8dbf-2918a4d33dd6",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-04T21:42:18.981113Z",
+  "branch": "CU-86exg112m__nemoto-masaharu",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "apps/web/app/(lp)/lp/_components/footer.tsx",
+    "apps/web/app/(lp)/privacy-policies/page.tsx",
+    "apps/web/app/layout.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "f11a7f70aa26",
+  "token_usage": {
+    "input_tokens": 164,
+    "cache_creation_tokens": 222304,
+    "cache_read_tokens": 11814225,
+    "output_tokens": 67306,
+    "api_call_count": 109
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T21:42:18.561728Z",
+    "agent_lines": 317,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 317,
+    "agent_percentage": 100
+  }
+}
