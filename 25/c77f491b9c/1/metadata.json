@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "25c77f491b9c",
+  "session_id": "340d2ea9-8676-4ee2-ab91-93f885662a47",
   "strategy": "manual-commit",
+  "created_at": "2026-05-04T13:02:42.039532Z",
   "branch": "CU-86exfq4jt__nemoto-masaharu",
-  "checkpoints_count": 7,
+  "checkpoints_count": 4,
   "files_touched": [
     ".claude/rules/migration-down.md",
     ".claude/settings.json",
@@ -40,25 +42,25 @@
     "apps/web/app/(main)/page.tsx",
     "apps/web/vitest.config.ts"
   ],
-  "sessions": [
-    {
-      "metadata": "/25/c77f491b9c/0/metadata.json",
-      "transcript": "/25/c77f491b9c/0/full.jsonl",
-      "content_hash": "/25/c77f491b9c/0/content_hash.txt",
-      "prompt": "/25/c77f491b9c/0/prompt.txt"
-    },
-    {
-      "metadata": "/25/c77f491b9c/1/metadata.json",
-      "transcript": "/25/c77f491b9c/1/full.jsonl",
-      "content_hash": "/25/c77f491b9c/1/content_hash.txt",
-      "prompt": "/25/c77f491b9c/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "bae143a9e455",
   "token_usage": {
-    "input_tokens": 46,
-    "cache_creation_tokens": 51272,
-    "cache_read_tokens": 544285,
-    "output_tokens": 12735,
-    "api_call_count": 18
+    "input_tokens": 17,
+    "cache_creation_tokens": 11412,
+    "cache_read_tokens": 194970,
+    "output_tokens": 1869,
+    "api_call_count": 9
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T13:02:42.026854Z",
+    "agent_lines": 1010,
+    "human_added": 0,
+    "human_modified": 8,
+    "human_removed": 6,
+    "total_committed": 1018,
+    "agent_percentage": 99.21414538310412
   }
 }
