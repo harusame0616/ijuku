@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f41e478f7bff",
+  "strategy": "manual-commit",
+  "branch": "CU-86exg1hm0_contacts_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/internal/db/contacts.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000010_add_contacts.down.sql",
+    "apps/api/migrations/000010_add_contacts.up.sql",
+    "apps/api/queries/contacts.sql",
+    "apps/api/routes/contacts/post.go",
+    "apps/api/routes/contacts/post.medium.server_test.go",
+    "apps/web/app/(lp)/contacts/_components/contact-form.client.test.tsx",
+    "apps/web/app/(lp)/contacts/_components/contact-form.client.tsx",
+    "apps/web/app/(lp)/contacts/contact.action.small.server.test.ts",
+    "apps/web/app/(lp)/contacts/contact.action.ts",
+    "apps/web/app/(lp)/contacts/page.tsx",
+    "docs/api/お問い合わせ送信.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f4/1e478f7bff/0/metadata.json",
+      "transcript": "/f4/1e478f7bff/0/full.jsonl",
+      "content_hash": "/f4/1e478f7bff/0/content_hash.txt",
+      "prompt": "/f4/1e478f7bff/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 118,
+    "cache_creation_tokens": 197805,
+    "cache_read_tokens": 8910038,
+    "output_tokens": 58713,
+    "api_call_count": 98
+  }
+}

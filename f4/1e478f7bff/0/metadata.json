@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f41e478f7bff",
+  "session_id": "e017d957-87d9-4b52-9b22-e8bfa70c5308",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-04T23:18:32.229976Z",
+  "branch": "CU-86exg1hm0_contacts_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/internal/db/contacts.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000010_add_contacts.down.sql",
+    "apps/api/migrations/000010_add_contacts.up.sql",
+    "apps/api/queries/contacts.sql",
+    "apps/api/routes/contacts/post.go",
+    "apps/api/routes/contacts/post.medium.server_test.go",
+    "apps/web/app/(lp)/contacts/_components/contact-form.client.test.tsx",
+    "apps/web/app/(lp)/contacts/_components/contact-form.client.tsx",
+    "apps/web/app/(lp)/contacts/contact.action.small.server.test.ts",
+    "apps/web/app/(lp)/contacts/contact.action.ts",
+    "apps/web/app/(lp)/contacts/page.tsx",
+    "docs/api/お問い合わせ送信.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "605665e46300",
+  "token_usage": {
+    "input_tokens": 118,
+    "cache_creation_tokens": 197805,
+    "cache_read_tokens": 8910038,
+    "output_tokens": 58713,
+    "api_call_count": 98
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T23:18:32.033214Z",
+    "agent_lines": 1097,
+    "human_added": 1,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1098,
+    "agent_percentage": 99.90892531876139
+  }
+}
