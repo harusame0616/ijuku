@@ -8,13 +8,18 @@ import (
 )
 
 type EnrollParams struct {
-	userId   uuid.UUID
-	courseId uuid.UUID
+	userId     uuid.UUID
+	authorSlug string
+	courseSlug string
 }
 
 type EnrollResult struct {
-	CourseId   string
+	CourseId   uuid.UUID
 	EnrolledAt time.Time
+}
+
+type EnrollCourseRepository interface {
+	getCourseBySlug(ctx context.Context, authorSlug, courseSlug string) (Course, error)
 }
 
 type EnrollmentCreator interface {
@@ -27,12 +32,12 @@ type EnrollUsecaseInterface interface {
 }
 
 type EnrollUsecase struct {
-	courseRepository     CourseRepository
+	courseRepository     EnrollCourseRepository
 	enrollmentRepository EnrollmentCreator
 	now                  func() time.Time
 }
 
-func NewEnrollUsecase(courseRepo CourseRepository, enrollmentRepo EnrollmentCreator) EnrollUsecase {
+func NewEnrollUsecase(courseRepo EnrollCourseRepository, enrollmentRepo EnrollmentCreator) EnrollUsecase {
 	return EnrollUsecase{
 		courseRepository:     courseRepo,
 		enrollmentRepository: enrollmentRepo,
@@ -41,7 +46,7 @@ func NewEnrollUsecase(courseRepo CourseRepository, enrollmentRepo EnrollmentCrea
 }
 
 func (u EnrollUsecase) execute(ctx context.Context, params EnrollParams) (EnrollResult, error) {
-	course, err := u.courseRepository.getCourseByCourseId(ctx, params.courseId)
+	course, err := u.courseRepository.getCourseBySlug(ctx, params.authorSlug, params.courseSlug)
 	if err != nil {
 		return EnrollResult{}, err
 	}
@@ -50,20 +55,20 @@ func (u EnrollUsecase) execute(ctx context.Context, params EnrollParams) (Enroll
 		return EnrollResult{}, err
 	}
 
-	if _, err := u.enrollmentRepository.findByUserAndCourse(ctx, params.userId, params.courseId); err == nil {
+	if _, err := u.enrollmentRepository.findByUserAndCourse(ctx, params.userId, course.courseId); err == nil {
 		return EnrollResult{}, ErrAlreadyEnrolled
 	} else if err != ErrNotEnrolled {
 		return EnrollResult{}, err
 	}
 
-	enrollment := NewEnrollment(params.userId, params.courseId, u.now())
+	enrollment := NewEnrollment(params.userId, course.courseId, u.now())
 
 	if err := u.enrollmentRepository.create(ctx, enrollment); err != nil {
 		return EnrollResult{}, err
 	}
 
 	return EnrollResult{
-		CourseId:   enrollment.CourseId().String(),
+		CourseId:   enrollment.CourseId(),
 		EnrolledAt: enrollment.EnrolledAt(),
 	}, nil
 }

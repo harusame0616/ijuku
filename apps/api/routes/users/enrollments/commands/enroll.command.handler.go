@@ -26,7 +26,8 @@ func NewEnrollHandler(usecase EnrollUsecaseInterface) *EnrollHandler {
 }
 
 type postEnrollmentRequestBody struct {
-	CourseId string `json:"courseId"`
+	AuthorSlug string `json:"authorSlug"`
+	CourseSlug string `json:"courseSlug"`
 }
 
 type postEnrollmentResponse struct {
@@ -55,19 +56,19 @@ func (h *EnrollHandler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	if body.CourseId == "" {
-		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "courseId must be required")
+	if body.AuthorSlug == "" {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "authorSlug must be required")
 		return
 	}
-	courseId, err := uuid.Parse(body.CourseId)
-	if err != nil {
-		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "courseId must be UUID format")
+	if body.CourseSlug == "" {
+		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "courseSlug must be required")
 		return
 	}
 
 	result, err := h.usecase.execute(r.Context(), EnrollParams{
-		userId:   userId,
-		courseId: courseId,
+		userId:     userId,
+		authorSlug: body.AuthorSlug,
+		courseSlug: body.CourseSlug,
 	})
 	if err != nil {
 		switch {
@@ -86,7 +87,7 @@ func (h *EnrollHandler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Req
 
 	w.WriteHeader(http.StatusCreated)
 	_ = json.NewEncoder(w).Encode(postEnrollmentResponse{
-		CourseId:   result.CourseId,
+		CourseId:   result.CourseId.String(),
 		EnrolledAt: result.EnrolledAt.Format(time.RFC3339),
 	})
 }

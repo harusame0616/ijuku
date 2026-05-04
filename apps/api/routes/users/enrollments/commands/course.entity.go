@@ -23,17 +23,17 @@ type Section struct {
 }
 
 type Author struct {
-	authorId string
+	authorId uuid.UUID
 	name     string
 }
 
 type Category struct {
-	categoryId string
+	categoryId uuid.UUID
 	name       string
 }
 
 type Course struct {
-	courseId      string
+	courseId      uuid.UUID
 	title         string
 	description   string
 	slug          string
@@ -50,7 +50,7 @@ var ErrEnrollmentNotAllowed = errors.New("enrollment not allowed")
 var ErrTopicNotFoundInCourse = errors.New("topic not found in course")
 
 func (course *Course) checkEnrollable(userId uuid.UUID) error {
-	if course.publishStatus != "published" && course.author.authorId != userId.String() {
+	if course.publishStatus != "published" && course.author.authorId != userId {
 		return ErrEnrollmentNotAllowed
 	}
 	return nil

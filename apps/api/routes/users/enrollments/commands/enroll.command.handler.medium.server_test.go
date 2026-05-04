@@ -21,7 +21,11 @@ const (
 	enrollMedUserID        = "43000000-0000-0000-0000-000000000000"
 	enrollMedCourseID      = "44000000-0000-0000-0000-000000000000"
 	enrollMedDraftCourseID = "44000000-0000-0000-0000-000000000010"
-	enrollMedMissingCourse = "44000000-0000-0000-0000-0000000000ff"
+
+	enrollMedAuthorSlug      = "enroll-author"
+	enrollMedCourseSlug      = "enroll-test-course"
+	enrollMedDraftCourseSlug = "enroll-test-draft"
+	enrollMedMissingSlug     = "enroll-test-missing"
 )
 
 func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
@@ -36,8 +40,8 @@ func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{enrollMedCategoryID},
 		},
 		{
-			`INSERT INTO authors (author_id, name, profile) VALUES ($1, 'enroll 著者', '')`,
-			[]any{enrollMedAuthorID},
+			`INSERT INTO authors (author_id, name, profile, slug) VALUES ($1, 'enroll 著者', '', $2)`,
+			[]any{enrollMedAuthorID, enrollMedAuthorSlug},
 		},
 		{
 			`INSERT INTO users (user_id, nickname) VALUES ($1, 'enroll ユーザー')`,
@@ -49,8 +53,8 @@ func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
 		},
 		{
 			`INSERT INTO courses (course_id, title, description, slug, tags, publish_status, category_id, author_id, visibility)
-			 VALUES ($1, 'enroll コース', '', 'enroll-test-course', '[]', 'published', $2, $3, 'public')`,
-			[]any{enrollMedCourseID, enrollMedCategoryID, enrollMedAuthorID},
+			 VALUES ($1, 'enroll コース', '', $2, '[]', 'published', $3, $4, 'public')`,
+			[]any{enrollMedCourseID, enrollMedCourseSlug, enrollMedCategoryID, enrollMedAuthorID},
 		},
 		{
 			`INSERT INTO course_sections (course_section_id, course_id, index, title, description) VALUES ('45000000-0000-0000-0000-000000000000', $1, 0, 'sec', '')`,
@@ -63,8 +67,8 @@ func setupEnrollTestData(ctx context.Context, pool *pgxpool.Pool) error {
 		},
 		{
 			`INSERT INTO courses (course_id, title, description, slug, tags, publish_status, category_id, author_id, visibility)
-			 VALUES ($1, 'enroll ドラフトコース', '', 'enroll-test-draft', '[]', 'draft', $2, $3, 'private')`,
-			[]any{enrollMedDraftCourseID, enrollMedCategoryID, enrollMedAuthorID},
+			 VALUES ($1, 'enroll ドラフトコース', '', $2, '[]', 'draft', $3, $4, 'private')`,
+			[]any{enrollMedDraftCourseID, enrollMedDraftCourseSlug, enrollMedCategoryID, enrollMedAuthorID},
 		},
 		{
 			`INSERT INTO course_sections (course_section_id, course_id, index, title, description) VALUES ('45000000-0000-0000-0000-000000000010', $1, 0, 'sec', '')`,
@@ -141,21 +145,25 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 		return count > 0
 	}
 
+	body := func(authorSlug, courseSlug string) string {
+		return fmt.Sprintf(`{"authorSlug":%q,"courseSlug":%q}`, authorSlug, courseSlug)
+	}
+
 	t.Run("公開コースの受講開始は201で成功する", func(t *testing.T) {
 		t.Cleanup(func() { cleanupEnrollEnrollments(ctx, pool) })
 
 		w := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, `{"courseId":"`+enrollMedCourseID+`"}`))
+		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, body(enrollMedAuthorSlug, enrollMedCourseSlug)))
 
 		if w.Result().StatusCode != http.StatusCreated {
 			t.Fatalf("ステータスコードが201であること: got %d", w.Result().StatusCode)
 		}
-		var body map[string]string
-		json.NewDecoder(w.Result().Body).Decode(&body)
-		if body["courseId"] != enrollMedCourseID {
-			t.Errorf("courseIdが一致すること: got %q", body["courseId"])
+		var resp map[string]string
+		json.NewDecoder(w.Result().Body).Decode(&resp)
+		if resp["courseId"] != enrollMedCourseID {
+			t.Errorf("courseIdが一致すること: got %q", resp["courseId"])
 		}
-		if body["enrolledAt"] == "" {
+		if resp["enrolledAt"] == "" {
 			t.Errorf("enrolledAtが返ること")
 		}
 		if !enrollmentExists(t, enrollMedUserID, enrollMedCourseID) {
@@ -167,21 +175,21 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 		t.Cleanup(func() { cleanupEnrollEnrollments(ctx, pool) })
 
 		w1 := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w1, newReq(t, enrollMedUserID, `{"courseId":"`+enrollMedCourseID+`"}`))
+		handler.PostEnrollmentHandler(w1, newReq(t, enrollMedUserID, body(enrollMedAuthorSlug, enrollMedCourseSlug)))
 		if w1.Result().StatusCode != http.StatusCreated {
 			t.Fatalf("初回は201であること: got %d", w1.Result().StatusCode)
 		}
 
 		w2 := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w2, newReq(t, enrollMedUserID, `{"courseId":"`+enrollMedCourseID+`"}`))
+		handler.PostEnrollmentHandler(w2, newReq(t, enrollMedUserID, body(enrollMedAuthorSlug, enrollMedCourseSlug)))
 
 		if w2.Result().StatusCode != http.StatusConflict {
 			t.Errorf("ステータスコードが409であること: got %d", w2.Result().StatusCode)
 		}
-		var body map[string]string
-		json.NewDecoder(w2.Result().Body).Decode(&body)
-		if body["errorCode"] != "ALREADY_ENROLLED" {
-			t.Errorf("errorCodeがALREADY_ENROLLEDであること: got %q", body["errorCode"])
+		var resp map[string]string
+		json.NewDecoder(w2.Result().Body).Decode(&resp)
+		if resp["errorCode"] != "ALREADY_ENROLLED" {
+			t.Errorf("errorCodeがALREADY_ENROLLEDであること: got %q", resp["errorCode"])
 		}
 	})
 
@@ -189,15 +197,15 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 		t.Cleanup(func() { cleanupEnrollEnrollments(ctx, pool) })
 
 		w := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, `{"courseId":"`+enrollMedDraftCourseID+`"}`))
+		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, body(enrollMedAuthorSlug, enrollMedDraftCourseSlug)))
 
 		if w.Result().StatusCode != http.StatusForbidden {
 			t.Errorf("ステータスコードが403であること: got %d", w.Result().StatusCode)
 		}
-		var body map[string]string
-		json.NewDecoder(w.Result().Body).Decode(&body)
-		if body["errorCode"] != "ENROLLMENT_FORBIDDEN" {
-			t.Errorf("errorCodeがENROLLMENT_FORBIDDENであること: got %q", body["errorCode"])
+		var resp map[string]string
+		json.NewDecoder(w.Result().Body).Decode(&resp)
+		if resp["errorCode"] != "ENROLLMENT_FORBIDDEN" {
+			t.Errorf("errorCodeがENROLLMENT_FORBIDDENであること: got %q", resp["errorCode"])
 		}
 		if enrollmentExists(t, enrollMedUserID, enrollMedDraftCourseID) {
 			t.Errorf("DBにenrollmentが作成されていないこと")
@@ -208,7 +216,7 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 		t.Cleanup(func() { cleanupEnrollEnrollments(ctx, pool) })
 
 		w := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w, newReq(t, enrollMedAuthorID, `{"courseId":"`+enrollMedDraftCourseID+`"}`))
+		handler.PostEnrollmentHandler(w, newReq(t, enrollMedAuthorID, body(enrollMedAuthorSlug, enrollMedDraftCourseSlug)))
 
 		if w.Result().StatusCode != http.StatusCreated {
 			t.Errorf("ステータスコードが201であること: got %d", w.Result().StatusCode)
@@ -218,17 +226,17 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 		}
 	})
 
-	t.Run("存在しないcourseIdは404 COURSE_NOT_FOUNDを返す", func(t *testing.T) {
+	t.Run("存在しないslugの組み合わせは404 COURSE_NOT_FOUNDを返す", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, `{"courseId":"`+enrollMedMissingCourse+`"}`))
+		handler.PostEnrollmentHandler(w, newReq(t, enrollMedUserID, body(enrollMedAuthorSlug, enrollMedMissingSlug)))
 
 		if w.Result().StatusCode != http.StatusNotFound {
 			t.Errorf("ステータスコードが404であること: got %d", w.Result().StatusCode)
 		}
-		var body map[string]string
-		json.NewDecoder(w.Result().Body).Decode(&body)
-		if body["errorCode"] != "COURSE_NOT_FOUND" {
-			t.Errorf("errorCodeがCOURSE_NOT_FOUNDであること: got %q", body["errorCode"])
+		var resp map[string]string
+		json.NewDecoder(w.Result().Body).Decode(&resp)
+		if resp["errorCode"] != "COURSE_NOT_FOUND" {
+			t.Errorf("errorCodeがCOURSE_NOT_FOUNDであること: got %q", resp["errorCode"])
 		}
 	})
 }

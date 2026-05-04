@@ -29,6 +29,7 @@ func main() {
 	q := db.New(pool)
 
 	coursesHandler := queries.NewCoursesHandlers(q)
+	courseDetailHandler := queries.NewGetCourseDetailHandler(q)
 	courseRepo := enrollmentscommands.NewSqrcCourseRepository(q)
 	enrollmentRepo := enrollmentscommands.NewSqrcEnrollmentRepository(q)
 	updateEnrollmentHandler := enrollmentscommands.NewUpdateEnrollmentHandler(enrollmentscommands.NewUpdateEnrollmentUsecase(courseRepo, enrollmentRepo))
@@ -46,9 +47,11 @@ func main() {
 	getEnrollmentHandler := enrollmentsqueries.NewGetEnrollmentHandler(q)
 
 	authMiddleware := libauth.Middleware(verifier, q)
+	optionalAuthMiddleware := libauth.OptionalMiddleware(verifier, q)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
+	http.Handle("GET /v1/courses/{authorSlug}/{courseSlug}", optionalAuthMiddleware(http.HandlerFunc(courseDetailHandler.GetCourseDetailHandler)))
 
 	http.Handle("GET /v1/me", authMiddleware(http.HandlerFunc(getUserHandler.GetUserHandler)))
 	http.Handle("PATCH /v1/me", authMiddleware(http.HandlerFunc(updateUserHandler.PatchUserHandler)))

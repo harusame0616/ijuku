@@ -17,3 +17,9 @@ paths:
 ```
 
 - shadcn/ui のコンポーネントを優先して使用する
+
+## client component は最小化する
+
+- ファイル全体に `"use client"` を付ける前に、 client 要因（state / event handler / browser API）を別ファイルへ切り出せないか必ず検討する
+- 親コンポーネントは「子に client を含むだけ」であれば universal のまま保つ
+- client component を作成した後も、 「これ以上分解して universal/server に逃がせる部分が残っていないか」を必ず再チェックする

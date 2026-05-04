@@ -25,6 +25,7 @@ const CourseSchema = v.object({
   publishStatus: v.picklist(["draft", "published", "archived"]),
   visibility: v.picklist(["private", "public", "paid"]),
   authorName: v.pipe(v.string(), v.minLength(1)),
+  authorSlug: v.pipe(v.string(), v.minLength(1)),
   authorProfile: v.string(),
   categoryName: v.pipe(v.string(), v.minLength(1)),
   categoryPath: v.pipe(v.string(), v.minLength(1)),
@@ -77,11 +78,12 @@ async function seedCourse(
 
   await sql.begin(async (tx) => {
     await tx`
-      INSERT INTO authors (author_id, name, profile)
-      VALUES (${authorId}, ${course.authorName}, ${course.authorProfile})
+      INSERT INTO authors (author_id, name, profile, slug)
+      VALUES (${authorId}, ${course.authorName}, ${course.authorProfile}, ${course.authorSlug})
       ON CONFLICT (author_id) DO UPDATE SET
         name = EXCLUDED.name,
-        profile = EXCLUDED.profile
+        profile = EXCLUDED.profile,
+        slug = EXCLUDED.slug
     `;
 
     await tx`
@@ -92,7 +94,6 @@ async function seedCourse(
         path = EXCLUDED.path
     `;
 
-    const tagsJson = JSON.stringify(course.tags);
     await tx`
       INSERT INTO courses (
         course_id, title, description, slug, tags, publish_status,
@@ -100,7 +101,7 @@ async function seedCourse(
       )
       VALUES (
         ${courseId}, ${course.title}, ${course.description}, ${course.slug},
-        ${tagsJson}::jsonb, ${course.publishStatus},
+        ${course.tags}, ${course.publishStatus},
         ${categoryId}, NOW(), ${authorId}, ${course.visibility}
       )
       ON CONFLICT (course_id) DO UPDATE SET

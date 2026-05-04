@@ -10,8 +10,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/google/uuid"
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5"
+)
+
+const (
+	validAuthorSlug = "valid-author"
+	validCourseSlug = "valid-course"
 )
 
 type stubEnrollUsecase struct {
@@ -41,12 +47,16 @@ func decodeEnrollMap(t *testing.T, w *httptest.ResponseRecorder) map[string]stri
 	return body
 }
 
+func validEnrollBody() string {
+	return `{"authorSlug":"` + validAuthorSlug + `","courseSlug":"` + validCourseSlug + `"}`
+}
+
 func TestPostEnrollmentHandler_Auth(t *testing.T) {
 	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
 		h := NewEnrollHandler(&stubEnrollUsecase{})
 		w := httptest.NewRecorder()
 
-		h.PostEnrollmentHandler(w, newEnrollRequest(t, "", `{"courseId":"`+validCourseId+`"}`))
+		h.PostEnrollmentHandler(w, newEnrollRequest(t, "", validEnrollBody()))
 
 		if w.Result().StatusCode != http.StatusUnauthorized {
 			t.Errorf("ステータスコードが401であること: got %d", w.Result().StatusCode)
@@ -60,10 +70,10 @@ func TestPostEnrollmentHandler_Validation(t *testing.T) {
 		userId string
 		body   string
 	}{
-		{name: "userIDがUUID形式でない", userId: "not-a-uuid", body: `{"courseId":"` + validCourseId + `"}`},
+		{name: "userIDがUUID形式でない", userId: "not-a-uuid", body: validEnrollBody()},
 		{name: "bodyが不正なJSON", userId: validUserId, body: `not-json`},
-		{name: "courseIdが空", userId: validUserId, body: `{"courseId":""}`},
-		{name: "courseIdがUUID形式でない", userId: validUserId, body: `{"courseId":"not-a-uuid"}`},
+		{name: "authorSlugが空", userId: validUserId, body: `{"authorSlug":"","courseSlug":"` + validCourseSlug + `"}`},
+		{name: "courseSlugが空", userId: validUserId, body: `{"authorSlug":"` + validAuthorSlug + `","courseSlug":""}`},
 	}
 
 	for _, tt := range tests {
@@ -102,7 +112,7 @@ func TestPostEnrollmentHandler_UsecaseErrorMapping(t *testing.T) {
 			h := NewEnrollHandler(&stubEnrollUsecase{err: tt.err})
 			w := httptest.NewRecorder()
 
-			h.PostEnrollmentHandler(w, newEnrollRequest(t, validUserId, `{"courseId":"`+validCourseId+`"}`))
+			h.PostEnrollmentHandler(w, newEnrollRequest(t, validUserId, validEnrollBody()))
 
 			if w.Result().StatusCode != tt.wantStatus {
 				t.Errorf("ステータスコードが一致すること: got %d, want %d", w.Result().StatusCode, tt.wantStatus)
@@ -120,13 +130,13 @@ func TestPostEnrollmentHandler_Success(t *testing.T) {
 		now := time.Date(2026, 5, 1, 10, 0, 0, 0, time.UTC)
 		h := NewEnrollHandler(&stubEnrollUsecase{
 			result: EnrollResult{
-				CourseId:   validCourseId,
+				CourseId:   uuid.MustParse(validCourseId),
 				EnrolledAt: now,
 			},
 		})
 		w := httptest.NewRecorder()
 
-		h.PostEnrollmentHandler(w, newEnrollRequest(t, validUserId, `{"courseId":"`+validCourseId+`"}`))
+		h.PostEnrollmentHandler(w, newEnrollRequest(t, validUserId, validEnrollBody()))
 
 		if w.Result().StatusCode != http.StatusCreated {
 			t.Fatalf("ステータスコードが201であること: got %d", w.Result().StatusCode)

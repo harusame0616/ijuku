@@ -24,6 +24,7 @@ type Author struct {
 	Profile   string             `json:"profile"`
 	CreatedAt pgtype.Timestamptz `json:"_created_at"`
 	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+	Slug      string             `json:"slug"`
 }
 
 type Category struct {

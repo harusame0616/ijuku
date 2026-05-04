@@ -34,7 +34,7 @@ func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, 
 	if authorId == "" {
 		authorId = uuid.NewString()
 	}
-	if _, err := pool.Exec(ctx, "INSERT INTO authors (author_id, name, profile) VALUES ($1, $2, $3)", authorId, "Test Author", "テスト用の author です"); err != nil {
+	if _, err := pool.Exec(ctx, "INSERT INTO authors (author_id, name, profile, slug) VALUES ($1, $2, $3, $4)", authorId, "Test Author", "テスト用の author です", "topic-detail-"+authorId); err != nil {
 		t.Fatalf("author の insert に失敗 : %v", err)
 	}
 	t.Cleanup(func() { pool.Exec(ctx, "DELETE FROM authors WHERE author_id = $1", authorId) })

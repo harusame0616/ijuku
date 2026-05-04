@@ -105,6 +105,30 @@ func uuidString(u pgtype.UUID) string {
 	return string(out)
 }
 
+// OptionalMiddleware は Middleware の任意認証版。
+// Authorization ヘッダーが無い、またはトークンが不正でも 401 にせず素通しする。
+// 認証成功時のみ userID を Context に詰める。公開ページで「ログイン時のみ追加情報を出す」用途に使う。
+func OptionalMiddleware(verifier *Verifier, resolver ApiKeyResolver) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			token, err := ExtractBearerToken(r)
+			if err != nil {
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			userID, err := resolveUserID(r.Context(), verifier, resolver, token)
+			if err != nil {
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			ctx := context.WithValue(r.Context(), userIDContextKey, userID)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
+}
+
 // UserIDFromContext は Middleware で詰めた userID を取り出す。
 // 認証されていないリクエストでは ok=false を返す。
 func UserIDFromContext(ctx context.Context) (string, bool) {

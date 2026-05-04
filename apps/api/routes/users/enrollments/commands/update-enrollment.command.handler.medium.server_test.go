@@ -46,7 +46,7 @@ func setupUpdateEnrollmentTestData(ctx context.Context, pool *pgxpool.Pool) erro
 			[]any{updTestCategoryID},
 		},
 		{
-			`INSERT INTO authors (author_id, name, profile) VALUES ($1, 'テスト著者', 'テストプロフィール')`,
+			`INSERT INTO authors (author_id, name, profile, slug) VALUES ($1, 'テスト著者', 'テストプロフィール', 'update-enrollment-author')`,
 			[]any{updTestAuthorID},
 		},
 		{

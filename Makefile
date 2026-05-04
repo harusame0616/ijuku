@@ -22,8 +22,8 @@ supabase-stop: ## Supabase ローカル環境を停止
 
 db-reset: ## DB をリセットしてマイグレーションを再適用
 	$(MAKE) -C packages/supabase supabase-reset
-	$(MAKE) -C packages/supabase migrate-up
 	$(MAKE) -C apps/api migrate-up
+	$(MAKE) -C packages/supabase supabase-seed
 
 db-seed: ## Mock 認証用テストユーザーとサンプルコースを投入（Service Role キー必須）
 	$(MAKE) -C packages/supabase supabase-seed

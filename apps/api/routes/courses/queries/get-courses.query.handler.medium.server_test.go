@@ -37,7 +37,7 @@ func setupTestData(ctx context.Context, pool *pgxpool.Pool) error {
 	}
 
 	_, err = pool.Exec(ctx,
-		`INSERT INTO authors (author_id, name, profile) VALUES ($1, 'テスト著者', 'テストプロフィール')`,
+		`INSERT INTO authors (author_id, name, profile, slug) VALUES ($1, 'テスト著者', 'テストプロフィール', 'get-courses-author')`,
 		testAuthorID,
 	)
 	if err != nil {

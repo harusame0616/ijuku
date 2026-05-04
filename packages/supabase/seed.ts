@@ -6,7 +6,7 @@ import { seedCourses } from "./seed-course.ts";
 const env = v.parse(
   v.object({
     url: v.optional(v.pipe(v.string(), v.url()), "http://127.0.0.1:54321"),
-    serviceRoleKey: v.pipe(v.string(), v.minLength(1)),
+    serviceRoleKey: v.optional(v.pipe(v.string(), v.minLength(1)), 'sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz'),
     databaseUrl: v.optional(
       v.pipe(v.string(), v.minLength(1)),
       "postgresql://postgres:postgres@127.0.0.1:54322/postgres",

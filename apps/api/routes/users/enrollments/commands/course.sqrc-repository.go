@@ -25,15 +25,71 @@ func (repository *SqrcCourseRepository) getCourseByCourseId(ctx context.Context,
 		return Course{}, err
 	}
 
-	courseRaw, err := repository.sqrc.GetCourseById(ctx, courseIdUuid)
+	raw, err := repository.sqrc.GetCourseById(ctx, courseIdUuid)
 	if err != nil {
 		return Course{}, err
 	}
 
-	return toCourse(courseRaw), nil
+	return buildCourse(courseRawFields{
+		CourseID:      raw.CourseID,
+		Title:         raw.Title,
+		Description:   raw.Description,
+		Slug:          raw.Slug,
+		Tags:          raw.Tags,
+		PublishStatus: raw.PublishStatus,
+		CategoryID:    raw.CategoryID,
+		CategoryName:  raw.CategoryName,
+		PublishedAt:   raw.PublishedAt,
+		AuthorID:      raw.AuthorID,
+		AuthorName:    raw.AuthorName,
+		Visibility:    raw.Visibility,
+		Sections:      raw.Sections,
+	}), nil
 }
 
-func toCourse(raw db.GetCourseByIdRow) Course {
+func (repository *SqrcCourseRepository) getCourseBySlug(ctx context.Context, authorSlug, courseSlug string) (Course, error) {
+	raw, err := repository.sqrc.GetCourseBySlug(ctx, db.GetCourseBySlugParams{
+		Authorslug: authorSlug,
+		Courseslug: courseSlug,
+	})
+	if err != nil {
+		return Course{}, err
+	}
+
+	return buildCourse(courseRawFields{
+		CourseID:      raw.CourseID,
+		Title:         raw.Title,
+		Description:   raw.Description,
+		Slug:          raw.Slug,
+		Tags:          raw.Tags,
+		PublishStatus: raw.PublishStatus,
+		CategoryID:    raw.CategoryID,
+		CategoryName:  raw.CategoryName,
+		PublishedAt:   raw.PublishedAt,
+		AuthorID:      raw.AuthorID,
+		AuthorName:    raw.AuthorName,
+		Visibility:    raw.Visibility,
+		Sections:      raw.Sections,
+	}), nil
+}
+
+type courseRawFields struct {
+	CourseID      pgtype.UUID
+	Title         string
+	Description   string
+	Slug          string
+	Tags          []byte
+	PublishStatus string
+	CategoryID    pgtype.UUID
+	CategoryName  string
+	PublishedAt   pgtype.Timestamptz
+	AuthorID      pgtype.UUID
+	AuthorName    string
+	Visibility    string
+	Sections      []byte
+}
+
+func buildCourse(raw courseRawFields) Course {
 	var tags []string
 	json.Unmarshal(raw.Tags, &tags)
 
@@ -81,19 +137,19 @@ func toCourse(raw db.GetCourseByIdRow) Course {
 	}
 
 	return Course{
-		courseId:      raw.CourseID.String(),
+		courseId:      uuid.UUID(raw.CourseID.Bytes),
 		title:         raw.Title,
 		description:   raw.Description,
 		slug:          raw.Slug,
 		tags:          tags,
 		publishStatus: raw.PublishStatus,
 		category: Category{
-			categoryId: raw.CategoryID.String(),
+			categoryId: uuid.UUID(raw.CategoryID.Bytes),
 			name:       raw.CategoryName,
 		},
 		publishedAt: publishedAt,
 		author: Author{
-			authorId: raw.AuthorID.String(),
+			authorId: uuid.UUID(raw.AuthorID.Bytes),
 			name:     raw.AuthorName,
 		},
 		visibility: raw.Visibility,

@@ -2,6 +2,21 @@
 
 next.js の file convention は除外する（page.tsx など）
 
+## コンポーネントの種別判定フロー
+
+上から順に評価し、最初に該当した区分を採用する：
+
+1. ファイル先頭に `"use client"` がある → **client**
+2. 以下のいずれかを使う → **server**
+   - `async` 関数として宣言されている
+   - サーバー専用モジュール（`next/headers`、 DB クライアント、 シークレット環境変数など）の参照
+3. 以下のいずれかを使う → **client**（`"use client"` を付与）
+   - React の hook を使う（`useState` / `useEffect` / `useRef` / `useContext` 等）
+   - イベントハンドラ（`onClick` 等）の直接定義
+   - ブラウザ専用 API（`window` / `document` / `localStorage` 等）
+   - 内部で `"use client"` を要求するライブラリ
+4. 上記いずれにも該当しない（props を受けて JSX を返すだけ、 子に client component を含むだけ） → **universal**
+
 ## サーバーコンポーネント
 
 \*.server.tsx
@@ -13,8 +28,6 @@ next.js の file convention は除外する（page.tsx など）
 ## ユニバーサルコンポーネント
 
 \*.universal.tsx
-
-ただし use client がついていなくてもクライアントコンポーネントとして使用することを想定している場合はクライアントコンポーネントとして扱い命名する
 
 ## スケルトンコンポーネント
 

@@ -125,6 +125,137 @@ func (q *Queries) GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetC
 	return i, err
 }
 
+const getCourseBySlug = `-- name: GetCourseBySlug :one
+WITH
+    target_course AS (
+        SELECT courses.course_id
+        FROM courses
+            JOIN authors USING (author_id)
+        WHERE courses.slug = $1
+            AND authors.slug = $2
+    ),
+    section_agg AS (
+        SELECT
+            sections.course_id,
+            sections.course_section_id,
+            sections.title,
+            sections.description,
+            sections.index,
+            COALESCE(
+                jsonb_agg(
+                    jsonb_build_object(
+                        'course_section_topic_id', topics.course_section_topic_id,
+                        'title', topics.title,
+                        'description', topics.description,
+                        'content', topics."content"
+                    )
+                    ORDER BY topics.index
+                ) FILTER (WHERE topics.course_section_topic_id IS NOT NULL),
+                '[]'::jsonb
+            ) AS topics
+        FROM
+            course_sections AS sections
+            LEFT JOIN course_section_topics AS topics
+                ON topics.course_section_id = sections.course_section_id
+        WHERE
+            sections.course_id = (SELECT course_id FROM target_course)
+        GROUP BY
+            sections.course_id,
+            sections.course_section_id
+    )
+SELECT
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name AS category_name,
+    courses.published_at,
+    courses.author_id,
+    authors.name AS author_name,
+    authors.slug AS author_slug,
+    courses.visibility,
+    COALESCE(
+        jsonb_agg(
+            jsonb_build_object(
+                'course_section_id', section_agg.course_section_id,
+                'title', section_agg.title,
+                'description', section_agg.description,
+                'topics', section_agg.topics
+            )
+            ORDER BY section_agg.index
+        ) FILTER (WHERE section_agg.course_section_id IS NOT NULL),
+        '[]'::jsonb
+    ) :: jsonb AS sections
+FROM
+    courses
+    JOIN categories USING (category_id)
+    JOIN authors USING (author_id)
+    LEFT JOIN section_agg ON courses.course_id = section_agg.course_id
+WHERE
+    courses.course_id = (SELECT course_id FROM target_course)
+GROUP BY
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name,
+    courses.published_at,
+    courses.author_id,
+    authors.name,
+    authors.slug,
+    courses.visibility
+`
+
+type GetCourseBySlugParams struct {
+	Courseslug string `json:"courseslug"`
+	Authorslug string `json:"authorslug"`
+}
+
+type GetCourseBySlugRow struct {
+	CourseID      pgtype.UUID        `json:"course_id"`
+	Title         string             `json:"title"`
+	Description   string             `json:"description"`
+	Slug          string             `json:"slug"`
+	Tags          []byte             `json:"tags"`
+	PublishStatus string             `json:"publish_status"`
+	CategoryID    pgtype.UUID        `json:"category_id"`
+	CategoryName  string             `json:"category_name"`
+	PublishedAt   pgtype.Timestamptz `json:"published_at"`
+	AuthorID      pgtype.UUID        `json:"author_id"`
+	AuthorName    string             `json:"author_name"`
+	AuthorSlug    string             `json:"author_slug"`
+	Visibility    string             `json:"visibility"`
+	Sections      []byte             `json:"sections"`
+}
+
+func (q *Queries) GetCourseBySlug(ctx context.Context, arg GetCourseBySlugParams) (GetCourseBySlugRow, error) {
+	row := q.db.QueryRow(ctx, getCourseBySlug, arg.Courseslug, arg.Authorslug)
+	var i GetCourseBySlugRow
+	err := row.Scan(
+		&i.CourseID,
+		&i.Title,
+		&i.Description,
+		&i.Slug,
+		&i.Tags,
+		&i.PublishStatus,
+		&i.CategoryID,
+		&i.CategoryName,
+		&i.PublishedAt,
+		&i.AuthorID,
+		&i.AuthorName,
+		&i.AuthorSlug,
+		&i.Visibility,
+		&i.Sections,
+	)
+	return i, err
+}
+
 const getCourses = `-- name: GetCourses :many
 SELECT
     course_id AS "courseId",

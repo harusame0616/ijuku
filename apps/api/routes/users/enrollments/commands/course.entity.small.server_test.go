@@ -59,21 +59,21 @@ func TestCourse_checkEnrollable(t *testing.T) {
 	other := uuid.New()
 
 	t.Run("publishedの場合は誰でも受講可能", func(t *testing.T) {
-		course := Course{publishStatus: "published", author: Author{authorId: author.String()}}
+		course := Course{publishStatus: "published", author: Author{authorId: author}}
 		if err := course.checkEnrollable(other); err != nil {
 			t.Errorf("エラーが発生しないこと: %v", err)
 		}
 	})
 
 	t.Run("draftで著者本人は受講可能", func(t *testing.T) {
-		course := Course{publishStatus: "draft", author: Author{authorId: author.String()}}
+		course := Course{publishStatus: "draft", author: Author{authorId: author}}
 		if err := course.checkEnrollable(author); err != nil {
 			t.Errorf("エラーが発生しないこと: %v", err)
 		}
 	})
 
 	t.Run("draftで非著者はErrEnrollmentNotAllowedを返す", func(t *testing.T) {
-		course := Course{publishStatus: "draft", author: Author{authorId: author.String()}}
+		course := Course{publishStatus: "draft", author: Author{authorId: author}}
 		if err := course.checkEnrollable(other); !errors.Is(err, ErrEnrollmentNotAllowed) {
 			t.Errorf("ErrEnrollmentNotAllowedが返ること: got %v", err)
 		}

@@ -48,7 +48,7 @@ func setupMediumTestData(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{mediumTestCategoryID},
 		},
 		{
-			`INSERT INTO authors (author_id, name, profile) VALUES ($1, 'enrollments medium 著者', '')`,
+			`INSERT INTO authors (author_id, name, profile, slug) VALUES ($1, 'enrollments medium 著者', '', 'enrollments-medium-author')`,
 			[]any{mediumTestAuthorID},
 		},
 		{

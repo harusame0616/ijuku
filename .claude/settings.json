@@ -1,6 +1,6 @@
 {
   "env": {
-    "JUKUBOX_API_KEY": "jukubox_oGaPUllkhulZrpcKSqo6ckpD6ik_8cbYXaADJ3erPNs",
+    "JUKUBOX_API_KEY": "jukubox_shJAQZ1aqDaFBJupn42AW00nwGVaFRT26FZhyMkXfiY",
     "JUKUBOX_API_BASE_URL": "http://localhost:8080"
   },
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
