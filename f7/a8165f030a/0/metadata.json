@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f7a8165f030a",
+  "session_id": "a010e84d-25b6-4ec0-a207-f919d0679a7e",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-04T00:19:32.511447Z",
+  "branch": "CU-86exfhm2q__nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".cspell.yaml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4132073be9ba",
+  "checkpoint_transcript_start": 1578,
+  "transcript_lines_at_start": 1578,
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 11198,
+    "cache_read_tokens": 2011422,
+    "output_tokens": 950,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 58
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T00:19:31.33895Z",
+    "agent_lines": 2,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2,
+    "agent_percentage": 100
+  }
+}
